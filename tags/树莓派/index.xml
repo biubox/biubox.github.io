@@ -1,0 +1,158 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>树莓派 - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/</link>
+        <description>树莓派 - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="self" type="application/rss+xml" /><item>
+    <title>树莓派初始配置</title>
+    <link>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</guid>
+    <description><![CDATA[<h2 id="配置wifi接入">配置Wifi接入</h2>
+<p><code>wpa_supplicant.conf</code>是linux无线网络管理软件<code>wpa_supplicant</code>的配置文件，该文件记录了无线网络的配置情况。</p>
+<pre><code>vim /etc/wpa_supplicant/wpa_supplicant.conf
+</code></pre>
+<p>其中ssid为wifi名称，psk为wifi密码</p>
+<p>添加 <code>network</code> 节点，添加后文件内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">country</span><span class="o">=</span>GB
+<span class="nv">ctrl_interface</span><span class="o">=</span><span class="nv">DIR</span><span class="o">=</span>/var/run/wpa_supplicant <span class="nv">GROUP</span><span class="o">=</span>netdev
+<span class="nv">update_config</span><span class="o">=</span><span class="m">1</span>
+<span class="c1">##在此处之后添加</span>
+<span class="nv">network</span><span class="o">={</span>
+        <span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;Honor 10&#34;</span>
+        <span class="nv">psk</span><span class="o">=</span><span class="s2">&#34;zyj123#..&#34;</span>
+        <span class="nv">priority</span><span class="o">=</span><span class="m">5</span>
+      <span class="o">}</span>
+<span class="nv">network</span><span class="o">={</span>
+        <span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;company&#34;</span>
+        <span class="nv">psk</span><span class="o">=</span><span class="s2">&#34;companyPwd&#34;</span>
+        <span class="nv">priority</span><span class="o">=</span><span class="m">4</span>
+      <span class="o">}</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p><em><strong>其中priority为优先级，值越大，优先级越高。</strong></em></p>
+<hr>
+<h2 id="静态ip设置wifi和有线">静态IP设置(Wifi和有线)</h2>
+<p>在 interfaces 文件的开头注释里告诉我们了要修改静态IP地址，需要修改的是 /etc/dhcpcd.conf 也就是 DHCP 的配置文件。</p>
+<p>查看官方文档 man dhcpcd.conf 可知，需要配置 static IP 的话，只需修改以下参数：</p>
+<pre><code>vi /etc/dhcpcd.conf
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># 使用 vi 编辑文件，增加下列配置项</span>
+<span class="c1"># 指定接口 eth0　或者 wlan0</span>
+interface eth0
+<span class="c1"># 指定静态IP，/24表示子网掩码为 255.255.255.0</span>
+static <span class="nv">ip_address</span><span class="o">=</span>192.168.1.20/24
+<span class="c1"># 路由器/网关IP地址</span>
+static <span class="nv">routers</span><span class="o">=</span>192.168.1.1
+<span class="c1"># 手动自定义DNS服务器</span>
+static <span class="nv">domain_name_servers</span><span class="o">=</span>192.168.1.1 114.114.114.114
+<span class="c1"># 修改完成后，按esc键后输入 :wq 保存。重启树莓派就生效了</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="查看cpu温度">查看CPU温度</h2>
+<pre><code>sudo cat/sys/class/thermal/thermal_zone0/temp
+</code></pre>
+<hr>
+<h2 id="hdmi热拔插增强设置">HDMI热拔插/增强设置</h2>
+<p>树莓派有两个视频输出源（HDMI、模拟复合视频）。从原理上，HDMI口可以检测显示设备的有无及分辨率，模拟视频只能单纯输出，对目标设备没有任何检测（可以理解为开环）。</p>
+<p><em><strong>不能双头同时输出，开机时的策略是有HDMI则HDMI优先，无则退化到模拟视频。</strong></em></p>
+<p>可以通过修改config.txt来改动。设置<code>hdmi_force_hotplug=1</code>可以强制系统认为HDMI接口有设备插入。</p>
+<p>找到<code>#hdmi_force_hotplug=1</code>这句话，把前面的<code>#</code>注释符号去掉，启用HDMI热插拔功能。
+找到<code>#config_hdmi_boost=4</code>这句话，把前面的<code>#</code>注释符号去掉，启用加强HDMI信号。</p>
+<p>注意强制HDMI输出时，树莓派不知道对面的显示设备是什么。</p>
+<hr>
+<h2 id="强制分辨率显示">强制分辨率显示</h2>
+<p>所以你可能有必要用<code>hdmi_group</code>和<code>hdmi_mode</code>选项手动指定显示分辨率</p>
+<p>找到<code>#hdmi_group=1</code>这句话，把前面的<code>#</code>注释符号去掉,强行指定显示器类型：</p>
+<p><em><strong>1是连接老式电视，2代表连接新电视.</strong></em></p>
+<p>配置 <code>hdmi_safe = 1</code>，可以显示，可是屏幕分辨率一直只有640 * 480。
+hdmi_safe = 1强制使分辨率为640 * 480。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">/opt/vc/bin/tvservice -m CEA  ＃CEA老屏幕，hdmi_group <span class="o">=</span> <span class="m">1</span>
+/opt/vc/bin/tvservice -m DMT  ＃新屏幕  <span class="nv">hdmi_group</span> <span class="o">=</span> <span class="m">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>查看屏幕支持的分辨率</p>
+<p></p>
+<p><code>/boot/config.txt</code> 里面设置如下</p>
+<pre><code>hdmi_group=2  #设置为新式电视模式
+hdmi_mode=27  #选择合适的分辨率 &quot;mode 码&quot;
+</code></pre>
+<hr>
+<h2 id="强制竖屏">强制竖屏</h2>
+<pre><code>display_rotate=1
+</code></pre>
+]]></description>
+</item><item>
+    <title>树莓派引脚图</title>
+    <link>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%95%E8%84%9A%E5%9B%BE/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%95%E8%84%9A%E5%9B%BE/</guid>
+    <description><![CDATA[<h2 id="树莓派引脚图">树莓派引脚图</h2>
+<p></p>
+]]></description>
+</item><item>
+    <title>树莓派设置AP</title>
+    <link>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BEwifi%E5%92%8Cap/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BEwifi%E5%92%8Cap/</guid>
+    <description><![CDATA[<h2 id="树莓派设置ap">树莓派设置AP</h2>
+<p>输入如下命令:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">iw list
+
+</code></pre></td></tr></table>
+</div>
+</div><p><em><strong>输出内容包涵<code>AP</code>则支持AP模式</strong></em></p>
+<p><code>ip neigh</code> 查看手机热点分配IP</p>
+<p>加入代码<code>display_rotate=1</code>使得屏幕竖屏显示</p>
+]]></description>
+</item></channel>
+</rss>

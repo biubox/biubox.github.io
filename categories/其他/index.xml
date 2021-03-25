@@ -1,0 +1,1564 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>其他 - 分类 - FiixOne`Blog</title>
+        <link>https://fiix.one/categories/%E5%85%B6%E4%BB%96/</link>
+        <description>其他 - 分类 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 15 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/categories/%E5%85%B6%E4%BB%96/" rel="self" type="application/rss+xml" /><item>
+    <title>Git命令使用方法</title>
+    <link>https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</link>
+    <pubDate>Thu, 15 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</guid>
+    <description><![CDATA[<p>[toc]</p>
+<h2 id="git-恢复到上次提交">Git 恢复到上次提交</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git log   <span class="c1">#查询到需要恢复的版本</span>
+
+git reset --soft hash1  <span class="c1">#--soft 保存本地文件</span>
+git reset --hard hash2  <span class="c1">#--hard 本地文件也被恢复到上一个版本</span>
+
+git push origin HEAD --force
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="git-add-撤销">Git Add 撤销</h2>
+<p>撤销操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git status 					<span class="c1">#先看一下add 中的文件 </span>
+git reset HEAD 				<span class="c1">#撤销上一次add </span>
+git reset HEAD path/file.name <span class="c1">#单独撤销某个文件</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="git-更改项目语言分类">Git 更改项目语言分类</h2>
+<p>在项目目录中创建一个名为 &ldquo;<code>.gitattributes</code>&rdquo; 的文件，添加以下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">*.js linguist-language=Java
+</code></pre></td></tr></table>
+</div>
+</div><p>重新<code>git push</code>到 Github 上</p>
+<hr>
+<h2 id="git-强制放弃本地修改新增删除文件">Git 强制放弃本地修改（新增、删除文件）</h2>
+<p>本地修改了一些文件，其中包含修改、新增、删除的，不需要了想要丢弃
+<code>git check -- .</code>操作只放弃了修改的文件，新增和删除的仍然没有恢复
+使用如下命令：
+<code>git checkout . &amp;&amp; git clean -df</code></p>
+<p>可以放弃所有修改、新增、删除文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git checkout .  	//放弃本地修改，没有提交的可以回到未修改前版本
+git clean  			//是从工作目录中移除没有track的文件
+</code></pre></td></tr></table>
+</div>
+</div><p>通常的参数是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git clean -df 
+	-d 	<span class="c1">#表示同时移除目录,</span>
+	-f  <span class="c1">#表示force,在git的配置文件中, clean.requireForce=true,如果不加-f,clean将会拒绝执行.</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="git-工具---子模块">Git 工具 - 子模块</h2>
+<p><em><strong>项目嵌套子项目（仓库）</strong></em></p>
+<p>子模块允许你将一个 Git 仓库作为另一个 Git 仓库的子目录。 它能让你将另一个仓库克隆到自己的项目中，同时还保持提交的独立。</p>
+<h3 id="开始使用子模块">开始使用子模块</h3>
+<p>首先将一个<strong>已存在的 Git 仓库</strong>添加为<strong>正在工作的仓库的子模块</strong>。 你可以通过在 <code>git submodule add</code> 命令后面加上想要跟踪的项目的相对或绝对 URL 来添加新的子模块。</p>
+<p>在本例中，我们将会添加一个名为 “DbConnector” 的库。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git submodule add https://github.com/chaconinc/DbConnector
+Cloning into <span class="s1">&#39;DbConnector&#39;</span>...
+remote: Counting objects: 11, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>10/10<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">11</span> <span class="o">(</span>delta 0<span class="o">)</span>, reused <span class="m">11</span> <span class="o">(</span>delta 0<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>11/11<span class="o">)</span>, <span class="k">done</span>.
+Checking connectivity... <span class="k">done</span>.
+</code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，子模块会将子项目放到一个与仓库同名的目录中，如果你想要放到其他地方，那么可以在命令结尾添加一个不同的路径。</p>
+<p>运行 <code>git status</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git status
+On branch master
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+
+Changes to be committed:
+  <span class="o">(</span>use <span class="s2">&#34;git reset HEAD &lt;file&gt;...&#34;</span> to unstage<span class="o">)</span>
+
+	new file:   .gitmodules
+	new file:   DbConnector
+</code></pre></td></tr></table>
+</div>
+</div><p>注意产生到新的 <code>.gitmodules</code> 文件。 该配置文件保存了项目 <strong>URL <strong>与已经拉取的</strong>本地目录</strong>之间的映射：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>submodule <span class="s2">&#34;DbConnector&#34;</span><span class="o">]</span>
+	<span class="nv">path</span> <span class="o">=</span> DbConnector
+	<span class="nv">url</span> <span class="o">=</span> https://github.com/chaconinc/DbConnector
+</code></pre></td></tr></table>
+</div>
+</div><p>如果有多个子模块，该文件中就会有多条记录。 要重点注意的是，该文件也像 <code>.gitignore</code> 文件一样受到版本控制。 它会和该项目的其他部分一同被拉取推送。 这就是克隆该项目的人知道去哪获得子模块的原因。</p>
+<p>可以根据自己的需要，通过在本地执行 <code>git config submodule.DbConnector.url &lt;私有URL&gt;</code> 来覆盖这个选项的值</p>
+<p><code>DbConnector</code> 是工作目录中的一个子目录，但 Git 还是会将它视作一个子模块。当你不在那个目录中时，Git 并不会跟踪它的内容， 而是将它看作子模块仓库中的某个具体的提交。</p>
+<h3 id="克隆含有子模块的项目">克隆含有子模块的项目</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/chaconinc/MainProject
+Cloning into <span class="s1">&#39;MainProject&#39;</span>...
+remote: Counting objects: 14, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>13/13<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">14</span> <span class="o">(</span>delta 1<span class="o">)</span>, reused <span class="m">13</span> <span class="o">(</span>delta 0<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>14/14<span class="o">)</span>, <span class="k">done</span>.
+Checking connectivity... <span class="k">done</span>.
+$ <span class="nb">cd</span> MainProject
+$ ls -la
+total <span class="m">16</span>
+drwxr-xr-x   <span class="m">9</span> schacon  staff  <span class="m">306</span> Sep <span class="m">17</span> 15:21 .
+drwxr-xr-x   <span class="m">7</span> schacon  staff  <span class="m">238</span> Sep <span class="m">17</span> 15:21 ..
+drwxr-xr-x  <span class="m">13</span> schacon  staff  <span class="m">442</span> Sep <span class="m">17</span> 15:21 .git
+-rw-r--r--   <span class="m">1</span> schacon  staff   <span class="m">92</span> Sep <span class="m">17</span> 15:21 .gitmodules
+drwxr-xr-x   <span class="m">2</span> schacon  staff   <span class="m">68</span> Sep <span class="m">17</span> 15:21 DbConnector
+-rw-r--r--   <span class="m">1</span> schacon  staff  <span class="m">756</span> Sep <span class="m">17</span> 15:21 Makefile
+drwxr-xr-x   <span class="m">3</span> schacon  staff  <span class="m">102</span> Sep <span class="m">17</span> 15:21 includes
+drwxr-xr-x   <span class="m">4</span> schacon  staff  <span class="m">136</span> Sep <span class="m">17</span> 15:21 scripts
+drwxr-xr-x   <span class="m">4</span> schacon  staff  <span class="m">136</span> Sep <span class="m">17</span> 15:21 src
+$ <span class="nb">cd</span> DbConnector/
+$ ls
+$
+</code></pre></td></tr></table>
+</div>
+</div><p><code>DbConnector</code> 目录是空的。</p>
+<p>你必须运行两个命令：</p>
+<p><code>git submodule init</code> 用来初始化本地配置文件</p>
+<p><code>git submodule update</code> 则从该项目中抓取所有数据并检出父项目中列出的合适的提交。</p>
+<p>现在 <code>DbConnector</code> 子目录是处在和<strong>之前提交时相同的状态</strong>了</p>
+<blockquote>
+<p>更简单一点的方式。 如果给 <code>git clone</code> 命令传递 <code>--recurse-submodules</code> 选项，它就会自动初始化并更新仓库中的每一个子模块， 包括可能存在的嵌套子模块。</p>
+</blockquote>
+<h4 id="单独克隆了模块但忘记添加子模块注意">单独克隆了模块但忘记添加子模块（注意）</h4>
+<p>已经克隆了项目但忘记了 <code>--recurse-submodules</code>，</p>
+<p>那么可以运行 <code>git submodule update --init</code> 将 <code>git submodule init</code> 和 <code>git submodule update</code> 合并成一步。</p>
+<p>如果还要初始化、抓取并检出任何嵌套的子模块， 请使用简明的 <code>git submodule update --init --recursive</code>。</p>
+<h3 id="从子模块的远端拉取上游修改">从子模块的远端拉取上游修改</h3>
+<p>如果你不想在子目录中手动抓取与合并，那么还有种更容易的方式。 运行 <code>git submodule update --remote</code>，Git 将会进入子模块然后抓取并更新。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git submodule update --remote DbConnector
+remote: Counting objects: 4, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">4</span> <span class="o">(</span>delta 2<span class="o">)</span>, reused <span class="m">4</span> <span class="o">(</span>delta 2<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>4/4<span class="o">)</span>, <span class="k">done</span>.
+From https://github.com/chaconinc/DbConnector
+   3f19983..d0354fc  master     -&gt; origin/master
+Submodule path <span class="s1">&#39;DbConnector&#39;</span>: checked out <span class="s1">&#39;d0354fc054692d3906c85c3af05ddce39a1c0644&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>此命令默认会假定你想要更新并检出子模块仓库的 <code>master</code> 分支。</p>
+<h3 id="从项目远端拉取上游更改">从项目远端拉取上游更改</h3>
+<p>协作者的视角，他自己的 <code>MainProject</code> 仓库的本地克隆， 只是执行 <code>git pull</code> 获取子模块的新提交的更改还不够：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git pull
+From https://github.com/chaconinc/MainProject
+   fb9093c..0a24cfc  master     -&gt; origin/master
+Fetching submodule DbConnector
+From https://github.com/chaconinc/DbConnector
+   c3f01dc..c87d55d  stable     -&gt; origin/stable
+Updating fb9093c..0a24cfc
+Fast-forward
+ .gitmodules         <span class="p">|</span> <span class="m">2</span> +-
+ DbConnector         <span class="p">|</span> <span class="m">2</span> +-
+ <span class="m">2</span> files changed, <span class="m">2</span> insertions<span class="o">(</span>+<span class="o">)</span>, <span class="m">2</span> deletions<span class="o">(</span>-<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git status
+ On branch master
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+Changes not staged <span class="k">for</span> commit:
+  <span class="o">(</span>use <span class="s2">&#34;git add &lt;file&gt;...&#34;</span> to update what will be committed<span class="o">)</span>
+  <span class="o">(</span>use <span class="s2">&#34;git checkout -- &lt;file&gt;...&#34;</span> to discard changes in working directory<span class="o">)</span>
+
+	modified:   DbConnector <span class="o">(</span>new commits<span class="o">)</span>
+
+Submodules changed but not updated:
+
+* DbConnector c87d55d...c3f01dc <span class="o">(</span>4<span class="o">)</span>:
+  &lt; catch non-null terminated lines
+  &lt; more robust error handling
+  &lt; more efficient db routine
+  &lt; better connection routine
+
+no changes added to commit <span class="o">(</span>use <span class="s2">&#34;git add&#34;</span> and/or <span class="s2">&#34;git commit -a&#34;</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，<code>git pull</code> 命令会递归地<strong>抓取子模块的更改</strong>，如上面第一个命令的输出所示。 然而，它<strong>不会在主项目中更新子模块</strong>。</p>
+<p>这点可通过 <code>git status</code> 命令看到，它会显示子模块“已修改”，且“有新的提交”。</p>
+<p>此外，左边的尖括号（&lt;）指出了新的提交，表示这些提交已在 MainProject 中记录，但尚未在本地的 <code>DbConnector</code> 中检出。</p>
+<p>为了完成在主项目的更新，你需要运行 <code>git submodule update</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git submodule update --init --recursive
+Submodule path <span class="s1">&#39;vendor/plugins/demo&#39;</span>: checked out <span class="s1">&#39;48679c6302815f6c76f1fe30625d795d9e55fc56&#39;</span>
+
+$ git status
+ On branch master
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+nothing to commit, working tree clean
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="git基本常用命令如下">Git基本常用命令如下：</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">　　mkdir：         XX (创建一个空目录 XX指目录名)
+
+　　pwd：          显示当前目录的路径。
+
+　　git init          把当前的目录变成可以管理的git仓库，生成隐藏.git文件。
+
+　　git add XX       把xx文件添加到暂存区去。
+
+　　git commit –m “XX”  提交文件 –m 后面的是注释。
+
+　　git status        查看仓库状态
+
+　　git diff  XX      查看XX文件修改了那些内容
+
+　　git log          查看历史记录
+
+　　git reset  --hard HEAD^ 或者 git reset  --hard HEAD~ 回退到上一个版本
+
+　　(如果想回退到100个版本，使用git reset –hard HEAD~100 )
+
+　　cat XX         查看XX文件内容
+
+　　git reflog       查看历史记录的版本号id
+
+　　git checkout -- XX  把XX文件在工作区的修改全部撤销。
+
+　　git rm XX          删除XX文件
+
+　　git remote add origin https://github.com/username/testgit 关联一个远程库
+
+　　git push –u(第一次要用-u 以后不需要) origin master 把当前master分支推送到远程库
+
+　　git clone https://github.com/username/testgit  从远程库中克隆
+
+　　git checkout –b dev  创建dev分支 并切换到dev分支上
+
+　　git branch  查看当前所有的分支
+
+　　git checkout master 切换回master分支
+
+　　git merge dev    在当前的分支上合并dev分支
+
+　　git branch –d dev 删除dev分支
+
+　　git branch name  创建分支
+
+　　git stash 把当前的工作隐藏起来 等以后恢复现场后继续工作
+
+　　git stash list 查看所有被隐藏的文件列表
+
+　　git stash apply 恢复被隐藏的文件，但是内容不删除
+
+　　git stash drop 删除文件
+
+　　git stash pop 恢复文件的同时 也删除文件
+
+　　git remote 查看远程库的信息
+
+　　git remote –v 查看远程库的详细信息
+
+　　git push origin master  Git会把master分支推送到远程库对应的远程分支上
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="文献地址">文献地址</h2>
+<p>部分文献摘录于：<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97" target="_blank" rel="noopener noreffer">git-scm.com</a></p>
+]]></description>
+</item><item>
+    <title>Markdown语法中文版简易教程CSDN</title>
+    <link>https://fiix.one/posts/markdown%E8%AF%AD%E6%B3%95%E4%B8%AD%E6%96%87%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8Bcsdn/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/markdown%E8%AF%AD%E6%B3%95%E4%B8%AD%E6%96%87%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8Bcsdn/</guid>
+    <description><![CDATA[<p>@<a href="%e8%bf%99%e9%87%8c%e5%86%99%e8%87%aa%e5%ae%9a%e4%b9%89%e7%9b%ae%e5%bd%95%e6%a0%87%e9%a2%98" rel="">TOC</a></p>
+<h1 id="欢迎使用markdown编辑器">欢迎使用Markdown编辑器</h1>
+<p>你好！ 这是你第一次使用 <strong>Markdown编辑器</strong> 所展示的欢迎页。如果你想学习如何使用Markdown编辑器, 可以仔细阅读这篇文章，了解一下Markdown的基本语法知识。</p>
+<h2 id="新的改变">新的改变</h2>
+<p>我们对Markdown编辑器进行了一些功能拓展与语法支持，除了标准的Markdown编辑器功能，我们增加了如下几点新功能，帮助你用它写博客：</p>
+<ol>
+<li><strong>全新的界面设计</strong> ，将会带来全新的写作体验；</li>
+<li>在创作中心设置你喜爱的代码高亮样式，Markdown <strong>将代码片显示选择的高亮样式</strong> 进行展示；</li>
+<li>增加了 <strong>图片拖拽</strong> 功能，你可以将本地的图片直接拖拽到编辑区域直接展示；</li>
+<li>全新的 <strong>KaTeX数学公式</strong> 语法；</li>
+<li>增加了支持<strong>甘特图的mermaid语法<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></strong> 功能；</li>
+<li>增加了 <strong>多屏幕编辑</strong> Markdown文章功能；</li>
+<li>增加了 <strong>焦点写作模式、预览模式、简洁写作模式、左右区域同步滚轮设置</strong> 等功能，功能按钮位于编辑区域与预览区域中间；</li>
+<li>增加了 <strong>检查列表</strong> 功能。</li>
+</ol>
+<h2 id="功能快捷键">功能快捷键</h2>
+<p>撤销：<kbd>Ctrl/Command</kbd> + <kbd>Z</kbd>
+重做：<kbd>Ctrl/Command</kbd> + <kbd>Y</kbd>
+加粗：<kbd>Ctrl/Command</kbd> + <kbd>B</kbd>
+斜体：<kbd>Ctrl/Command</kbd> + <kbd>I</kbd>
+标题：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd>
+无序列表：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd>
+有序列表：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd>
+检查列表：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>
+插入代码：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd>
+插入链接：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd>
+插入图片：<kbd>Ctrl/Command</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd></p>
+<h2 id="合理的创建标题有助于目录的生成">合理的创建标题，有助于目录的生成</h2>
+<p>直接输入1次<kbd>#</kbd>，并按下<kbd>space</kbd>后，将生成1级标题。
+输入2次<kbd>#</kbd>，并按下<kbd>space</kbd>后，将生成2级标题。
+以此类推，我们支持6级标题。有助于使用<code>TOC</code>语法后生成一个完美的目录。</p>
+<h2 id="如何改变文本的样式">如何改变文本的样式</h2>
+<p><em>强调文本</em> <em>强调文本</em></p>
+<p><strong>加粗文本</strong> <strong>加粗文本</strong></p>
+<p>==标记文本==</p>
+<p><del>删除文本</del></p>
+<blockquote>
+<p>引用文本</p>
+</blockquote>
+<p>H~2~O is是液体。</p>
+<p>2^10^ 运算结果是 1024.</p>
+<h2 id="插入链接与图片">插入链接与图片</h2>
+<p>链接: <a href="https://mp.csdn.net" target="_blank" rel="noopener noreffer">link</a>.</p>
+<p>图片: </p>
+<p>带尺寸的图片: ![Alt](<a href="https://avatar.csdn.net/7/7/B/1_ralf_hx163com.jpg">https://avatar.csdn.net/7/7/B/1_ralf_hx163com.jpg</a> =30x30)</p>
+<p>当然，我们为了让用户更加便捷，我们增加了图片拖拽功能。</p>
+<h2 id="如何插入一段漂亮的代码片">如何插入一段漂亮的代码片</h2>
+<p><a href="https://mp.csdn.net/configure" target="_blank" rel="noopener noreffer">博客设置</a>页面，选择一款你喜欢的代码片高亮样式，下面展示同样高亮的 <code>代码片</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// An highlighted block
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="生成一个适合你的列表">生成一个适合你的列表</h2>
+<ul>
+<li>项目
+<ul>
+<li>项目
+<ul>
+<li>项目</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>项目1</li>
+<li>项目2</li>
+<li>项目3</li>
+</ol>
+<ul>
+<li><i class="far fa-square fa-fw"></i> 计划任务</li>
+<li><i class="far fa-check-square fa-fw"></i> 完成任务</li>
+</ul>
+<h2 id="创建一个表格">创建一个表格</h2>
+<p>一个简单的表格是这么创建的：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>电脑</td>
+<td>$1600</td>
+</tr>
+<tr>
+<td>手机</td>
+<td>$12</td>
+</tr>
+<tr>
+<td>导管</td>
+<td>$1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="设定内容居中居左居右">设定内容居中、居左、居右</h3>
+<p>使用<code>:---------:</code>居中
+使用<code>:----------</code>居左
+使用<code>----------:</code>居右</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">第一列</th>
+<th style="text-align:right">第二列</th>
+<th style="text-align:left">第三列</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">第一列文本居中</td>
+<td style="text-align:right">第二列文本居右</td>
+<td style="text-align:left">第三列文本居左</td>
+</tr>
+</tbody>
+</table>
+<h3 id="smartypants">SmartyPants</h3>
+<p>SmartyPants将ASCII标点字符转换为“智能”印刷标点HTML实体。例如：</p>
+<table>
+<thead>
+<tr>
+<th>TYPE</th>
+<th>ASCII</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single backticks</td>
+<td><code>'Isn't this fun?'</code></td>
+<td>&lsquo;Isn&rsquo;t this fun?&rsquo;</td>
+</tr>
+<tr>
+<td>Quotes</td>
+<td><code>&quot;Isn't this fun?&quot;</code></td>
+<td>&ldquo;Isn&rsquo;t this fun?&rdquo;</td>
+</tr>
+<tr>
+<td>Dashes</td>
+<td><code>-- is en-dash, --- is em-dash</code></td>
+<td>&ndash; is en-dash, &mdash; is em-dash</td>
+</tr>
+</tbody>
+</table>
+<h2 id="创建一个自定义列表">创建一个自定义列表</h2>
+<dl>
+<dt>Markdown</dt>
+<dd>Text-to-HTML conversion tool</dd>
+<dt>Authors</dt>
+<dd>John</dd>
+<dd>Luke</dd>
+</dl>
+<h2 id="如何创建一个注脚">如何创建一个注脚</h2>
+<p>一个具有注脚的文本。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<h2 id="注释也是必不可少的">注释也是必不可少的</h2>
+<p>Markdown将文本转换为 HTML。</p>
+<p>*[HTML]:   超文本标记语言</p>
+<h2 id="katex数学公式">KaTeX数学公式</h2>
+<p>您可以使用渲染LaTeX数学表达式 <a href="https://khan.github.io/KaTeX/" target="_blank" rel="noopener noreffer">KaTeX</a>:</p>
+<p>Gamma公式展示 $\Gamma(n) = (n-1)!\quad\forall
+n\in\mathbb N$ 是通过欧拉积分</p>
+<p>$$
+\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt,.
+$$</p>
+<blockquote>
+<p>你可以找到更多关于的信息 <strong>LaTeX</strong> 数学表达式<a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference" target="_blank" rel="noopener noreffer">here</a>.</p>
+</blockquote>
+<h2 id="新的甘特图功能丰富你的文章">新的甘特图功能，丰富你的文章</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">gantt
+        dateFormat  YYYY-MM-DD
+        title Adding GANTT diagram functionality to mermaid
+        section 现有任务
+        已完成               :done,    des1, 2014-01-06,2014-01-08
+        进行中               :active,  des2, 2014-01-09, 3d
+        计划一               :         des3, after des2, 5d
+        计划二               :         des4, after des3, 5d
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>关于 <strong>甘特图</strong> 语法，参考 <a href="https://mermaidjs.github.io/" target="_blank" rel="noopener noreffer">这儿</a>,</li>
+</ul>
+<h2 id="uml-图表">UML 图表</h2>
+<p>可以使用UML图表进行渲染。 <a href="https://mermaidjs.github.io/" target="_blank" rel="noopener noreffer">Mermaid</a>. 例如下面产生的一个序列图：:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sequenceDiagram
+张三 -&gt;&gt; 李四: 你好！李四, 最近怎么样?
+李四--&gt;&gt;王五: 你最近怎么样，王五？
+李四--x 张三: 我很好，谢谢!
+李四-x 王五: 我很好，谢谢!
+Note right of 王五: 李四想了很长时间, 文字太长了&lt;br/&gt;不适合放在一行.
+
+李四--&gt;张三: 打量着王五...
+张三-&gt;王五: 很好... 王五, 你怎么样?
+</code></pre></td></tr></table>
+</div>
+</div><p>这将产生一个流程图。:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">graph LR
+A[长方形] -- 链接 --&gt; B((圆))
+A --&gt; C(圆角长方形)
+B --&gt; D{菱形}
+C --&gt; D
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>关于 <strong>Mermaid</strong> 语法，参考 <a href="https://mermaidjs.github.io/" target="_blank" rel="noopener noreffer">这儿</a>,</li>
+</ul>
+<h2 id="flowchart流程图">FLowchart流程图</h2>
+<p>我们依旧会支持flowchart的流程图：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">st=&gt;start: 开始
+e=&gt;end: 结束
+op=&gt;operation: 我的操作
+cond=&gt;condition: 确认？
+
+st-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;op
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>关于 <strong>Flowchart流程图</strong> 语法，参考 <a href="http://adrai.github.io/flowchart.js/" target="_blank" rel="noopener noreffer">这儿</a>.</li>
+</ul>
+<h2 id="导出与导入">导出与导入</h2>
+<h3 id="导出">导出</h3>
+<p>如果你想尝试使用此编辑器, 你可以在此篇文章任意编辑。当你完成了一篇文章的写作, 在上方工具栏找到 <strong>文章导出</strong> ，生成一个.md文件或者.html文件进行本地保存。</p>
+<h3 id="导入">导入</h3>
+<p>如果你想加载一篇你写过的.md文件或者.html文件，在上方工具栏可以选择导入功能进行对应扩展名的文件导入，
+继续你的创作。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://mermaidjs.github.io/" target="_blank" rel="noopener noreffer">mermaid语法说明</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>注脚的解释 <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></description>
+</item><item>
+    <title>Markdown语法英文版</title>
+    <link>https://fiix.one/posts/markdown%E8%AF%AD%E6%B3%95%E8%8B%B1%E6%96%87/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/markdown%E8%AF%AD%E6%B3%95%E8%8B%B1%E6%96%87/</guid>
+    <description><![CDATA[<h1 id="markdown-syntax">Markdown: Syntax</h1>
+<ul>
+<li><a href="#overview" rel="">Overview</a>
+<ul>
+<li><a href="#philosophy" rel="">Philosophy</a></li>
+<li><a href="#html" rel="">Inline HTML</a></li>
+<li><a href="#autoescape" rel="">Automatic Escaping for Special Characters</a></li>
+</ul>
+</li>
+<li><a href="#block" rel="">Block Elements</a>
+<ul>
+<li><a href="#p" rel="">Paragraphs and Line Breaks</a></li>
+<li><a href="#header" rel="">Headers</a></li>
+<li><a href="#blockquote" rel="">Blockquotes</a></li>
+<li><a href="#list" rel="">Lists</a></li>
+<li><a href="#precode" rel="">Code Blocks</a></li>
+<li><a href="#hr" rel="">Horizontal Rules</a></li>
+</ul>
+</li>
+<li><a href="#span" rel="">Span Elements</a>
+<ul>
+<li><a href="#link" rel="">Links</a></li>
+<li><a href="#em" rel="">Emphasis</a></li>
+<li><a href="#code" rel="">Code</a></li>
+<li><a href="#img" rel="">Images</a></li>
+</ul>
+</li>
+<li><a href="#misc" rel="">Miscellaneous</a>
+<ul>
+<li><a href="#backslash" rel="">Backslash Escapes</a></li>
+<li><a href="#autolink" rel="">Automatic Links</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="overview">Overview</h2>
+<h3 id="philosophy">Philosophy</h3>
+<p>Markdown is intended to be as easy-to-read and easy-to-write as is feasible.</p>
+<p>Readability, however, is emphasized above all else. A Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&rsquo;s been marked up with tags or formatting instructions. While
+Markdown&rsquo;s syntax has been influenced by several existing text-to-HTML
+filters &ndash; including [Setext] <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="noopener noreffer">1</a>, [atx] <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="noopener noreffer">2</a>, [Textile] <a href="http://textism.com/tools/textile/" target="_blank" rel="noopener noreffer">3</a>, [reStructuredText] <a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="noopener noreffer">4</a>,
+[Grutatext] <a href="http://www.triptico.com/software/grutatxt.html" target="_blank" rel="noopener noreffer">5</a>, and [EtText] <a href="http://ettext.taint.org/doc/" target="_blank" rel="noopener noreffer">6</a> &ndash; the single biggest source of
+inspiration for Markdown&rsquo;s syntax is the format of plain text email.</p>
+<p>To this end, Markdown&rsquo;s syntax is comprised entirely of punctuation
+characters, which punctuation characters have been carefully chosen so
+as to look like what they mean. E.g., asterisks around a word actually
+look like *emphasis*. Markdown lists look like, well, lists. Even
+blockquotes look like quoted passages of text, assuming you&rsquo;ve ever
+used email.</p>
+<h3 id="html">Inline HTML</h3>
+<p>Markdown&rsquo;s syntax is intended for one purpose: to be used as a
+format for <em>writing</em> for the web.</p>
+<p>Markdown is not a replacement for HTML, or even close to it. Its
+syntax is very small, corresponding only to a very small subset of
+HTML tags. The idea is <em>not</em> to create a syntax that makes it easier
+to insert HTML tags. In my opinion, HTML tags are already easy to
+insert. The idea for Markdown is to make it easy to read, write, and
+edit prose. HTML is a <em>publishing</em> format; Markdown is a <em>writing</em>
+format. Thus, Markdown&rsquo;s formatting syntax only addresses issues that
+can be conveyed in plain text.</p>
+<p>For any markup that is not covered by Markdown&rsquo;s syntax, you simply
+use HTML itself. There&rsquo;s no need to preface it or delimit it to
+indicate that you&rsquo;re switching from Markdown to HTML; you just use
+the tags.</p>
+<p>The only restrictions are that block-level HTML elements &ndash; e.g. <code>&lt;div&gt;</code>,
+<code>&lt;table&gt;</code>, <code>&lt;pre&gt;</code>, <code>&lt;p&gt;</code>, etc. &ndash; must be separated from surrounding
+content by blank lines, and the start and end tags of the block should
+not be indented with tabs or spaces. Markdown is smart enough not
+to add extra (unwanted) <code>&lt;p&gt;</code> tags around HTML block-level tags.</p>
+<p>For example, to add an HTML table to a Markdown article:</p>
+<pre><code>This is a regular paragraph.
+
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Foo&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+This is another regular paragraph.
+</code></pre>
+<p>Note that Markdown formatting syntax is not processed within block-level
+HTML tags. E.g., you can&rsquo;t use Markdown-style <code>*emphasis*</code> inside an
+HTML block.</p>
+<p>Span-level HTML tags &ndash; e.g. <code>&lt;span&gt;</code>, <code>&lt;cite&gt;</code>, or <code>&lt;del&gt;</code> &ndash; can be
+used anywhere in a Markdown paragraph, list item, or header. If you
+want, you can even use HTML tags instead of Markdown formatting; e.g. if
+you&rsquo;d prefer to use HTML <code>&lt;a&gt;</code> or <code>&lt;img&gt;</code> tags instead of Markdown&rsquo;s
+link or image syntax, go right ahead.</p>
+<p>Unlike block-level HTML tags, Markdown syntax <em>is</em> processed within
+span-level tags.</p>
+<h3 id="autoescape">Automatic Escaping for Special Characters</h3>
+<p>In HTML, there are two characters that demand special treatment: <code>&lt;</code>
+and <code>&amp;</code>. Left angle brackets are used to start tags; ampersands are
+used to denote HTML entities. If you want to use them as literal
+characters, you must escape them as entities, e.g. <code>&amp;lt;</code>, and
+<code>&amp;amp;</code>.</p>
+<p>Ampersands in particular are bedeviling for web writers. If you want to
+write about &lsquo;AT&amp;T&rsquo;, you need to write &lsquo;<code>AT&amp;amp;T</code>&rsquo;. You even need to
+escape ampersands within URLs. Thus, if you want to link to:</p>
+<pre><code>http://images.google.com/images?num=30&amp;q=larry+bird
+</code></pre>
+<p>you need to encode the URL as:</p>
+<pre><code>http://images.google.com/images?num=30&amp;amp;q=larry+bird
+</code></pre>
+<p>in your anchor tag <code>href</code> attribute. Needless to say, this is easy to
+forget, and is probably the single most common source of HTML validation
+errors in otherwise well-marked-up web sites.</p>
+<p>Markdown allows you to use these characters naturally, taking care of
+all the necessary escaping for you. If you use an ampersand as part of
+an HTML entity, it remains unchanged; otherwise it will be translated
+into <code>&amp;amp;</code>.</p>
+<p>So, if you want to include a copyright symbol in your article, you can write:</p>
+<pre><code>&amp;copy;
+</code></pre>
+<p>and Markdown will leave it alone. But if you write:</p>
+<pre><code>AT&amp;T
+</code></pre>
+<p>Markdown will translate it to:</p>
+<pre><code>AT&amp;amp;T
+</code></pre>
+<p>Similarly, because Markdown supports <a href="#html" rel="">inline HTML</a>, if you use
+angle brackets as delimiters for HTML tags, Markdown will treat them as
+such. But if you write:</p>
+<pre><code>4 &lt; 5
+</code></pre>
+<p>Markdown will translate it to:</p>
+<pre><code>4 &amp;lt; 5
+</code></pre>
+<p>However, inside Markdown code spans and blocks, angle brackets and
+ampersands are <em>always</em> encoded automatically. This makes it easy to use
+Markdown to write about HTML code. (As opposed to raw HTML, which is a
+terrible format for writing about HTML syntax, because every single <code>&lt;</code>
+and <code>&amp;</code> in your example code needs to be escaped.)</p>
+<hr>
+<h2 id="block">Block Elements</h2>
+<h3 id="p">Paragraphs and Line Breaks</h3>
+<p>A paragraph is simply one or more consecutive lines of text, separated
+by one or more blank lines. (A blank line is any line that looks like a
+blank line &ndash; a line containing nothing but spaces or tabs is considered
+blank.) Normal paragraphs should not be indented with spaces or tabs.</p>
+<p>The implication of the &ldquo;one or more consecutive lines of text&rdquo; rule is
+that Markdown supports &ldquo;hard-wrapped&rdquo; text paragraphs. This differs
+significantly from most other text-to-HTML formatters (including Movable
+Type&rsquo;s &ldquo;Convert Line Breaks&rdquo; option) which translate every line break
+character in a paragraph into a <code>&lt;br /&gt;</code> tag.</p>
+<p>When you <em>do</em> want to insert a <code>&lt;br /&gt;</code> break tag using Markdown, you
+end a line with two or more spaces, then type return.</p>
+<p>Yes, this takes a tad more effort to create a <code>&lt;br /&gt;</code>, but a simplistic
+&ldquo;every line break is a <code>&lt;br /&gt;</code>&rdquo; rule wouldn&rsquo;t work for Markdown.
+Markdown&rsquo;s email-style <a href="#blockquote" rel="">blockquoting</a> and multi-paragraph <a href="#list" rel="">list items</a>
+work best &ndash; and look better &ndash; when you format them with hard breaks.</p>
+<h3 id="header">Headers</h3>
+<p>Markdown supports two styles of headers, [Setext] <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="noopener noreffer">1</a> and [atx] <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="noopener noreffer">2</a>.</p>
+<p>Setext-style headers are &ldquo;underlined&rdquo; using equal signs (for first-level
+headers) and dashes (for second-level headers). For example:</p>
+<pre><code>This is an H1
+=============
+
+This is an H2
+-------------
+</code></pre>
+<p>Any number of underlining <code>=</code>&rsquo;s or <code>-</code>&rsquo;s will work.</p>
+<p>Atx-style headers use 1-6 hash characters at the start of the line,
+corresponding to header levels 1-6. For example:</p>
+<pre><code># This is an H1
+
+## This is an H2
+
+###### This is an H6
+</code></pre>
+<p>Optionally, you may &ldquo;close&rdquo; atx-style headers. This is purely
+cosmetic &ndash; you can use this if you think it looks better. The
+closing hashes don&rsquo;t even need to match the number of hashes
+used to open the header. (The number of opening hashes
+determines the header level.) :</p>
+<pre><code># This is an H1 #
+
+## This is an H2 ##
+
+### This is an H3 ######
+</code></pre>
+<h3 id="blockquote">Blockquotes</h3>
+<p>Markdown uses email-style <code>&gt;</code> characters for blockquoting. If you&rsquo;re
+familiar with quoting passages of text in an email message, then you
+know how to create a blockquote in Markdown. It looks best if you hard
+wrap the text and put a <code>&gt;</code> before every line:</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+&gt;
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+&gt; id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>Markdown allows you to be lazy and only put the <code>&gt;</code> before the first
+line of a hard-wrapped paragraph:</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
+adding additional levels of <code>&gt;</code>:</p>
+<pre><code>&gt; This is the first level of quoting.
+&gt;
+&gt; &gt; This is nested blockquote.
+&gt;
+&gt; Back to the first level.
+</code></pre>
+<p>Blockquotes can contain other Markdown elements, including headers, lists,
+and code blocks:</p>
+<blockquote>
+<h2 id="this-is-a-header">This is a header.</h2>
+<ol>
+<li>This is the first list item.</li>
+<li>This is the second list item.</li>
+</ol>
+<p>Here&rsquo;s some example code:</p>
+<pre><code>return shell_exec(&quot;echo $input | $markdown_script&quot;);
+</code></pre>
+</blockquote>
+<p>Any decent text editor should make email-style quoting easy. For
+example, with BBEdit, you can make a selection and choose Increase
+Quote Level from the Text menu.</p>
+<h3 id="list">Lists</h3>
+<p>Markdown supports ordered (numbered) and unordered (bulleted) lists.</p>
+<p>Unordered lists use asterisks, pluses, and hyphens &ndash; interchangably
+&ndash; as list markers:</p>
+<pre><code>*   Red
+*   Green
+*   Blue
+</code></pre>
+<p>is equivalent to:</p>
+<pre><code>+   Red
++   Green
++   Blue
+</code></pre>
+<p>and:</p>
+<pre><code>-   Red
+-   Green
+-   Blue
+</code></pre>
+<p>Ordered lists use numbers followed by periods:</p>
+<pre><code>1.  Bird
+2.  McHale
+3.  Parish
+</code></pre>
+<p>It&rsquo;s important to note that the actual numbers you use to mark the
+list have no effect on the HTML output Markdown produces. The HTML
+Markdown produces from the above list is:</p>
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;McHale&lt;/li&gt;
+&lt;li&gt;Parish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p>If you instead wrote the list in Markdown like this:</p>
+<pre><code>1.  Bird
+1.  McHale
+1.  Parish
+</code></pre>
+<p>or even:</p>
+<pre><code>3. Bird
+1. McHale
+8. Parish
+</code></pre>
+<p>you&rsquo;d get the exact same HTML output. The point is, if you want to,
+you can use ordinal numbers in your ordered Markdown lists, so that
+the numbers in your source match the numbers in your published HTML.
+But if you want to be lazy, you don&rsquo;t have to.</p>
+<p>If you do use lazy list numbering, however, you should still start the
+list with the number 1. At some point in the future, Markdown may support
+starting ordered lists at an arbitrary number.</p>
+<p>List markers typically start at the left margin, but may be indented by
+up to three spaces. List markers must be followed by one or more spaces
+or a tab.</p>
+<p>To make lists look nice, you can wrap items with hanging indents:</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>But if you want to be lazy, you don&rsquo;t have to:</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>If list items are separated by blank lines, Markdown will wrap the
+items in <code>&lt;p&gt;</code> tags in the HTML output. For example, this input:</p>
+<pre><code>*   Bird
+*   Magic
+</code></pre>
+<p>will turn into:</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;Magic&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>But this:</p>
+<pre><code>*   Bird
+
+*   Magic
+</code></pre>
+<p>will turn into:</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Bird&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Magic&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>List items may consist of multiple paragraphs. Each subsequent
+paragraph in a list item must be indented by either 4 spaces
+or one tab:</p>
+<pre><code>1.  This is a list item with two paragraphs. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+    mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+    sit amet velit.
+
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>It looks nice if you indent every line of the subsequent
+paragraphs, but here again, Markdown will allow you to be
+lazy:</p>
+<pre><code>*   This is a list item with two paragraphs.
+
+    This is the second paragraph in the list item. You're
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.
+
+*   Another item in the same list.
+</code></pre>
+<p>To put a blockquote within a list item, the blockquote&rsquo;s <code>&gt;</code>
+delimiters need to be indented:</p>
+<pre><code>*   A list item with a blockquote:
+
+    &gt; This is a blockquote
+    &gt; inside a list item.
+</code></pre>
+<p>To put a code block within a list item, the code block needs
+to be indented <em>twice</em> &ndash; 8 spaces or two tabs:</p>
+<pre><code>*   A list item with a code block:
+
+        &lt;code goes here&gt;
+</code></pre>
+<p>It&rsquo;s worth noting that it&rsquo;s possible to trigger an ordered list by
+accident, by writing something like this:</p>
+<pre><code>1986. What a great season.
+</code></pre>
+<p>In other words, a <em>number-period-space</em> sequence at the beginning of a
+line. To avoid this, you can backslash-escape the period:</p>
+<pre><code>1986\. What a great season.
+</code></pre>
+<h3 id="precode">Code Blocks</h3>
+<p>Pre-formatted code blocks are used for writing about programming or
+markup source code. Rather than forming normal paragraphs, the lines
+of a code block are interpreted literally. Markdown wraps a code block
+in both <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code> tags.</p>
+<p>To produce a code block in Markdown, simply indent every line of the
+block by at least 4 spaces or 1 tab or use three backticks <code>```</code>. For example, given this input:</p>
+<pre><code>This is a normal paragraph:
+
+    This is a code block.
+</code></pre>
+<p>or</p>
+<pre><code>This is a normal paragraph:
+```
+This is a code block.
+```
+</code></pre>
+<p>Markdown will generate:</p>
+<pre><code>&lt;p&gt;This is a normal paragraph:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;This is a code block.&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>One level of indentation &ndash; 4 spaces or 1 tab &ndash; is removed from each
+line of the code block. For example, this:</p>
+<pre><code>Here is an example of AppleScript:
+
+    tell application &quot;Foo&quot;
+        beep
+    end tell
+</code></pre>
+<p>will turn into:</p>
+<pre><code>&lt;p&gt;Here is an example of AppleScript:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    tell application &quot;Foo&quot;
+        beep
+    end tell
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>A code block continues until it reaches a line that is not indented
+(or the end of the article).</p>
+<p>Within a code block, ampersands (<code>&amp;</code>) and angle brackets (<code>&lt;</code> and <code>&gt;</code>)
+are automatically converted into HTML entities. This makes it very
+easy to include example HTML source code using Markdown &ndash; just paste
+it and indent it, and Markdown will handle the hassle of encoding the
+ampersands and angle brackets. For example, this:</p>
+<pre><code>    &lt;div class=&quot;footer&quot;&gt;
+        &amp;copy; 2004 Foo Corporation
+    &lt;/div&gt;
+</code></pre>
+<p>will turn into:</p>
+<pre><code>&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;footer&quot;&amp;gt;
+    &amp;amp;copy; 2004 Foo Corporation
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>Regular Markdown syntax is not processed within code blocks. E.g.,
+asterisks are just literal asterisks within a code block. This means
+it&rsquo;s also easy to use Markdown to write about Markdown&rsquo;s own syntax.</p>
+<h3 id="hr">Horizontal Rules</h3>
+<p>You can produce a horizontal rule tag (<code>&lt;hr /&gt;</code>) by placing three or
+more hyphens, asterisks, or underscores on a line by themselves. If you
+wish, you may use spaces between the hyphens or asterisks. Each of the
+following lines will produce a horizontal rule:</p>
+<pre><code>* * *
+
+***
+
+*****
+
+- - -
+
+---------------------------------------
+</code></pre>
+<hr>
+<h2 id="span">Span Elements</h2>
+<h3 id="link">Links</h3>
+<p>Markdown supports two style of links: <em>inline</em> and <em>reference</em>.</p>
+<p>In both styles, the link text is delimited by [square brackets].</p>
+<p>To create an inline link, use a set of regular parentheses immediately
+after the link text&rsquo;s closing square bracket. Inside the parentheses,
+put the URL where you want the link to point, along with an <em>optional</em>
+title for the link, surrounded in quotes. For example:</p>
+<pre><code>This is [an example](http://example.com/ &quot;Title&quot;) inline link.
+
+[This link](http://example.net/) has no title attribute.
+</code></pre>
+<p>Will produce:</p>
+<pre><code>&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot; title=&quot;Title&quot;&gt;
+an example&lt;/a&gt; inline link.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://example.net/&quot;&gt;This link&lt;/a&gt; has no
+title attribute.&lt;/p&gt;
+</code></pre>
+<p>If you&rsquo;re referring to a local resource on the same server, you can
+use relative paths:</p>
+<pre><code>See my [About](/about/) page for details.
+</code></pre>
+<p>Reference-style links use a second set of square brackets, inside
+which you place a label of your choosing to identify the link:</p>
+<pre><code>This is [an example][id] reference-style link.
+</code></pre>
+<p>You can optionally use a space to separate the sets of brackets:</p>
+<pre><code>This is [an example] [id] reference-style link.
+</code></pre>
+<p>Then, anywhere in the document, you define your link label like this,
+on a line by itself:</p>
+<pre><code>[id]: http://example.com/  &quot;Optional Title Here&quot;
+</code></pre>
+<p>That is:</p>
+<ul>
+<li>Square brackets containing the link identifier (optionally
+indented from the left margin using up to three spaces);</li>
+<li>followed by a colon;</li>
+<li>followed by one or more spaces (or tabs);</li>
+<li>followed by the URL for the link;</li>
+<li>optionally followed by a title attribute for the link, enclosed
+in double or single quotes, or enclosed in parentheses.</li>
+</ul>
+<p>The following three link definitions are equivalent:</p>
+<p><strong>Note:</strong> There is a known bug in Markdown.pl 1.0.1 which prevents
+single quotes from being used to delimit link titles.</p>
+<p>The link URL may, optionally, be surrounded by angle brackets:</p>
+<pre><code>[id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;
+</code></pre>
+<p>You can put the title attribute on the next line and use extra spaces
+or tabs for padding, which tends to look better with longer URLs:</p>
+<pre><code>[id]: http://example.com/longish/path/to/resource/here
+    &quot;Optional Title Here&quot;
+</code></pre>
+<p>Link definitions are only used for creating links during Markdown
+processing, and are stripped from your document in the HTML output.</p>
+<p>Link definition names may consist of letters, numbers, spaces, and
+punctuation &ndash; but they are <em>not</em> case sensitive. E.g. these two
+links:</p>
+<p>[link text][a]
+[link text][A]</p>
+<p>are equivalent.</p>
+<p>The <em>implicit link name</em> shortcut allows you to omit the name of the
+link, in which case the link text itself is used as the name.
+Just use an empty set of square brackets &ndash; e.g., to link the word
+&ldquo;Google&rdquo; to the google.com web site, you could simply write:</p>
+<p><a href="http://google.com/" target="_blank" rel="noopener noreffer">Google</a></p>
+<p>And then define the link:</p>
+<p>Because link names may contain spaces, this shortcut even works for
+multiple words in the link text:</p>
+<p>Visit <a href="http://daringfireball.net/" target="_blank" rel="noopener noreffer">Daring Fireball</a> for more information.</p>
+<p>And then define the link:</p>
+<p>Link definitions can be placed anywhere in your Markdown document. I
+tend to put them immediately after each paragraph in which they&rsquo;re
+used, but if you want, you can put them all at the end of your
+document, sort of like footnotes.</p>
+<p>Here&rsquo;s an example of reference links in action:</p>
+<pre><code>I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        &quot;Google&quot;
+  [2]: http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [3]: http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre>
+<p>Using the implicit link name shortcut, you could instead write:</p>
+<pre><code>I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        &quot;Google&quot;
+  [yahoo]:  http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [msn]:    http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre>
+<p>Both of the above examples will produce the following HTML output:</p>
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
+title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from
+&lt;a href=&quot;http://search.yahoo.com/&quot; title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt;
+or &lt;a href=&quot;http://search.msn.com/&quot; title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+<p>For comparison, here is the same paragraph written using
+Markdown&rsquo;s inline link style:</p>
+<pre><code>I get 10 times more traffic from [Google](http://google.com/ &quot;Google&quot;)
+than from [Yahoo](http://search.yahoo.com/ &quot;Yahoo Search&quot;) or
+[MSN](http://search.msn.com/ &quot;MSN Search&quot;).
+</code></pre>
+<p>The point of reference-style links is not that they&rsquo;re easier to
+write. The point is that with reference-style links, your document
+source is vastly more readable. Compare the above examples: using
+reference-style links, the paragraph itself is only 81 characters
+long; with inline-style links, it&rsquo;s 176 characters; and as raw HTML,
+it&rsquo;s 234 characters. In the raw HTML, there&rsquo;s more markup than there
+is text.</p>
+<p>With Markdown&rsquo;s reference-style links, a source document much more
+closely resembles the final output, as rendered in a browser. By
+allowing you to move the markup-related metadata out of the paragraph,
+you can add links without interrupting the narrative flow of your
+prose.</p>
+<h3 id="em">Emphasis</h3>
+<p>Markdown treats asterisks (<code>*</code>) and underscores (<code>_</code>) as indicators of
+emphasis. Text wrapped with one <code>*</code> or <code>_</code> will be wrapped with an
+HTML <code>&lt;em&gt;</code> tag; double <code>*</code>&rsquo;s or <code>_</code>&rsquo;s will be wrapped with an HTML
+<code>&lt;strong&gt;</code> tag. E.g., this input:</p>
+<pre><code>*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+</code></pre>
+<p>will produce:</p>
+<pre><code>&lt;em&gt;single asterisks&lt;/em&gt;
+
+&lt;em&gt;single underscores&lt;/em&gt;
+
+&lt;strong&gt;double asterisks&lt;/strong&gt;
+
+&lt;strong&gt;double underscores&lt;/strong&gt;
+</code></pre>
+<p>You can use whichever style you prefer; the lone restriction is that
+the same character must be used to open and close an emphasis span.</p>
+<p>Emphasis can be used in the middle of a word:</p>
+<pre><code>un*frigging*believable
+</code></pre>
+<p>But if you surround an <code>*</code> or <code>_</code> with spaces, it&rsquo;ll be treated as a
+literal asterisk or underscore.</p>
+<p>To produce a literal asterisk or underscore at a position where it
+would otherwise be used as an emphasis delimiter, you can backslash
+escape it:</p>
+<pre><code>\*this text is surrounded by literal asterisks\*
+</code></pre>
+<h3 id="code">Code</h3>
+<p>To indicate a span of code, wrap it with backtick quotes (<code>`</code>).
+Unlike a pre-formatted code block, a code span indicates code within a
+normal paragraph. For example:</p>
+<pre><code>Use the `printf()` function.
+</code></pre>
+<p>will produce:</p>
+<pre><code>&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
+</code></pre>
+<p>To include a literal backtick character within a code span, you can use
+multiple backticks as the opening and closing delimiters:</p>
+<pre><code>``There is a literal backtick (`) here.``
+</code></pre>
+<p>which will produce this:</p>
+<pre><code>&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<p>The backtick delimiters surrounding a code span may include spaces &ndash;
+one after the opening, one before the closing. This allows you to place
+literal backtick characters at the beginning or end of a code span:</p>
+<pre><code>A single backtick in a code span: `` ` ``
+
+A backtick-delimited string in a code span: `` `foo` ``
+</code></pre>
+<p>will produce:</p>
+<pre><code>&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<p>With a code span, ampersands and angle brackets are encoded as HTML
+entities automatically, which makes it easy to include example HTML
+tags. Markdown will turn this:</p>
+<pre><code>Please don't use any `&lt;blink&gt;` tags.
+</code></pre>
+<p>into:</p>
+<pre><code>&lt;p&gt;Please don't use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+</code></pre>
+<p>You can write this:</p>
+<pre><code>`&amp;#8212;` is the decimal-encoded equivalent of `&amp;mdash;`.
+</code></pre>
+<p>to produce:</p>
+<pre><code>&lt;p&gt;&lt;code&gt;&amp;amp;#8212;&lt;/code&gt; is the decimal-encoded
+equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;
+</code></pre>
+<h3 id="img">Images</h3>
+<p>Admittedly, it&rsquo;s fairly difficult to devise a &ldquo;natural&rdquo; syntax for
+placing images into a plain text document format.</p>
+<p>Markdown uses an image syntax that is intended to resemble the syntax
+for links, allowing for two styles: <em>inline</em> and <em>reference</em>.</p>
+<p>Inline image syntax looks like this:</p>
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+</code></pre>
+<p>That is:</p>
+<ul>
+<li>An exclamation mark: <code>!</code>;</li>
+<li>followed by a set of square brackets, containing the <code>alt</code>
+attribute text for the image;</li>
+<li>followed by a set of parentheses, containing the URL or path to
+the image, and an optional <code>title</code> attribute enclosed in double
+or single quotes.</li>
+</ul>
+<p>Reference-style image syntax looks like this:</p>
+<pre><code>![Alt text][id]
+</code></pre>
+<p>Where &ldquo;id&rdquo; is the name of a defined image reference. Image references
+are defined using syntax identical to link references:</p>
+<pre><code>[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre>
+<p>As of this writing, Markdown has no syntax for specifying the
+dimensions of an image; if this is important to you, you can simply
+use regular HTML <code>&lt;img&gt;</code> tags.</p>
+<hr>
+<h2 id="misc">Miscellaneous</h2>
+<h3 id="autolink">Automatic Links</h3>
+<p>Markdown supports a shortcut style for creating &ldquo;automatic&rdquo; links for URLs and email addresses: simply surround the URL or email address with angle brackets. What this means is that if you want to show the actual text of a URL or email address, and also have it be a clickable link, you can do this:</p>
+<pre><code>&lt;http://example.com/&gt;
+</code></pre>
+<p>Markdown will turn this into:</p>
+<pre><code>&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;
+</code></pre>
+<p>Automatic links for email addresses work similarly, except that
+Markdown will also perform a bit of randomized decimal and hex
+entity-encoding to help obscure your address from address-harvesting
+spambots. For example, Markdown will turn this:</p>
+<pre><code>&lt;address@example.com&gt;
+</code></pre>
+<p>into something like this:</p>
+<pre><code>&lt;a href=&quot;&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;
+&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
+&amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
+&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
+</code></pre>
+<p>which will render in a browser as a clickable link to &ldquo;<a href="mailto:address@example.com">address@example.com</a>&rdquo;.</p>
+<p>(This sort of entity-encoding trick will indeed fool many, if not
+most, address-harvesting bots, but it definitely won&rsquo;t fool all of
+them. It&rsquo;s better than nothing, but an address published in this way
+will probably eventually start receiving spam.)</p>
+<h3 id="backslash">Backslash Escapes</h3>
+<p>Markdown allows you to use backslash escapes to generate literal
+characters which would otherwise have special meaning in Markdown&rsquo;s
+formatting syntax. For example, if you wanted to surround a word
+with literal asterisks (instead of an HTML <code>&lt;em&gt;</code> tag), you can use
+backslashes before the asterisks, like this:</p>
+<pre><code>\*literal asterisks\*
+</code></pre>
+<p>Markdown provides backslash escapes for the following characters:</p>
+<pre><code>\   backslash
+`   backtick
+*   asterisk
+_   underscore
+{}  curly braces
+[]  square brackets
+()  parentheses
+#   hash mark
++ plus sign
+- minus sign (hyphen)
+.   dot
+!   exclamation mark</code></pre>
+]]></description>
+</item><item>
+    <title>Wikitten官方文档</title>
+    <link>https://fiix.one/posts/wikitten%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/wikitten%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/</guid>
+    <description><![CDATA[<h1 id="personal-wiki">personal wiki!</h1>
+<p><code>Wikitten</code> is a small, fast, PHP wiki that <a href="https://github.com/victorstanciu" target="_blank" rel="noopener noreffer">I</a> made because I really needed a place to store my notes, snippets, ideas, and so on. I&rsquo;ve tried a lot of personal wikis and note-taking applications in the past, but since I have peculiar needs, none of them really suited me, so I rolled my own.</p>
+<p>The page you are looking at right now is part of the actual wiki, and is written using the <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener noreffer">Markdown</a> syntax. If you&rsquo;re not familiar with Markdown go ahead, press the <code>Toggle source</code> button in the upper right corner, or check out the <a href="Sample%20Markdown%20document.md" rel="">sample document</a> in the sidebar. By the way, if you&rsquo;re reading the source, noticed how I linked to another page within the wiki?</p>
+<p>Now, there are other Markdown-powered wikis out there, and I&rsquo;ve tried some of them, but I wanted something that I could use to store my code snippets too, so <code>syntax highlighting</code> was a must. Expand the <code>Code snippets</code> folder in the sidebar and take a look at some of the supported file types. I also needed something light enough that I could sync on Dropbox, because I access my notes and snippets on multiple machines.</p>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>PHP <code>5.3+</code></li>
+<li>The Apache webserver (with <code>mod_rewrite</code>)</li>
+</ul>
+<p>or</p>
+<ul>
+<li>PHP <code>5.4</code></li>
+<li>Inbuilt webserver <code>php -S 0.0.0.0:8000 routing.php</code></li>
+</ul>
+<h3 id="installation">Installation</h3>
+<ul>
+<li><a href="https://github.com/victorstanciu/Wikitten/archive/master.zip" target="_blank" rel="noopener noreffer">Download</a> the latest version or clone the <a href="https://github.com/victorstanciu/Wikitten" target="_blank" rel="noopener noreffer">repository on GitHub</a></li>
+<li>After extracting the archive, drop the files somewhere in your DocumentRoot, or make a separate Apache <a href="http://httpd.apache.org/docs/2.2/mod/core.html#virtualhost" target="_blank" rel="noopener noreffer">VirtualHost</a> (this is the way I currently use it myself)</li>
+<li>That&rsquo;s it. There&rsquo;s a <code>library</code> directory in the installation folder. Everything you place in there will be rendered by the wiki. If there&rsquo;s an <code>index.md</code> file (such as the one you are reading now) in that folder, it will be served by default when accessing the wiki.</li>
+</ul>
+<p>You can also run the wiki using <a href="https://github.com/victorstanciu/Wikitten/wiki/Docker-instructions" target="_blank" rel="noopener noreffer">Docker</a></p>
+<h3 id="configure-wikitten">Configure Wikitten</h3>
+<p>You are able to configure Wikitten by using the config file.
+First, copy the <code>config.php.example</code> to <code>config.php</code> and you are ready to change the settings.<br>
+Some options are disabled with a comment but can be enabled by removing <code>//</code> from the option line.</p>
+<ul>
+<li><code>define('APP_NAME', 'My Wiki');</code> - Set the Wiki title</li>
+<li><code>define('DEFAULT_FILE', 'index.md');</code> - Choose the file that should be loaded as the homepage, must be located in library folder</li>
+<li><code>define('LIBRARY', '/path/to/wiki/library');</code> - Set a custom path to the library</li>
+<li><code>define('ENABLE_EDITING', true);</code> - Enable the in-page editing of any files</li>
+<li><code>define('USE_PAGE_METADATA', true);</code> - Enable the JSON Front Matter (meta data), see below for more details</li>
+<li><code>define('USE_DARK_THEME', true);</code> - Enable the dark theme (see below for a screenshot)</li>
+<li><code>define('USE_WIKITTEN_LOGO', false);</code> - Disable the Wikitten logo on the left bottom</li>
+</ul>
+<h3 id="json-front-matter-meta-data">JSON Front Matter (meta data)</h3>
+<p>Wikitten content can also be tagged using a simple but powerful JSON Front Matter system, akin to <a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter" target="_blank" rel="noopener noreffer">Jekyll&rsquo;s YAML Front Matter</a>. Defining a custom title, tags, or other
+relevant data for a specific page is just a matter of adding a special header at the start of your files, like so:</p>
+<pre><code>---
+&quot;title&quot;: &quot;My Custom Page Title&quot;,
+&quot;tags&quot;: [&quot;my&quot;, &quot;custom&quot;, &quot;tags&quot;],
+&quot;author&quot;: &quot;Bob&quot;
+---
+
+# Hello, world!
+
+This is my cool wiki page.
+</code></pre>
+<p>Wikitten will intelligently grab this data, and use it for things like meta keywords, the
+page title, and maybe eventually search indexing. All the information provided in this
+header is passed as-is to the views, so future components and plugins may also make use of it.</p>
+<p><strong>Note:</strong> The JSON header is expected to be a JSON hash, but to simplify things, Wikitten lets you leave out the starting an ending <code>{ }</code> brackets if you want. Everything else in the JSON syntax still applies:</p>
+<ul>
+<li>Strings (i.e: <code>title</code> must be written within double quotes: <code>&quot;title&quot;</code>)</li>
+<li>Values must be seperated with a comma character, even if its the only value in a line.</li>
+</ul>
+<h3 id="dark-theme">Dark Theme</h3>
+<p>If you are working until midnight it can be a pain to look at bright white backgrounds. That&rsquo;s why Wikitten offers a Dark Theme which can be enabled in the config.php file with the <code>define('USE_DARK_THEME', true);</code> option.</p>
+<p>It looks like this:
+</p>
+<h3 id="roadmap">Roadmap</h3>
+<p>Some of the features I plan to implement next:</p>
+<ul>
+<li><a href="http://pastebin.com/" target="_blank" rel="noopener noreffer">Pastebin</a> API integration. I think it would be cool to share snippets on Pastebin (or a similar service) with a single click</li>
+<li>Creating / updating files directly through the web interface. Other wikis place great accent on creating and editing pages in the browser, but since I have my trusty code editor open non-stop anyway, I prefer to update my files manually for now.</li>
+<li>Search in files</li>
+</ul>
+<h3 id="special-thanks-go-to">Special thanks go to:</h3>
+<ul>
+<li><a href="http://michelf.ca/home/" target="_blank" rel="noopener noreffer">Michel Fortin</a>, for the <a href="http://michelf.ca/projects/php-markdown/" target="_blank" rel="noopener noreffer">PHP Markdown parser</a>.</li>
+<li><a href="http://marijnhaverbeke.nl/" target="_blank" rel="noopener noreffer">Marijn Haverbeke</a>, for <a href="http://codemirror.net/" target="_blank" rel="noopener noreffer">CodeMirror</a>, a JavaScript code editor.</li>
+<li>Twitter, for the <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="noopener noreffer">Bootstrap</a> CSS framework.</li>
+<li>All Vectors, for the <a href="http://www.allvectors.com/cats-vector/" target="_blank" rel="noopener noreffer">free cat vector</a> silhouette I used in making the logo.</li>
+</ul>
+]]></description>
+</item></channel>
+</rss>

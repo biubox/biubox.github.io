@@ -1,0 +1,130 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Windows - 分类 - FiixOne`Blog</title>
+        <link>https://fiix.one/categories/windows/</link>
+        <description>Windows - 分类 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/categories/windows/" rel="self" type="application/rss+xml" /><item>
+    <title>Win-CMD运行命令</title>
+    <link>https://fiix.one/posts/win-cmd%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/win-cmd%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4/</guid>
+    <description><![CDATA[<ol>
+<li>gpedit.msc&mdash;&ndash;组策略</li>
+<li>Nslookup&mdash;&mdash;-IP地址侦测器</li>
+<li>explorer&mdash;&mdash;-打开资源管理器</li>
+<li>logoff&mdash;&mdash;&mdash;注销命令</li>
+<li>tsshutdn&mdash;&mdash;-60秒倒计时关机命令</li>
+<li>lusrmgr.msc&mdash;-本机用户和组</li>
+<li>services.msc&mdash;</li>
+<li>oobe/msoobe /a&mdash;-检查XP是否激活</li>
+<li>notepad&mdash;&mdash;&ndash;打开记事本</li>
+<li>cleanmgr&mdash;&mdash;-垃圾整理</li>
+<li>net start messenger&mdash;-开始信使服务</li>
+<li>compmgmt.msc&mdash;计算机管理</li>
+<li>net stop messenger&mdash;&ndash;停止信使服务</li>
+<li>conf&mdash;&mdash;&mdash;&ndash;启动netmeeting</li>
+<li>dvdplay&mdash;&mdash;&ndash;DVD播放器</li>
+<li>charmap&mdash;&mdash;&ndash;启动字符映射表</li>
+<li>diskmgmt.msc&mdash;磁盘管理实用程序</li>
+<li>calc&mdash;&mdash;&mdash;&ndash;启动计算器</li>
+<li>dfrg.msc&mdash;&mdash;-磁盘碎片整理程序</li>
+<li>chkdsk.exe&mdash;&ndash;Chkdsk磁盘检查</li>
+<li>devmgmt.msc&mdash; 设备管理器</li>
+<li>regsvr32 /u *.dll&mdash;-停止dll文件运行</li>
+<li>drwtsn32&mdash;&mdash; 系统医生</li>
+<li>rononce -p &mdash;-15秒关机</li>
+<li>dxdiag&mdash;&mdash;&mdash;检查DirectX信息</li>
+<li>Msconfig.exe&mdash;系统配置实用程序</li>
+<li>mem.exe&mdash;&mdash;&ndash;显示内存使用情况</li>
+<li>regedit.exe&mdash;-注册表</li>
+<li>winchat&mdash;&mdash;&ndash;XP自带局域网聊天</li>
+<li>progman&mdash;&mdash;&ndash;程序管理器</li>
+<li>winmsd&mdash;&mdash;&mdash;系统信息</li>
+<li>perfmon.msc&mdash;-计算机性能监测程序</li>
+<li>winver&mdash;&mdash;&mdash;检查Windows版本</li>
+<li>sfc /scannow&mdash;&ndash;扫描错误并复原</li>
+<li>taskmgr&mdash;&ndash;任务管理器（2000／xp／2003</li>
+<li>winver&mdash;&mdash;&mdash;检查Windows版本</li>
+<li>wmimgmt.msc&mdash;-打开windows管理体系结构(WMI)</li>
+<li>wupdmgr&mdash;&mdash;&ndash;windows更新程序</li>
+<li>wscript&mdash;&mdash;&ndash;windows脚本宿主设置</li>
+<li>write&mdash;&mdash;&mdash;-写字板</li>
+<li>winmsd&mdash;&mdash;&mdash;系统信息</li>
+<li>wiaacmgr&mdash;&mdash;-扫描仪和照相机向导</li>
+<li>winchat&mdash;&mdash;&ndash;XP自带局域网聊天</li>
+<li>mem.exe&mdash;&mdash;&ndash;显示内存使用情况</li>
+<li>Msconfig.exe&mdash;系统配置实用程序</li>
+<li>mplayer2&mdash;&mdash;-简易widnows media player</li>
+<li>mspaint&mdash;&mdash;&ndash;画图板</li>
+<li>mstsc&mdash;&mdash;&mdash;-远程桌面连接</li>
+<li>mplayer2&mdash;&mdash;-媒体播放机</li>
+<li>magnify&mdash;&mdash;&ndash;放大镜实用程序</li>
+<li>mmc&mdash;&mdash;&mdash;&mdash;打开控制台</li>
+<li>mobsync&mdash;&mdash;&ndash;同步命令</li>
+<li>dxdiag&mdash;&mdash;&mdash;检查DirectX信息</li>
+<li>drwtsn32&mdash;&mdash; 系统医生</li>
+<li>devmgmt.msc&mdash; 设备管理器</li>
+<li>dfrg.msc&mdash;&mdash;-磁盘碎片整理程序</li>
+<li>diskmgmt.msc&mdash;磁盘管理实用程序</li>
+<li>dcomcnfg&mdash;&mdash;-打开系统组件服务</li>
+<li>ddeshare&mdash;&mdash;-打开DDE共享设置</li>
+<li>net stop messenger&mdash;&ndash;停止信使服务</li>
+<li>net start messenger&mdash;-开始信使服务</li>
+<li>notepad&mdash;&mdash;&ndash;打开记事本</li>
+<li>nslookup&mdash;&mdash;-网络管理的工具向导</li>
+<li>ntbackup&mdash;&mdash;-系统备份和还原</li>
+<li>narrator&mdash;&mdash;-屏幕“讲述人”</li>
+<li>ntmsmgr.msc&mdash;-移动存储管理器</li>
+<li>ntmsoprq.msc&mdash;移动存储管理员操作请求</li>
+<li>netstat -an&mdash;-(TC)命令检查接口</li>
+<li>syncapp&mdash;&mdash;&ndash;创建一个公文包</li>
+<li>sysedit&mdash;&mdash;&ndash;系统配置编辑器</li>
+<li>sigverif&mdash;&mdash;-文件签名验证程序</li>
+<li>sndrec32&mdash;&mdash;-录音机</li>
+<li>shrpubw&mdash;&mdash;&ndash;创建共享文件夹</li>
+<li>secpol.msc&mdash;&ndash;本地安全策略</li>
+<li>syskey&mdash;&mdash;&mdash;系统加密，一旦加密就不能解开，保护windows xp系统的双重密码</li>
+<li>services.msc&mdash;本地服务设置</li>
+<li>Sndvol32&mdash;&mdash;-音量控制程序</li>
+<li>sfc.exe&mdash;&mdash;&ndash;系统文件检查器</li>
+<li>sfc /scannow&mdash;windows文件保护</li>
+<li>tourstart&mdash;&mdash;xp简介（安装完成后出现的漫游xp程序）</li>
+<li>taskmgr&mdash;&mdash;&ndash;任务管理器</li>
+<li>eventvwr&mdash;&mdash;-事件查看器</li>
+<li>eudcedit&mdash;&mdash;-造字程序</li>
+<li>explorer&mdash;&mdash;-打开资源管理器</li>
+<li>packager&mdash;&mdash;-对象包装程序</li>
+<li>perfmon.msc&mdash;-计算机性能监测程序</li>
+<li>progman&mdash;&mdash;&ndash;程序管理器</li>
+<li>regedit.exe&mdash;-注册表</li>
+<li>rsop.msc&mdash;&mdash;-组策略结果集</li>
+<li>regedt32&mdash;&mdash;-注册表编辑器</li>
+<li>regsvr32 /u *.dll&mdash;-停止dll文件运行</li>
+<li>regsvr32 /u zipfldr.dll&mdash;&mdash;取消ZIP支持</li>
+<li>cmd.exe&mdash;&mdash;&ndash;CMD命令提示符</li>
+<li>chkdsk.exe&mdash;&ndash;Chkdsk磁盘检查</li>
+<li>certmgr.msc&mdash;-证书管理实用程序</li>
+<li>calc&mdash;&mdash;&mdash;&ndash;启动计算器</li>
+<li>charmap&mdash;&mdash;&ndash;启动字符映射表</li>
+<li>cliconfg&mdash;&mdash;-SQL SERVER 客户端网络实用程序</li>
+<li>Clipbrd&mdash;&mdash;&ndash;剪贴板查看器</li>
+<li>conf&mdash;&mdash;&mdash;&ndash;启动netmeeting</li>
+<li>compmgmt.msc&mdash;计算机管理</li>
+<li>cleanmgr&mdash;&mdash;-垃圾整理</li>
+<li>ciadv.msc&mdash;&mdash;索引服务程序</li>
+<li>osk&mdash;&mdash;&mdash;&mdash;打开屏幕键盘</li>
+<li>odbcad32&mdash;&mdash;-ODBC数据源管理器</li>
+<li>oobe/msoobe /a&mdash;-检查XP是否激活</li>
+<li>lusrmgr.msc&mdash;-本机用户和组</li>
+<li>logoff&mdash;&mdash;&mdash;注销命令</li>
+<li>iexpress&mdash;&mdash;-木马捆绑工具，系统自带</li>
+<li>Nslookup&mdash;&mdash;-IP地址侦测器</li>
+<li>fsmgmt.msc&mdash;&ndash;共享文件夹管理器</li>
+<li>utilman&mdash;&mdash;&ndash;辅助工具管理器</li>
+<li>gpedit.msc&mdash;&ndash;组策略</li>
+</ol>
+]]></description>
+</item></channel>
+</rss>

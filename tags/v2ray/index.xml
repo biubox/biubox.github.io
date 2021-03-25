@@ -1,0 +1,114 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>V2ray - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/v2ray/</link>
+        <description>V2ray - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/v2ray/" rel="self" type="application/rss+xml" /><item>
+    <title>V2ray一键安装|bbr加速</title>
+    <link>https://fiix.one/posts/v2ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/v2ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[<h2 id="v2ray一键安装">V2ray一键安装</h2>
+<hr>
+<p><strong>Debian8/Debian7/Ubuntu16/Ubuntu14/centos7 v2ray一键部署管理脚本：</strong></p>
+<ul>
+<li>
+<p>安装脚本命令：</p>
+<p><code>bash &lt;(curl -s -L https://git.io/v2ray.sh) </code></p>
+</li>
+<li>
+<p>卸载脚本命令：</p>
+<p><code>bash &lt;(curl -s -L https://git.io/v2ray.sh) </code></p>
+</li>
+<li>
+<p>快速管理</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  v2ray info 查看 V2Ray 配置信息
+
+  v2ray config 修改 V2Ray 配置
+
+  v2ray link 生成 V2Ray 配置文件链接
+
+  v2ray infolink 生成 V2Ray 配置信息链接
+
+  v2ray qr 生成 V2Ray 配置二维码链接
+
+  v2ray ss 修改 Shadowsocks 配置
+
+  v2ray ssinfo 查看 Shadowsocks 配置信息
+
+  v2ray ssqr 生成 Shadowsocks 配置二维码链接
+
+  v2ray status 查看 V2Ray 运行状态
+
+  v2ray start 启动 V2Ray
+
+  v2ray stop 停止 V2Ray
+
+  v2ray restart 重启 V2Ray
+
+  v2ray log 查看 V2Ray 运行日志
+
+  v2ray update 更新 V2Ray
+
+  v2ray update.sh 更新 V2Ray 管理脚本
+
+  v2ray uninstall 卸载 V2Ray
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="安装bbr加速">安装bbr加速</h2>
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">wget --no-check-certificate  https://github.com/teddysun/across/raw/master  /bbr.sh
+chmod +x bbr.sh 
+./bbr.sh
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+]]></description>
+</item></channel>
+</rss>

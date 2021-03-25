@@ -1,0 +1,129 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>SSH - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/ssh/</link>
+        <description>SSH - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/ssh/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux启用SSH密钥登录</title>
+    <link>https://fiix.one/posts/linux%E5%90%AF%E7%94%A8ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/linux%E5%90%AF%E7%94%A8ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/</guid>
+    <description><![CDATA[<h2 id="linux启用ssh密钥登录">Linux启用SSH密钥登录</h2>
+<p>在某些时候，使用密码作为登录服务器的认证方式是不太安全的，为避免密码被暴力破解，许多时候可以采用ssh密钥登录服务器，这里以CentOS为例。</p>
+<h3 id="第一步">第一步</h3>
+<p>　　生成秘钥对:</p>
+<ul>
+<li><strong>方法一</strong></li>
+</ul>
+<p>在服务器上利用ssh-keygen生成:
+输入:</p>
+<pre><code>ssh-keygen -t rsa
+</code></pre>
+<p>一路enter跳过(当然你也可以自己定义，不过没必要);</p>
+<p>会在<code>/root/.ssh</code>下生成公钥(id_rsa.pub)私钥(id_rsa);</p>
+<p>（公钥是用于服务器端，私钥是用于客户端） 然后将私钥下载至电脑上(登录时会用到)。</p>
+<ul>
+<li><strong>方法二</strong></li>
+</ul>
+<p>利用远程工具(如Xshell)生成
+这里以Xshell为例，点击”工具-新建用户密钥生成向导”全部默认;</p>
+<p>下一步，提示输入密钥加密的密码，这里可以为空;</p>
+<p>下一步，将公钥保存为文件，命名为id_rsa.pub;</p>
+<p>上传到服务器<code>/root/.ssh</code>下。</p>
+<h3 id="第二步">第二步</h3>
+<p>　　修改<code>/etc/ssh/sshd_config</code>如下部分:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">RSAAuthentication yes 开启RSA验证
+PubkeyAuthentication yes 是否使用公钥验证
+AuthorizedKeysFile .ssh/authorized_keys 公钥的保存位置
+PasswordAuthentication no 禁止使用密码验证登录
+</code></pre></td></tr></table>
+</div>
+</div><p>这里最好是禁止使用密码验证登录，否则用密钥就没多大意义了。
+更改后保存。</p>
+<h3 id="第三步">第三步</h3>
+<p>　　进入到密钥保存的目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /root/.ssh
+新建密钥验证文件”authorized_keys”，并将公钥输出重定向覆盖密钥验证文件:
+
+touch authorized_keys  
+cat id_rsa.pub &gt;&gt; authorized_keys   这里建议使用追加而不是覆盖
+修改authorized_keys文件权限为600
+chmod  600 /root/.ssh/authorized_keys
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="第四步">第四步</h3>
+<p>　　重启ssh服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#CentOS 7之前的版本请执行:  
+service sshd restart
+#CentOS 7请执行:  
+systemctl restart sshd.service
+</code></pre></td></tr></table>
+</div>
+</div><p>接下来就能够通过密钥登录服务器了:
+在打开连接的时候会提示导入用户密钥，选择之前保存的私钥文件”id_rsa”即可。</p>
+<p><strong>如何在Linux系统中用密钥方式连接其他的远程Linux主机呢？</strong></p>
+<pre><code>ssh -i ~/.ssh/id_rsa root@192.168.1.1 -p 22
+</code></pre>
+]]></description>
+</item><item>
+    <title>SSH登录取消yes</title>
+    <link>https://fiix.one/posts/ssh%E7%99%BB%E5%BD%95%E5%8F%96%E6%B6%88yes/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ssh%E7%99%BB%E5%BD%95%E5%8F%96%E6%B6%88yes/</guid>
+    <description><![CDATA[<h2 id="ssh登录取消yes">SSH登录取消yes</h2>
+<p>ssh登录机器的时候，如果这台机器没有使用ssh登录过(严格来说应该是<code>~/.ssh/known_hosts</code>文件中没有这台机器的HostKey)</p>
+<p>ssh会产生一个提示，询问是否需 要添加这台机器的HostKey，回答yes/no即可，虽然只要不删除<code>~/.ssh/known_hosts</code>文件中该机器的HostKey，则这个提示 将不会出现，书写一些自动化脚本的时候，就会成为问题。</p>
+<hr>
+<p><code>vi /etc/ssh/ssh_config</code>
+下面的参数默认为ask，去掉前面的注释，设置为<code>no</code>即可。
+<code>StrictHostKeyChecking no</code></p>
+<hr>
+<p>以后ssh将会自动添加HostKey到<code>~/.ssh/known_hosts</code>，不会再询问。</p>
+<p>默认该项配置是<code>ask</code>，所以会询问。</p>
+<p>最严格的配置是<code>yes</code>，每次必须手动将hostkey添加到<code>~/.ssh/known_hosts</code>文件中。</p>
+]]></description>
+</item><item>
+    <title>SSH登陆时带上密码</title>
+    <link>https://fiix.one/posts/ssh%E7%99%BB%E9%99%86%E6%97%B6%E5%B8%A6%E4%B8%8A%E5%AF%86%E7%A0%81/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ssh%E7%99%BB%E9%99%86%E6%97%B6%E5%B8%A6%E4%B8%8A%E5%AF%86%E7%A0%81/</guid>
+    <description><![CDATA[<h2 id="ssh登陆时带上密码">SSH登陆时带上密码</h2>
+<p>在ssh的同时带上密码，不用手动输入
+先安装一个软件包</p>
+<p><code>yum install -y sshpass</code></p>
+<p>只需要在ssh命令的前面带上sshpass就可以</p>
+<p><code>sshpass -p 'your passwd' ssh root@192.168.1.1 systemctl restart nginx</code></p>
+]]></description>
+</item></channel>
+</rss>

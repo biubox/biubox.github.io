@@ -1,0 +1,40 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>SELinux - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/selinux/</link>
+        <description>SELinux - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/selinux/" rel="self" type="application/rss+xml" /><item>
+    <title>Centos7关闭SELinux</title>
+    <link>https://fiix.one/posts/centos7%E5%85%B3%E9%97%ADselinux/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E5%85%B3%E9%97%ADselinux/</guid>
+    <description><![CDATA[<h2 id="centos7关闭selinux">CentOS7关闭SELinux</h2>
+<h3 id="查看状态">查看状态</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@dev-server ~]# getenforce
+Disabled
+[root@dev-server ~]# /usr/sbin/sestatus -v
+SELinux status:                 disabled
+</code></pre></td></tr></table>
+</div>
+</div><p>临时关闭
+##设置SELinux 成为permissive模式
+##setenforce 1 设置SELinux 成为enforcing模式
+setenforce 0</p>
+<p>永久关闭</p>
+<pre><code>vi /etc/selinux/config
+</code></pre>
+<p>将SELINUX=enforcing改为SELINUX=disabled</p>
+<p><strong>设置后需要重启才能生效</strong></p>
+]]></description>
+</item></channel>
+</rss>

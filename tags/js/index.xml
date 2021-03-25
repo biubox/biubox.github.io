@@ -1,0 +1,751 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>JS - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/js/</link>
+        <description>JS - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/js/" rel="self" type="application/rss+xml" /><item>
+    <title>JS获取日期时间及其它操作</title>
+    <link>https://fiix.one/posts/js%E8%8E%B7%E5%8F%96%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%8F%8A%E5%85%B6%E5%AE%83%E6%93%8D%E4%BD%9C/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/js%E8%8E%B7%E5%8F%96%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%8F%8A%E5%85%B6%E5%AE%83%E6%93%8D%E4%BD%9C/</guid>
+    <description><![CDATA[<h2 id="js获取当前日期时间及其它操作">Js获取当前日期时间及其它操作</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="nx">myDate</span><span class="p">.</span><span class="nx">getYear</span><span class="p">();</span>        <span class="c1">//获取当前年份(2位)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>    <span class="c1">//获取完整的年份(4位,1970-????)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">();</span>       <span class="c1">//获取当前月份(0-11,0代表1月)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>        <span class="c1">//获取当前日(1-31)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getDay</span><span class="p">();</span>         <span class="c1">//获取当前星期X(0-6,0代表星期天)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getTime</span><span class="p">();</span>        <span class="c1">//获取当前时间(从1970.1.1开始的毫秒数)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span>       <span class="c1">//获取当前小时数(0-23)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span>     <span class="c1">//获取当前分钟数(0-59)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span>     <span class="c1">//获取当前秒数(0-59)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getMilliseconds</span><span class="p">();</span>    <span class="c1">//获取当前毫秒数(0-999)
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">toLocaleDateString</span><span class="p">();</span>     <span class="c1">//获取当前日期
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">mytime</span><span class="o">=</span><span class="nx">myDate</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">();</span>     <span class="c1">//获取当前时间
+</span><span class="c1"></span><span class="nx">myDate</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span> <span class="p">);</span>        <span class="c1">//获取日期与时间
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="日期时间脚本库方法列表">日期时间脚本库方法列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">isLeapYear</span> <span class="nx">判断闰年</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">Format</span> <span class="nx">日期格式化</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">DateAdd</span> <span class="nx">日期计算</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">DateDiff</span> <span class="nx">比较日期差</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="nx">日期转字符串</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toArray</span> <span class="nx">日期分割为数组</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">DatePart</span> <span class="nx">取日期的部分信息</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">MaxDayOfDate</span> <span class="nx">取日期所在月的最大天数</span>
+<span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">WeekNumOfYear</span> <span class="nx">判断日期所在年的第几周</span>
+<span class="nx">StringToDate</span> <span class="nx">字符串转日期型</span>
+<span class="nx">IsValidDate</span> <span class="nx">验证日期有效性</span>
+<span class="nx">CheckDateTime</span> <span class="nx">完整日期时间检查</span>
+<span class="nx">daysBetween</span> <span class="nx">日期天数差</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="js代码">js代码：</h2>
+<h4 id="判断闰年">判断闰年</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//---------------------------------------------------
+</span><span class="c1">// 判断闰年
+</span><span class="c1">//---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">isLeapYear</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="o">==</span><span class="k">this</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span><span class="o">%</span><span class="mi">4</span><span class="o">&amp;&amp;</span><span class="p">((</span><span class="k">this</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span><span class="o">%</span><span class="mi">400</span><span class="o">==</span><span class="mi">0</span><span class="p">)));</span>
+<span class="p">}</span>
+
+<span class="c1">//---------------------------------------------------
+</span><span class="c1">// 日期格式化
+</span><span class="c1">// 格式 YYYY/yyyy/YY/yy 表示年份
+</span><span class="c1">// MM/M 月份
+</span><span class="c1">// W/w 星期
+</span><span class="c1">// dd/DD/d/D 日期
+</span><span class="c1">// hh/HH/h/H 时间
+</span><span class="c1">// mm/m 分钟
+</span><span class="c1">// ss/SS/s/S 秒
+</span><span class="c1">//---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">Format</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">formatStr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">formatStr</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">Week</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;日&#39;</span><span class="p">,</span><span class="s1">&#39;一&#39;</span><span class="p">,</span><span class="s1">&#39;二&#39;</span><span class="p">,</span><span class="s1">&#39;三&#39;</span><span class="p">,</span><span class="s1">&#39;四&#39;</span><span class="p">,</span><span class="s1">&#39;五&#39;</span><span class="p">,</span><span class="s1">&#39;六&#39;</span><span class="p">];</span>
+
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/yyyy|YYYY/</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/yy|YY/</span><span class="p">,(</span><span class="k">this</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">?</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">).</span><span class="nx">toString</span><span class="p">()</span><span class="o">:</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">));</span>
+
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/MM/</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">?</span><span class="k">this</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span><span class="o">:</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/M/g</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">());</span>
+
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/w|W/g</span><span class="p">,</span><span class="nx">Week</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">getDay</span><span class="p">()]);</span>
+
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/dd|DD/</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">?</span><span class="k">this</span><span class="p">.</span><span class="nx">getDate</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span><span class="o">:</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getDate</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/d|D/g</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getDate</span><span class="p">());</span>
+
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/hh|HH/</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">?</span><span class="k">this</span><span class="p">.</span><span class="nx">getHours</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span><span class="o">:</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getHours</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/h|H/g</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getHours</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/mm/</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">?</span><span class="k">this</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span><span class="o">:</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/m/g</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">());</span>
+
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/ss|SS/</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">?</span><span class="k">this</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span><span class="o">:</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+    <span class="nx">str</span><span class="o">=</span><span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/s|S/g</span><span class="p">,</span><span class="k">this</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+
+    <span class="k">return</span> <span class="nx">str</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="求两个时间的天数差">求两个时间的天数差</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 求两个时间的天数差 日期格式为 YYYY-MM-dd
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">daysBetween</span><span class="p">(</span><span class="nx">DateOne</span><span class="p">,</span><span class="nx">DateTwo</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">OneMonth</span> <span class="o">=</span> <span class="nx">DateOne</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="nx">DateOne</span><span class="p">.</span><span class="nx">lastIndexOf</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">OneDay</span> <span class="o">=</span> <span class="nx">DateOne</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">DateOne</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="nx">DateOne</span><span class="p">.</span><span class="nx">lastIndexOf</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">OneYear</span> <span class="o">=</span> <span class="nx">DateOne</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">DateOne</span><span class="p">.</span><span class="nx">indexOf</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">));</span>
+
+    <span class="kd">var</span> <span class="nx">TwoMonth</span> <span class="o">=</span> <span class="nx">DateTwo</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="nx">DateTwo</span><span class="p">.</span><span class="nx">lastIndexOf</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">TwoDay</span> <span class="o">=</span> <span class="nx">DateTwo</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">DateTwo</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="nx">DateTwo</span><span class="p">.</span><span class="nx">lastIndexOf</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">TwoYear</span> <span class="o">=</span> <span class="nx">DateTwo</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">DateTwo</span><span class="p">.</span><span class="nx">indexOf</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">));</span>
+
+    <span class="kd">var</span> <span class="nx">cha</span><span class="o">=</span><span class="p">((</span><span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">OneMonth</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">OneDay</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">OneYear</span><span class="p">)</span><span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">TwoMonth</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">TwoDay</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">TwoYear</span><span class="p">))</span><span class="o">/</span><span class="mi">86400000</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">cha</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="日期计算">日期计算</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 日期计算
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">DateAdd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">strInterval</span><span class="p">,</span> <span class="nb">Number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">dtTmp</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">strInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;s&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;n&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">60000</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;h&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3600000</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;d&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">86400000</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;w&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">86400000</span> <span class="o">*</span> <span class="mi">7</span><span class="p">)</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;q&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">(),</span> <span class="p">(</span><span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">())</span> <span class="o">+</span> <span class="nb">Number</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getDate</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getHours</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+        <span class="k">case</span> <span class="s1">&#39;m&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">(),</span> <span class="p">(</span><span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">())</span> <span class="o">+</span> <span class="nb">Number</span><span class="p">,</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getDate</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getHours</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+        <span class="k">case</span> <span class="s1">&#39;y&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">((</span><span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="nb">Number</span><span class="p">),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getDate</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getHours</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">(),</span> <span class="nx">dtTmp</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="比较日期差-dtend">比较日期差 dtEnd</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 比较日期差 dtEnd 格式为日期型或者有效日期格式字符串
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">DateDiff</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">strInterval</span><span class="p">,</span> <span class="nx">dtEnd</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">dtStart</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">dtEnd</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span> <span class="p">)</span><span class="c1">//如果是字符串转换为日期型
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="nx">dtEnd</span> <span class="o">=</span> <span class="nx">StringToDate</span><span class="p">(</span><span class="nx">dtEnd</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">strInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;s&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="nb">parseInt</span><span class="p">((</span><span class="nx">dtEnd</span> <span class="o">-</span> <span class="nx">dtStart</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;n&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="nb">parseInt</span><span class="p">((</span><span class="nx">dtEnd</span> <span class="o">-</span> <span class="nx">dtStart</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60000</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;h&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="nb">parseInt</span><span class="p">((</span><span class="nx">dtEnd</span> <span class="o">-</span> <span class="nx">dtStart</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3600000</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;d&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="nb">parseInt</span><span class="p">((</span><span class="nx">dtEnd</span> <span class="o">-</span> <span class="nx">dtStart</span><span class="p">)</span> <span class="o">/</span> <span class="mi">86400000</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;w&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="nb">parseInt</span><span class="p">((</span><span class="nx">dtEnd</span> <span class="o">-</span> <span class="nx">dtStart</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">86400000</span> <span class="o">*</span> <span class="mi">7</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;m&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="p">(</span><span class="nx">dtEnd</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="p">((</span><span class="nx">dtEnd</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span><span class="o">-</span><span class="nx">dtStart</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">())</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">dtStart</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;y&#39;</span> <span class="o">:</span><span class="k">return</span> <span class="nx">dtEnd</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">-</span> <span class="nx">dtStart</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="日期输出字符串重载了系统的tostring方法">日期输出字符串，重载了系统的toString方法</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 日期输出字符串，重载了系统的toString方法
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">showWeek</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">myDate</span><span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">toLocaleDateString</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">showWeek</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">Week</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;日&#39;</span><span class="p">,</span><span class="s1">&#39;一&#39;</span><span class="p">,</span><span class="s1">&#39;二&#39;</span><span class="p">,</span><span class="s1">&#39;三&#39;</span><span class="p">,</span><span class="s1">&#39;四&#39;</span><span class="p">,</span><span class="s1">&#39;五&#39;</span><span class="p">,</span><span class="s1">&#39;六&#39;</span><span class="p">];</span>
+        <span class="nx">str</span> <span class="o">+=</span> <span class="s1">&#39; 星期&#39;</span> <span class="o">+</span> <span class="nx">Week</span><span class="p">[</span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getDay</span><span class="p">()];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">str</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="日期合法性验证">日期合法性验证</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 日期合法性验证
+</span><span class="c1">//| 格式为：YYYY-MM-DD或YYYY/MM/DD
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">IsValidDate</span><span class="p">(</span><span class="nx">DateStr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">sDate</span><span class="o">=</span><span class="nx">DateStr</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(^\s+|\s+$)/g</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="c1">//去两边空格;
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nx">sDate</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="c1">//如果格式满足YYYY-(/)MM-(/)DD或YYYY-(/)M-(/)DD或YYYY-(/)M-(/)D或YYYY-(/)MM-(/)D就替换为&#39;&#39;
+</span><span class="c1"></span>    <span class="c1">//数据库中，合法日期可以是:YYYY-MM/DD(2003-3/21),数据库会自动转换为YYYY-MM-DD格式
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">sDate</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[\d]{ 4,4 }[\-/]{ 1 }[\d]{ 1,2 }[\-/]{ 1 }[\d]{ 1,2 }/g</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">s</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1">//说明格式满足YYYY-MM-DD或YYYY-M-DD或YYYY-M-D或YYYY-MM-D
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">t</span><span class="o">=</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">sDate</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\-/g</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">));</span>
+        <span class="kd">var</span> <span class="nx">ar</span> <span class="o">=</span> <span class="nx">sDate</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[-/:]/</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">ar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">getYear</span><span class="p">()</span> <span class="o">||</span> <span class="nx">ar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span> <span class="o">||</span> <span class="nx">ar</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">getDate</span><span class="p">())</span>
+        <span class="p">{</span>
+            <span class="c1">//alert(&#39;错误的日期格式！格式为：YYYY-MM-DD或YYYY/MM/DD。注意闰年。&#39;);
+</span><span class="c1"></span>            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="c1">//alert(&#39;错误的日期格式！格式为：YYYY-MM-DD或YYYY/MM/DD。注意闰年。&#39;);
+</span><span class="c1"></span>        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="日期时间检查">日期时间检查</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 日期时间检查
+</span><span class="c1">//| 格式为：YYYY-MM-DD HH:MM:SS
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">CheckDateTime</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">reg</span> <span class="o">=</span> <span class="sr">/^(\d+)-(\d{ 1,2 })-(\d{ 1,2 }) (\d{ 1,2 }):(\d{ 1,2 }):(\d{ 1,2 })$/</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">reg</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">r</span><span class="o">==</span><span class="kc">null</span><span class="p">)</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="nx">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="nx">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">d</span><span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nx">r</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="nx">r</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="nx">r</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="nx">r</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span><span class="nx">r</span><span class="p">[</span><span class="mi">6</span><span class="p">]);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span><span class="o">!=</span><span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">!=</span><span class="nx">r</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span><span class="o">!=</span><span class="nx">r</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span><span class="o">!=</span><span class="nx">r</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span><span class="o">!=</span><span class="nx">r</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span><span class="o">!=</span><span class="nx">r</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span><span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="把日期分割成数组">把日期分割成数组</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 把日期分割成数组
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toArray</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">myArray</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
+    <span class="nx">myArray</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+    <span class="nx">myArray</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">();</span>
+    <span class="nx">myArray</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>
+    <span class="nx">myArray</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span>
+    <span class="nx">myArray</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span>
+    <span class="nx">myArray</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nx">myArray</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="取得日期数据信息">取得日期数据信息</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 取得日期数据信息
+</span><span class="c1">//| 参数 interval 表示数据类型
+</span><span class="c1">//| y 年 m月 d日 w星期 ww周 h时 n分 s秒
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">DatePart</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">interval</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">partStr</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">Week</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;日&#39;</span><span class="p">,</span><span class="s1">&#39;一&#39;</span><span class="p">,</span><span class="s1">&#39;二&#39;</span><span class="p">,</span><span class="s1">&#39;三&#39;</span><span class="p">,</span><span class="s1">&#39;四&#39;</span><span class="p">,</span><span class="s1">&#39;五&#39;</span><span class="p">,</span><span class="s1">&#39;六&#39;</span><span class="p">];</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">interval</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;y&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;m&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;d&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;w&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">Week</span><span class="p">[</span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getDay</span><span class="p">()];</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;ww&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">WeekNumOfYear</span><span class="p">();</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;h&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;n&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;s&#39;</span> <span class="o">:</span><span class="nx">partStr</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span><span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">partStr</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="取得当前日期所在月的最大天数">取得当前日期所在月的最大天数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 取得当前日期所在月的最大天数
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">MaxDayOfDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">ary</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">toArray</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">date1</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">ary</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nx">ary</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">date2</span> <span class="o">=</span> <span class="nx">date1</span><span class="p">.</span><span class="nx">dateAdd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">dateDiff</span><span class="p">(</span><span class="nx">date1</span><span class="p">.</span><span class="nx">Format</span><span class="p">(</span><span class="s1">&#39;yyyy-MM-dd&#39;</span><span class="p">),</span><span class="nx">date2</span><span class="p">.</span><span class="nx">Format</span><span class="p">(</span><span class="s1">&#39;yyyy-MM-dd&#39;</span><span class="p">));</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="取得当前日期所在周是一年中的第几周">取得当前日期所在周是一年中的第几周</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 取得当前日期所在周是一年中的第几周
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span><span class="nb">Date</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">WeekNumOfYear</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">ary</span> <span class="o">=</span> <span class="nx">myDate</span><span class="p">.</span><span class="nx">toArray</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nx">ary</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="nx">ary</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="nx">ary</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt; script language=VBScript\&gt; \n&#39;</span><span class="p">);</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;myDate = Datue(&#39;&#39;+month+&#39;</span><span class="o">-</span><span class="s1">&#39;+day+&#39;</span><span class="o">-</span><span class="s1">&#39;+year+&#39;&#39;) \n&#39;</span><span class="p">);</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;result = DatePart(&#39;</span><span class="nx">ww</span><span class="s1">&#39;, myDate) \n&#39;</span><span class="p">);</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39; \n&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="字符串转成日期类型">字符串转成日期类型</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//+---------------------------------------------------
+</span><span class="c1">//| 字符串转成日期类型
+</span><span class="c1">//| 格式 MM/dd/YYYY MM-dd-YYYY YYYY/MM/dd YYYY-MM-dd
+</span><span class="c1">//+---------------------------------------------------
+</span><span class="c1"></span>
+<span class="kd">function</span> <span class="nx">StringToDate</span><span class="p">(</span><span class="nx">DateStr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">converted</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">DateStr</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">converted</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">myDate</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="c1">//var delimCahar = DateStr.indexOf(&#39;/&#39;)!=-1?&#39;/&#39;:&#39;-&#39;;
+</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">arys</span><span class="o">=</span> <span class="nx">DateStr</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">);</span>
+        <span class="nx">myDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">arys</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">--</span><span class="nx">arys</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nx">arys</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">myDate</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">
+<span class="c1">//若要显示:当前日期加时间(如:2009-06-12 12:00)
+</span><span class="c1"></span>
+<span class="kd">function</span> <span class="nx">CurentTime</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+
+        <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nx">now</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>       <span class="c1">//年
+</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="nx">now</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>     <span class="c1">//月
+</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="nx">now</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>            <span class="c1">//日
+</span><span class="c1"></span>
+        <span class="kd">var</span> <span class="nx">hh</span> <span class="o">=</span> <span class="nx">now</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span>            <span class="c1">//时
+</span><span class="c1"></span>        <span class="kd">var</span> <span class="nx">mm</span> <span class="o">=</span> <span class="nx">now</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span>          <span class="c1">//分
+</span><span class="c1"></span>
+        <span class="kd">var</span> <span class="nx">clock</span> <span class="o">=</span> <span class="nx">year</span> <span class="o">+</span> <span class="s2">&#34;-&#34;</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nx">month</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="nx">clock</span> <span class="o">+=</span> <span class="s2">&#34;0&#34;</span><span class="p">;</span>
+
+        <span class="nx">clock</span> <span class="o">+=</span> <span class="nx">month</span> <span class="o">+</span> <span class="s2">&#34;-&#34;</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nx">day</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="nx">clock</span> <span class="o">+=</span> <span class="s2">&#34;0&#34;</span><span class="p">;</span>
+
+        <span class="nx">clock</span> <span class="o">+=</span> <span class="nx">day</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nx">hh</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="nx">clock</span> <span class="o">+=</span> <span class="s2">&#34;0&#34;</span><span class="p">;</span>
+
+        <span class="nx">clock</span> <span class="o">+=</span> <span class="nx">hh</span> <span class="o">+</span> <span class="s2">&#34;:&#34;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">mm</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="nx">clock</span> <span class="o">+=</span> <span class="s1">&#39;0&#39;</span><span class="p">;</span>
+        <span class="nx">clock</span> <span class="o">+=</span> <span class="nx">mm</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">(</span><span class="nx">clock</span><span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item></channel>
+</rss>

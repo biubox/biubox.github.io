@@ -1,0 +1,104 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>代理 - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/%E4%BB%A3%E7%90%86/</link>
+        <description>代理 - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 23 Oct 2020 08:29:17 &#43;0800</lastBuildDate><atom:link href="https://fiix.one/tags/%E4%BB%A3%E7%90%86/" rel="self" type="application/rss+xml" /><item>
+    <title>命令行使用代理</title>
+    <link>https://fiix.one/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/</link>
+    <pubDate>Fri, 23 Oct 2020 08:29:17 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/</guid>
+    <description><![CDATA[<h2 id="命令行使用代理">命令行使用代理</h2>
+<blockquote>
+<p>基本原理一样，触类旁通</p>
+</blockquote>
+<h3 id="设置环境变量临时生效">设置环境变量,临时生效</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>https://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="设置环境变量永久生效">设置环境变量,永久生效</h3>
+<p>修改 <code>~/.bash.rc</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080&#34;</span>
+<span class="c1"># 无需代理的主机或域名，可使用通配符</span>
+<span class="nb">export</span> <span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&#34;localhost, 127.0.0.1, ::1, 10.*.*.*,&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="取消设置环境变量">取消设置环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">unset</span> http_proxy
+<span class="nb">unset</span> https_proxy
+<span class="nb">unset</span> ftp_proxy
+<span class="nb">unset</span> all_proxy
+<span class="nb">unset</span> no_proxy
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="apt-get代理临时生效">apt-get代理,临时生效</h3>
+<p>在命令行临时带入
+在<code>apt</code>命令后面增加<code>-o</code>选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get -o Acquire::http::proxy<span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080/&#34;</span>  update
+sudo apt-get -o Acquire::https::proxy<span class="o">=</span><span class="s2">&#34;https://127.0.0.1:1080/&#34;</span>  update
+sudo apt-get -o Acquire:🧦:proxy<span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080/&#34;</span>  update
+<span class="c1"># 注意上面的使用&#39;socks&#39;是正确的，链接才是&#39;socks5&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="apt-get代理永久生效">apt-get代理,永久生效</h3>
+<p>修改 <code>/etc/apt/apt.conf</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">Acquire:🧦:proxy <span class="s2">&#34;socks5://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::http::proxy <span class="s2">&#34;http://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::https::proxy <span class="s2">&#34;https://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::ftp::proxy <span class="s2">&#34;ftp://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item></channel>
+</rss>

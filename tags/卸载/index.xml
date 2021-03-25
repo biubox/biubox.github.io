@@ -1,0 +1,45 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>卸载 - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/%E5%8D%B8%E8%BD%BD/</link>
+        <description>卸载 - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/%E5%8D%B8%E8%BD%BD/" rel="self" type="application/rss+xml" /><item>
+    <title>Ubuntu清除卸载后的软件包数据</title>
+    <link>https://fiix.one/posts/ubuntu%E6%B8%85%E9%99%A4%E5%8D%B8%E8%BD%BD%E5%90%8E%E7%9A%84%E5%8C%85%E6%95%B0%E6%8D%AE/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ubuntu%E6%B8%85%E9%99%A4%E5%8D%B8%E8%BD%BD%E5%90%8E%E7%9A%84%E5%8C%85%E6%95%B0%E6%8D%AE/</guid>
+    <description><![CDATA[<h2 id="ubuntu清除卸载后的包数据">Ubuntu清除卸载后的包数据</h2>
+<h3 id="单独卸载包时清除配置">单独卸载包时清除配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get 包名 --purge
+sudo apt-get purge 包名
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="卸载系统全部不用的包">卸载系统全部不用的包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get autoremove --purge
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="清除全部已卸载的包配置文件">清除全部已卸载的包配置文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo dpkg -l <span class="p">|</span>grep ^rc<span class="p">|</span>awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span>sudo xargs dpkg -P
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item></channel>
+</rss>

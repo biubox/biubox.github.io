@@ -99,7 +99,145 @@
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/avatar.png"
         title="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/avatar.png" /></a></div><h1 class="home-title">我思故我在...</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://space.bilibili.com/471993083" title="bilibili" target="_blank" rel="noopener noreffer me"><i data-svg-src="/svg/icons/bilibili.min.svg"></i></a><a href="mailto:fiixone@163.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
-</div></div>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/posts/home/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/biubox/cdn@data/img/tools.jpg"
+        data-srcset="https://cdn.jsdelivr.net/gh/biubox/cdn@data/img/tools.jpg, https://cdn.jsdelivr.net/gh/biubox/cdn@data/img/tools.jpg 1.5x, https://cdn.jsdelivr.net/gh/biubox/cdn@data/img/tools.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/biubox/cdn@data/img/tools.jpg"
+        title="https://cdn.jsdelivr.net/gh/biubox/cdn@data/img/tools.jpg" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/home/">主页</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-24">2021-03-24</time></span></div><div class="content">注意</div><div class="post-footer">
+        <a href="/posts/home/">阅读全文</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/">Tree命令详解</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-01-26">2021-01-26</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a>&nbsp;<a href="/categories/bash/"><i class="far fa-folder fa-fw"></i>Bash</a></span></div><div class="content"><h2 id="例如">例如:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">tree -C -L <span class="m">3</span> -T <span class="s2">&#34;文件下载列表&#34;</span> -H <span class="s2">&#34;&#34;</span> -I <span class="s2">&#34;*.html|img|en-US|icons&#34;</span> --charset<span class="o">=</span>utf8 -o index.html
+tree -C -L <span class="m">3</span> -D -h --dirsfirst -F -T <span class="s2">&#34;文件下载列表&#34;</span> -H <span class="s2">&#34;&#34;</span> -I <span class="s2">&#34;*.html|*.sh&#34;</span> --charset<span class="o">=</span>utf8 -o index.html
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="详解">详解:</h2></div><div class="post-footer">
+        <a href="/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/bash/">Bash</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/">命令行使用代理</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-10-23">2020-10-23</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div><div class="content"><h2 id="命令行使用代理">命令行使用代理</h2>
+<blockquote>
+<p>基本原理一样，触类旁通</p>
+</blockquote>
+<h3 id="设置环境变量临时生效">设置环境变量,临时生效</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>https://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="设置环境变量永久生效">设置环境变量,永久生效</h3>
+<p>修改 <code>~/.bash.rc</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080&#34;</span>
+<span class="c1"># 无需代理的主机或域名，可使用通配符</span>
+<span class="nb">export</span> <span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&#34;localhost, 127.0.0.1, ::1, 10.*.*.*,&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="取消设置环境变量">取消设置环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">unset</span> http_proxy
+<span class="nb">unset</span> https_proxy
+<span class="nb">unset</span> ftp_proxy
+<span class="nb">unset</span> all_proxy
+<span class="nb">unset</span> no_proxy
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="apt-get代理临时生效">apt-get代理,临时生效</h3>
+<p>在命令行临时带入
+在<code>apt</code>命令后面增加<code>-o</code>选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get -o Acquire::http::proxy<span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080/&#34;</span>  update
+sudo apt-get -o Acquire::https::proxy<span class="o">=</span><span class="s2">&#34;https://127.0.0.1:1080/&#34;</span>  update
+sudo apt-get -o Acquire:🧦:proxy<span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080/&#34;</span>  update
+<span class="c1"># 注意上面的使用&#39;socks&#39;是正确的，链接才是&#39;socks5&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="apt-get代理永久生效">apt-get代理,永久生效</h3>
+<p>修改 <code>/etc/apt/apt.conf</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">Acquire:🧦:proxy <span class="s2">&#34;socks5://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::http::proxy <span class="s2">&#34;http://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::https::proxy <span class="s2">&#34;https://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::ftp::proxy <span class="s2">&#34;ftp://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer">
+        <a href="/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/bash/">Bash</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/centos7%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D/">Centos7更改主机名</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-10-10">2020-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a>&nbsp;<a href="/categories/centos/"><i class="far fa-folder fa-fw"></i>Centos</a></span></div><div class="content">在CentOS7中，有三种定义的主机名: 静态的（Static hostname） “静态”主机名也称为内核主机名，是系统在启动时从/etc/ho</div><div class="post-footer">
+        <a href="/posts/centos7%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/centos/">Centos</a>,&nbsp;<a href="/tags/hostname/">Hostname</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/linux%E5%90%AF%E7%94%A8ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/">Linux启用SSH密钥登录</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-10-10">2020-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div><div class="content">Linux启用SSH密钥登录 在某些时候，使用密码作为登录服务器的认证方式是不太安全的，为避免密码被暴力破解，许多时候可以采用ssh密钥登录服</div><div class="post-footer">
+        <a href="/posts/linux%E5%90%AF%E7%94%A8ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ssh/">SSH</a>,&nbsp;<a href="/tags/bash/">Bash</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/vsftpd%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/">vsftpd主目录权限（无法写入,连接失败）解决方法</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-10-10">2020-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div><div class="content">vsftpd主目录权限（无法写入,连接失败） 当限定了用户不能跳出其主目录之后，使用该用户登录FTP时往往会遇到这个错误： 500 OOPS: vsftpd: refusing to run with writable root inside</div><div class="post-footer">
+        <a href="/posts/vsftpd%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/vsftp/">vsftp</a>,&nbsp;<a href="/tags/centos/">Centos</a>,&nbsp;<a href="/tags/ftp/">ftp</a></div></div>
+</article></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://fiix.one" target="_blank">FiixOne</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" ><img alt="知识共享许可协议" style="top:50%; margin:-3px;" src="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/cc/cc-by-nc-sa.svg"></a></span></div>

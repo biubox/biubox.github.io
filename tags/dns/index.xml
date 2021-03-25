@@ -1,0 +1,23 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>DNS - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/dns/</link>
+        <description>DNS - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/dns/" rel="self" type="application/rss+xml" /><item>
+    <title>查看DNS</title>
+    <link>https://fiix.one/posts/%E6%9F%A5%E7%9C%8Bdns/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%9F%A5%E7%9C%8Bdns/</guid>
+    <description><![CDATA[<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">getprop <span class="p">|</span>grep dns
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item></channel>
+</rss>

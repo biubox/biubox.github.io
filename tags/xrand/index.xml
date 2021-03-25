@@ -1,0 +1,85 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>xrand - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/xrand/</link>
+        <description>xrand - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/xrand/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux系统主机分辨率调节/投屏/双屏</title>
+    <link>https://fiix.one/posts/xrandr%E5%91%BD%E4%BB%A4%E6%8A%95%E5%B1%8F%E5%92%8C%E6%89%A9%E5%B1%95/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/xrandr%E5%91%BD%E4%BB%A4%E6%8A%95%E5%B1%8F%E5%92%8C%E6%89%A9%E5%B1%95/</guid>
+    <description><![CDATA[<h2 id="linux系统主机分辨率调节投屏双屏">Linux系统主机分辨率调节/投屏/双屏</h2>
+<p>xrandr 指令可以用来改变X环境的桌面大小和屏幕频率 </p>
+<p><code>xrandr</code>: 列出目前环境支持的解析度和频率 </p>
+<p><code>xrandr -q</code>: 同上 ，当前使用的分辨率会带上 “ * “ 号 </p>
+<h3 id="xrandr和cvt命令添加自定义的分辨率模式">xrandr和cvt命令添加自定义的分辨率模式</h3>
+<p>使用xrandr -q命令查看当前支持的分辨率模式: 
+例如,需要创建800x750的分辨率模式,步骤如下:</p>
+<ol>
+<li>使用cvt命令创建新的分辨率:</li>
+</ol>
+<p><code>cvt 800 750</code></p>
+<ol start="2">
+<li>使用xrandr -newmode modeline信息(cvt命令产生的结果) 创建新的mode:</li>
+</ol>
+<p><code>xrandr --newmode &quot;800X750_60.00&quot; 48.50 800 840 920 1040 750 753 763 779 -hsync +vsync</code></p>
+<ol start="3">
+<li>xrandr -addmode 设备名 mode 来为设备添加新的mode:</li>
+</ol>
+<p><code>xrandr -addmode VGA-1 800X750_60.00</code></p>
+<ol start="4">
+<li>使用xrandr -out 设备名 -mode mode 来使用新的分辨率模式</li>
+</ol>
+<p><code>xrand -out VGA-1 -mode 800X750_60.00</code></p>
+<p>以上步骤只是<strong>临时添加</strong>了新的分辨率,重启后就会消失,要永久保存,需要将modeline的信息保存到配置文件中.</p>
+<h3 id="更改分辨率">更改分辨率</h3>
+<p><code>xrandr -s 1024x768</code>   这种方式可以 </p>
+<p><code>xrandr -s n</code>  (n: xrandr 列出来的模式对应的数字)  这种方式也是可以的</p>
+<p>用法举例：<code>xrandr -s 1024x768 -r 75</code></p>
+<p>这样就可以将显示器的分辨率和刷新率立即更改为<code>1024x768＠75</code>，<strong>注意<code>1024x768</code>中间一定要是<code>x</code>不可以是<code>*</code>.</strong></p>
+<p>设置分辨率时需要指定设置的output及mode，如将eDP1的分辨率改为1920x1080，命令就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">xrandr --output eDP1 --mode 1920x1080
+--output:指定显示器。
+--mode:指定一种有效的分辨率。
+--rate:指定刷新率。
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>电脑的分辨率必须和投影率的分辨率相同，才能正常使用</p>
+<p>将笔记本屏慕内容克隆到屏幕</p>
+<p><code>xrandr --output VGA --same-as LVDS --auto</code> (LVDS:代表笔记本液晶屏)</p>
+<h3 id="xrandr-命令行切换双屏">xrandr 命令行切换双屏</h3>
+<p>常用方式如下，其他的可以自己探索：</p>
+<ul>
+<li>打开外接显示器(最高分辨率)，与笔记本液晶屏幕显示同样内容（克隆）</li>
+</ul>
+<p><code>xrandr --output VGA --same-as LVDS --auto</code></p>
+<ul>
+<li> 打开外接显示器(分辨率为1024x768)，与笔记本液晶屏幕显示同样内容（克隆）</li>
+</ul>
+<p><code>xrandr --output VGA --same-as LVDS --mode 1024x768</code></p>
+<p>* 打开外接显示器(最高分辨率)，设置为右侧扩展屏幕</p>
+<p><code>xrandr --output VGA --right-of LVDS --auto</code></p>
+<p>*关闭外接显示器</p>
+<p><code>xrandr --output VGA --off</code></p>
+<ul>
+<li>打开外接显示器，同时关闭笔记本液晶屏幕（只用外接显示器工作）</li>
+</ul>
+<p><code>xrandr --output VGA --auto --output LVDS --off</code></p>
+<p>* 关闭外接显示器，同时打开笔记本液晶屏幕 (只用笔记本液晶屏)</p>
+<p><code>xrandr --output VGA --off --output LVDS --auto</code></p>
+]]></description>
+</item></channel>
+</rss>

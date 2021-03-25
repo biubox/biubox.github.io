@@ -1,0 +1,204 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Centos - 分类 - FiixOne`Blog</title>
+        <link>https://fiix.one/categories/centos/</link>
+        <description>Centos - 分类 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/categories/centos/" rel="self" type="application/rss+xml" /><item>
+    <title>Centos7关闭SELinux</title>
+    <link>https://fiix.one/posts/centos7%E5%85%B3%E9%97%ADselinux/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E5%85%B3%E9%97%ADselinux/</guid>
+    <description><![CDATA[<h2 id="centos7关闭selinux">CentOS7关闭SELinux</h2>
+<h3 id="查看状态">查看状态</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@dev-server ~]# getenforce
+Disabled
+[root@dev-server ~]# /usr/sbin/sestatus -v
+SELinux status:                 disabled
+</code></pre></td></tr></table>
+</div>
+</div><p>临时关闭
+##设置SELinux 成为permissive模式
+##setenforce 1 设置SELinux 成为enforcing模式
+setenforce 0</p>
+<p>永久关闭</p>
+<pre><code>vi /etc/selinux/config
+</code></pre>
+<p>将SELINUX=enforcing改为SELINUX=disabled</p>
+<p><strong>设置后需要重启才能生效</strong></p>
+]]></description>
+</item><item>
+    <title>Centos7更改主机名</title>
+    <link>https://fiix.one/posts/centos7%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D/</guid>
+    <description><![CDATA[<h2 id="在centos7中有三种定义的主机名">在CentOS7中，有三种定义的主机名:</h2>
+<hr>
+<p><em><strong>静态的（Static hostname）</strong></em>
+“静态”主机名也称为内核主机名，是系统在启动时从/etc/hostname自动初始化的主机名。</p>
+<p><em><strong>瞬态的（Tansient hostname）</strong></em>
+“瞬态”主机名是在系统运行时临时分配的主机名，例如，通过DHCP或mDNS服务器分配。</p>
+<p><em><strong>灵活的（Pretty hostname）</strong></em>
+“灵活”主机名也有人叫做“别名”主机名。
+“灵活”主机名则允许使用自由形式（包括特殊/空白字符）的主机名，以展示给终端用户</p>
+<p><em><strong>“静态”主机名和“瞬态”主机名都遵从作为互联网域名同样的字符限制规则。</strong></em></p>
+<hr>
+<p>在CentOS 7中，使用<code>hostnamectl</code>命令行工具，可以查看或修改与主机名相关的配置。</p>
+<h3 id="查看主机名">查看主机名:</h3>
+<pre><code>//查看一下当前主机名的情况
+hostnamectl   
+
+//查看全部三种主机名
+hostnamectl status
+
+//只查看静态、瞬态或灵活主机名，分别使用--static，--transient或--pretty选项
+# hostnamectl --static
+
+# hostnamectl --transient
+
+# hostnamectl --pretty
+
+//瞬态的（Tansient hostname）
+hostname
+
+//查看主机名配置文件，（静态）（Static hostname）
+cat /etc/hostname
+</code></pre>
+<h3 id="查看当前linux操作系统相关信息-内核版本号硬件架构主机名称和操作系统类型等">查看当前Linux操作系统相关信息 （内核版本号、硬件架构、主机名称和操作系统类型等）:</h3>
+<pre><code>uname -a			//查看到的是瞬态的（Tansient hostname）
+cat /etc/redhat-release		//查看操作系统环境
+</code></pre>
+<h3 id="修改主机名">修改主机名:</h3>
+<ul>
+<li>临时有效</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">    hostname myname	//只能临时修改的主机名，当重启机器后，主机名称又变回来了。
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>永久生效</li>
+</ul>
+<p>(修改配置文件/etc/hostname来实现主机名的修改)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vim /etc/hostname
+hostname  myname
+</code></pre></td></tr></table>
+</div>
+</div><p>(命令行)</p>
+<p>//永久性的修改主机名称，重启后能保持修改后的。
+hostnamectl set-hostname xxx</p>
+<p>//删除hostname
+hostnamectl set-hostname &quot;&quot;
+hostnamectl set-hostname &quot;&quot; &ndash;static
+hostnamectl set-hostname &quot;&quot; &ndash;pretty</p>
+<ul>
+<li>修改主机名：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># hostnamectl set-hostname myname</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在修改静态/瞬态主机名时，任何特殊字符或空白字符会被移除，而提供的参数中的任何大写字母会自动转化为小写。</p>
+<p><em><strong>一旦修改了静态主机名，<code>/etc/hostname</code> 将被自动更新。<code>/etc/hosts</code> 不会更新以保存所做的修改，所以每次修改主机名后一定要手动更新/<code>etc/hosts</code>，之后再重启CentOS 7。否则系统再启动时会很慢。</strong></em></p>
+<ul>
+<li>手动更新/etc/hosts</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vim /etc/hosts
+#127.0.0.1   localhost localhost.localdomain
+127.0.0.1  myname
+#::1         localhost localhost.localdomain
+::1        myname
+</code></pre></td></tr></table>
+</div>
+</div><p>重启CentOS 7</p>
+]]></description>
+</item><item>
+    <title>Centos7查看开启关闭firewalld</title>
+    <link>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADfirewalld/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADfirewalld/</guid>
+    <description><![CDATA[<h2 id="centos7查看开启关闭firewalld">Centos7查看开启关闭firewalld</h2>
+<pre><code>systemctl stop firewalld.service #停止firewall
+
+systemctl disable firewalld.service #禁止firewall开机启动
+
+firewall-cmd --state #查看默认防火墙状态
+#（关闭后显示notrunning，开启后显示running）
+</code></pre>
+]]></description>
+</item><item>
+    <title>Centos7查看开启关闭iptables</title>
+    <link>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADiptables/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADiptables/</guid>
+    <description><![CDATA[<h2 id="iptables">iptables</h2>
+<p>CentOS 配置防火墙操作实例（启、停、开、闭端口）：</p>
+<p>注：防火墙的基本操作命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">查询防火墙状态:
+[root@localhost ~]# service iptables status
+停止防火墙:
+[root@localhost ~]# service iptables stop
+启动防火墙:
+[root@localhost ~]# service iptables start
+重启防火墙:
+[root@localhost ~]# service iptables restart
+永久关闭防火墙:
+[root@localhost ~]# chkconfig iptables off
+永久关闭后启用:
+[root@localhost ~]# chkconfig iptables on
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item></channel>
+</rss>

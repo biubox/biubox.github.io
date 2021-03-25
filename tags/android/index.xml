@@ -1,0 +1,154 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Android - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/android/</link>
+        <description>Android - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/android/" rel="self" type="application/rss+xml" /><item>
+    <title>Mitools准备和安装</title>
+    <link>https://fiix.one/posts/mitools%E5%87%86%E5%A4%87%E5%92%8C%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/mitools%E5%87%86%E5%A4%87%E5%92%8C%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[<h2 id="前言">前言</h2>
+<ol>
+<li>本人严重讨厌通知栏广告，权限滥用。</li>
+<li>每次系统更新看见有想用的功能了很是头疼，更新后部分软件重新预装。单个卸载删除太麻烦。</li>
+<li>部分应用临时用不上，批量冻结。</li>
+<li>登录过的WiFi给忘了密码，扫码什么的太麻烦。</li>
+<li>需要设置Hosts,禁广告。</li>
+<li>批量删除根目录广告、空文件夹。</li>
+</ol>
+<p><em><strong>纯脚本,需开启Root.自定义食用效果更佳</strong></em></p>
+<hr>
+<h3 id="前期准备必须">前期准备(必须)：</h3>
+<blockquote>
+<p>部分功能个人定义的，需要用到BusyBox</p>
+</blockquote>
+<ul>
+<li>
+<p>开发版用户-设置-授权管理-Root权限管理，开启Root权限。(每次升级完同样步骤)</p>
+</li>
+<li>
+<p>手机开启USB调试，电脑端运行ADB(解锁system分区)</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">adb root
+adb disable-verity
+adb reboot now
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>点击链接<strong>下载源码</strong> 文件，解压后将 <strong>su</strong> 文件夹 <strong>放在内存根目录</strong> 。</li>
+</ul>
+<button style="
+  width: auto;
+  height: 30px;
+  border-width: 0px; /* 边框宽度 */
+  border-radius: 8px 0 0 8px; /* 边框半径 */
+  background: #3e3737; /* 背景颜色 */
+  cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+  outline: none; /* 不显示轮廓线 */
+  font-family: Microsoft YaHei; /* 设置字体 */
+  font-weight: bold;
+  color: white; /* 字体颜色 */
+  float: left;
+"><i class='fab fa-keycdn' style='color:#F8F8F8'></i>Download
+  <button style="
+	width: auto;
+	height: 30px;
+  border-width: 0px; /* 边框宽度 */
+	border-radius: 0 8px 8px 0; /* 边框半径 */
+	background: #44BE16; /* 背景颜色 */
+	color: white; /* 字体颜色 */
+  float: none;
+"><a href="https://cdn.jsdelivr.net/gh/biubox/cdn@data/download/su.zip" target="_blank" download="su.zip" style="font-weight: bold; color: black;">[su.zip]<i class='fas fa-cloud-download-alt' style='color:white'></i></a>
+
+</button>
+
+</button>
+<hr>
+<h3 id="使用手机终端控制台">使用手机终端控制台:</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">su
+
+cp /sdcard/su/tool.sh /data/
+
+chmod +x /data/tool.sh
+
+</code></pre></td></tr></table>
+</div>
+</div><p>至此，工具安装完成。</p>
+<p>以后每次输入</p>
+<p><code>/data/tool.sh</code></p>
+<p>即可进入工具(<strong>可添加为代码片段或者短语，使用更方便</strong>)</p>
+<h2 id="基本目录解析">基本目录解析</h2>
+<p></p>
+<table>
+<thead>
+<tr>
+<th>文件名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all-app.list</td>
+<td>读取系统安装的所有包</td>
+</tr>
+<tr>
+<td>ban-app.list</td>
+<td>需要禁用的包名</td>
+</tr>
+<tr>
+<td>remove.list</td>
+<td>需要卸载的包名</td>
+</tr>
+<tr>
+<td>del-dir.list</td>
+<td>需要批量清理的文件夹名</td>
+</tr>
+<tr>
+<td>hosts</td>
+<td>自定义Hosts文件，我提供的里面禁止了部分广告</td>
+</tr>
+<tr>
+<td>wifi.pw</td>
+<td>自动导出的WiFi密码</td>
+</tr>
+<tr>
+<td>tool.sh</td>
+<td>主脚本</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>切记运行前注意查看上面的配置文件，避免误删！！！</strong></em></p>
+<p>(里面有的数据是我卸载的包名)</p>
+<h2 id="脚本使用">脚本使用</h2>
+<p>在模拟终端里面<strong>su</strong>使用Root权限。</p>
+<p>运行
+<code>/data/tool.sh</code></p>
+<p>根据<strong>数字选择需要</strong>的功能即可。
+</p>
+<p><em><strong>切记运行前注意修改上面的配置文件！！！</strong></em></p>
+]]></description>
+</item></channel>
+</rss>

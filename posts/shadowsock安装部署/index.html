@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Shadowsock安装部署|bbr - FiixOne`Blog</title><meta name="Description" content="FiixOne Blog"><meta property="og:title" content="Shadowsock安装部署|bbr" />
+<meta property="og:description" content="Shadowsocks-install 升级软件更新系统 1 2 yum update -y yum upgrade -y 官方安装说明 安装 Debian / Ubuntu: apt-get install python-pip pip install git&#43;https://github.com/shadowsocks/shadowsocks.git@master CentOS: yum install python-setuptools &amp;&amp; easy_install pip pip install git&#43;https://github.com/shadowsocks/shadowsocks.git@master CentOS 7 如果需要 AEAD 密码, 请安装 libsodium 1 2 dnf install libsodium python34-pip pip3 install git&#43;https://github.com/shadowsocks/shadowsocks.git@master 带有s" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-10T20:17:43&#43;00:00" />
+<meta property="article:modified_time" content="2020-10-10T20:17:43&#43;00:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"/>
+
+<meta name="twitter:title" content="Shadowsock安装部署|bbr"/>
+<meta name="twitter:description" content="Shadowsocks-install 升级软件更新系统 1 2 yum update -y yum upgrade -y 官方安装说明 安装 Debian / Ubuntu: apt-get install python-pip pip install git&#43;https://github.com/shadowsocks/shadowsocks.git@master CentOS: yum install python-setuptools &amp;&amp; easy_install pip pip install git&#43;https://github.com/shadowsocks/shadowsocks.git@master CentOS 7 如果需要 AEAD 密码, 请安装 libsodium 1 2 dnf install libsodium python34-pip pip3 install git&#43;https://github.com/shadowsocks/shadowsocks.git@master 带有s"/>
+<meta name="application-name" content="FiixOne`Blog">
+<meta name="apple-mobile-web-app-title" content="FiixOne`Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" /><link rel="prev" href="https://fiix.one/posts/ssh%E7%99%BB%E5%BD%95%E5%8F%96%E6%B6%88yes/" /><link rel="next" href="https://fiix.one/posts/mitools%E5%87%86%E5%A4%87%E5%92%8C%E5%AE%89%E8%A3%85/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Shadowsock安装部署|bbr",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/fiix.one\/posts\/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2\/"
+        },"image": ["https:\/\/cdn.jsdelivr.net\/gh\/biubox\/biubox.github.io@main\/img\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VPS, Shadowsocks, BBR","wordcount":  547 ,
+        "url": "https:\/\/fiix.one\/posts\/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2\/","datePublished": "2020-10-10T20:17:43+00:00","dateModified": "2020-10-10T20:17:43+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "FiixOne","logo": "https:\/\/cdn.jsdelivr.net\/gh\/biubox\/biubox.github.io@main\/img\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "FiixOne"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="FiixOne`Blog"><span class="header-title-pre"><i class='fab fa-blogger fa-fw'></i></span>Fiix.One</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/" title="主页"><i class='fa fa-home'></i>  </a><a class="menu-item" href="/posts/" title="所有文章"><i class='fas fa-list-alt'></i> 归档 </a><a class="menu-item" href="/categories/" title="分类"><i class='fa fa-th'></i> 分类 </a><a class="menu-item" href="/tags/" title="标签"><i class='fas fa-tags fa-fw'></i> 标签 </a><a class="menu-item" href="/download/" title="Download"><i class='fas fa-cloud-download-alt'></i> 下载 </a><a class="menu-item" href="/about/" title="关于"><i class='fa fa-user'></i> 关于 </a><a class="menu-item" href="https://space.bilibili.com/471993083" title="B站" rel="noopener noreffer" target="_blank"><i class='fas fa-video' style='color:#FB7299'></i>  </a><a class="menu-item" href="http://git.fiix.one" title="Git 加速" rel="noopener noreffer" target="_blank"><i class='fas fa-tachometer-alt'></i>  </a><a class="menu-item" href="/tools.html" title="小工具"><i class='fas fa-location-arrow'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="FiixOne`Blog"><span class="header-title-pre"><i class='fab fa-blogger fa-fw'></i></span>Fiix.One</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/" title="主页"><i class='fa fa-home'></i></a><a class="menu-item" href="/posts/" title="所有文章"><i class='fas fa-list-alt'></i>归档</a><a class="menu-item" href="/categories/" title="分类"><i class='fa fa-th'></i>分类</a><a class="menu-item" href="/tags/" title="标签"><i class='fas fa-tags fa-fw'></i>标签</a><a class="menu-item" href="/download/" title="Download"><i class='fas fa-cloud-download-alt'></i>下载</a><a class="menu-item" href="/about/" title="关于"><i class='fa fa-user'></i>关于</a><a class="menu-item" href="https://space.bilibili.com/471993083" title="B站" rel="noopener noreffer" target="_blank"><i class='fas fa-video' style='color:#FB7299'></i></a><a class="menu-item" href="http://git.fiix.one" title="Git 加速" rel="noopener noreffer" target="_blank"><i class='fas fa-tachometer-alt'></i></a><a class="menu-item" href="/tools.html" title="小工具"><i class='fas fa-location-arrow'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Shadowsock安装部署|bbr</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-10">2020-10-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 547 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#shadowsocks-install">Shadowsocks-install</a>
+      <ul>
+        <li><a href="#升级软件更新系统">升级软件更新系统</a></li>
+        <li><a href="#官方安装说明">官方安装说明</a>
+          <ul>
+            <li><a href="#安装">安装</a></li>
+            <li><a href="#用法">用法</a></li>
+            <li><a href="#使用配置文件">使用配置文件</a></li>
+          </ul>
+        </li>
+        <li><a href="#pip-安装说明">pip 安装说明</a>
+          <ul>
+            <li><a href="#安装python和pip">安装python和pip</a></li>
+            <li><a href="#config">config</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="shadowsocks-install">Shadowsocks-install</h2>
+<hr>
+<h3 id="升级软件更新系统">升级软件更新系统</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"> 	yum update -y
+	yum upgrade -y
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="官方安装说明">官方安装说明</h3>
+<h4 id="安装">安装</h4>
+<p>Debian / Ubuntu:</p>
+<pre><code>apt-get install python-pip
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre>
+<p>CentOS:</p>
+<pre><code>yum install python-setuptools &amp;&amp; easy_install pip
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre>
+<p>CentOS 7 如果需要 AEAD 密码, 请安装 libsodium</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">dnf install libsodium python34-pip
+pip3 install  git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre></td></tr></table>
+</div>
+</div><p>带有<a href="http://snapcraft.io/" target="_blank" rel="noopener noreffer">snap</a>的Linux发行版:</p>
+<pre><code>snap install shadowsocks
+</code></pre>
+<p>Windows:</p>
+<p>请查看: <a href="https://github.com/shadowsocks/shadowsocks/wiki/Install-Shadowsocks-Server-on-Windows" target="_blank" rel="noopener noreffer">Install Shadowsocks Server on Windows</a>.</p>
+<h4 id="用法">用法</h4>
+<pre><code>ssserver -p 443 -k password -m aes-256-cfb
+</code></pre>
+<p>后台运行:</p>
+<pre><code>sudo ssserver -p 443 -k password -m aes-256-cfb --user nobody -d start
+</code></pre>
+<p>停止:</p>
+<pre><code>sudo ssserver -d stop
+</code></pre>
+<p>检查日志 log:</p>
+<pre><code>sudo less /var/log/shadowsocks.log
+</code></pre>
+<p>通过检查所有选项<code>-h</code>。您也可以改用[配置]文件。</p>
+<p>如果安装了<a href="http://snapcraft.io/" target="_blank" rel="noopener noreffer">snap</a> 软件包，则必须在命令前面加上<code>shadowsocks</code>.，例如：</p>
+<pre><code>shadowsocks.ssserver -p 443 -k password -m aes-256-cfb
+</code></pre>
+<h4 id="使用配置文件">使用配置文件</h4>
+<p><a href="https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File" target="_blank" rel="noopener noreffer">Create configuration file and run</a></p>
+<p>启动:</p>
+<pre><code>ssserver -c /etc/shadowsocks.json
+</code></pre>
+<hr>
+<h3 id="pip-安装说明">pip 安装说明</h3>
+<h4 id="安装python和pip">安装python和pip</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	yum install python python-pip -y	<span class="c1">#安装python和pip</span>
+	pip install shadowsocks
+	<span class="c1">#安装shadowsocks 如果报错,按提示升级pip</span>
+	pip install --upgrade pip
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="config">config</h4>
+<ul>
+<li>配置文件需拷贝进 /etc 目录下</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	<span class="c1">#多用户配置文件</span>
+	vim /etc/shadowsocks.json
+	
+	<span class="o">{</span>
+    <span class="s2">&#34;server&#34;</span>: <span class="s2">&#34;0.0.0.0&#34;</span>,
+    <span class="s2">&#34;port_password&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;8381&#34;</span>: <span class="s2">&#34;foobar1&#34;</span>,
+        <span class="s2">&#34;8382&#34;</span>: <span class="s2">&#34;foobar2&#34;</span>,
+        <span class="s2">&#34;8383&#34;</span>: <span class="s2">&#34;foobar3&#34;</span>,
+        <span class="s2">&#34;8384&#34;</span>: <span class="s2">&#34;foobar4&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;timeout&#34;</span>: 300,
+    <span class="s2">&#34;method&#34;</span>: <span class="s2">&#34;aes-256-cfb&#34;</span>
+	<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>shadowsocks.service</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	vim /etc/systemd/system/shadowsocks.service
+	<span class="c1">#文件放置在	/etc/systemd/system/ 目录下.</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>Unit<span class="o">]</span>  
+<span class="nv">Description</span><span class="o">=</span>Shadowsocks  
+  
+<span class="o">[</span>Service<span class="o">]</span>  
+<span class="nv">TimeoutStartSec</span><span class="o">=</span><span class="m">0</span>  
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/ssserver -c /etc/shadowsocks.json  
+  
+<span class="o">[</span>Install<span class="o">]</span>  
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">chmod +x  /etc/systemd/system/shadowsocks.service
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如下报错请修改</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim /usr/lib/python2.7/site-packages/shadowsocks/crypto/openssl.py
+
+
+libcrypto.EVP_CIPHER_CTX_cleanup.argtypes <span class="o">=</span> <span class="o">(</span>c_void_p,<span class="o">)</span>
+<span class="c1">## 改成</span>
+libcrypto.EVP_CIPHER_CTX_reset.argtypes <span class="o">=</span> <span class="o">(</span>c_void_p,<span class="o">)</span>
+
+libcrypto.EVP_CIPHER_CTX_cleanup<span class="o">(</span>self._ctx<span class="o">)</span>
+<span class="c1">## 改成</span>
+libcrypto.EVP_CIPHER_CTX_reset<span class="o">(</span>self._ctx<span class="o">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">INFO: loading config from /etc/shadowsocks.json
+2021-03-07 08:46:36 INFO     loading libcrypto from libcrypto.so.10
+2021-03-07 08:46:36 INFO     starting server at 207.246.108.196:8001
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&#34;/usr/bin/ssserver&#34;</span>, line 11, in &lt;module&gt;
+    load_entry_point<span class="o">(</span><span class="s1">&#39;shadowsocks==2.8.2&#39;</span>, <span class="s1">&#39;console_scripts&#39;</span>, <span class="s1">&#39;ssserver&#39;</span><span class="o">)()</span>
+  File <span class="s2">&#34;/usr/lib/python3.4/site-packages/shadowsocks/server.py&#34;</span>, line 68, in main
+    tcp_servers.append<span class="o">(</span>tcprelay.TCPRelay<span class="o">(</span>a_config, dns_resolver, False<span class="o">))</span>
+  File <span class="s2">&#34;/usr/lib/python3.4/site-packages/shadowsocks/tcprelay.py&#34;</span>, line 582, in __init__
+    server_socket.bind<span class="o">(</span>sa<span class="o">)</span>
+OSError: <span class="o">[</span>Errno 99<span class="o">]</span> Cannot assign requested address
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>启动&rsquo;停止&rsquo;查看状态:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	systemctl start shadowsocks
+	systemctl stop shadowsocks
+	systemctl status shadowsocks
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>bbr加速脚本</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	./bbr.sh	<span class="c1">#自动配置安装脚本.</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-10-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" data-title="Shadowsock安装部署|bbr"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" data-title="Shadowsock安装部署|bbr"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/baidu.svg"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" data-title="Shadowsock安装部署|bbr"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/vps/">VPS</a>,&nbsp;<a href="/tags/shadowsocks/">Shadowsocks</a>,&nbsp;<a href="/tags/bbr/">BBR</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/ssh%E7%99%BB%E5%BD%95%E5%8F%96%E6%B6%88yes/" class="prev" rel="prev" title="SSH登录取消yes"><i class="fas fa-angle-left fa-fw"></i>SSH登录取消yes</a>
+            <a href="/posts/mitools%E5%87%86%E5%A4%87%E5%92%8C%E5%AE%89%E8%A3%85/" class="next" rel="next" title="Mitools准备和安装">Mitools准备和安装<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://fiix.one" target="_blank">FiixOne</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" ><img alt="知识共享许可协议" style="top:50%; margin:-3px;" src="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/cc/cc-by-nc-sa.svg"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":20,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

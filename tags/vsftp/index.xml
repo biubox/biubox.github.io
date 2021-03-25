@@ -1,0 +1,28 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>vsftp - 标签 - FiixOne`Blog</title>
+        <link>https://fiix.one/tags/vsftp/</link>
+        <description>vsftp - 标签 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</lastBuildDate><atom:link href="https://fiix.one/tags/vsftp/" rel="self" type="application/rss+xml" /><item>
+    <title>vsftpd主目录权限（无法写入,连接失败）解决方法</title>
+    <link>https://fiix.one/posts/vsftpd%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/vsftpd%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</guid>
+    <description><![CDATA[<h2 id="vsftpd主目录权限无法写入连接失败">vsftpd主目录权限（无法写入,连接失败）</h2>
+<p>当<strong>限定了用户不能跳出其主目录之后</strong>，使用该用户登录FTP时往往会遇到这个错误：</p>
+<pre><code>500 OOPS: vsftpd: refusing to run with writable root inside chroot ()
+</code></pre>
+<p>这个问题发生在最新的这是由于下面的更新造成的：</p>
+<p><em><strong>Add stronger checks for the configuration error of running with a writeable root directory inside a chroot(). This may bite people who carelessly turned on chroot_local_user but such is life.</strong></em></p>
+<p>从2.3.5之后，vsftpd增强了安全检查，如果<strong>用户被限定在了其主目录下，则该用户的主目录不能再具有写权限</strong>了！如果检查发现还有写权限，就会报该错误。</p>
+<p>要修复这个错误，可以用命令</p>
+<pre><code>chmod a-w /home/user #去除用户主目录的写权限，注意把目录替换成你自己的。
+</code></pre>
+<p>或者你可以在<code>vsftpd.conf</code>的配置文件中增加下列两项中的一项：</p>
+<pre><code>allow_writeable_chroot=YES
+</code></pre>
+]]></description>
+</item></channel>
+</rss>

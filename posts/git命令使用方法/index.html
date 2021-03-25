@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Git命令使用方法 - FiixOne`Blog</title><meta name="Description" content="FiixOne Blog"><meta property="og:title" content="Git命令使用方法" />
+<meta property="og:description" content="[toc] Git 恢复到上次提交 1 2 3 4 5 6 git log #查询到需要恢复的版本 git reset --soft hash1 #--soft 保存本地文件 git reset --hard hash2 #--hard 本地文件也被恢复到上一个版本 git push origin HEAD --force Git Add 撤销 撤销操" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-15T20:17:43&#43;00:00" />
+<meta property="article:modified_time" content="2020-10-15T20:17:43&#43;00:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"/>
+
+<meta name="twitter:title" content="Git命令使用方法"/>
+<meta name="twitter:description" content="[toc] Git 恢复到上次提交 1 2 3 4 5 6 git log #查询到需要恢复的版本 git reset --soft hash1 #--soft 保存本地文件 git reset --hard hash2 #--hard 本地文件也被恢复到上一个版本 git push origin HEAD --force Git Add 撤销 撤销操"/>
+<meta name="application-name" content="FiixOne`Blog">
+<meta name="apple-mobile-web-app-title" content="FiixOne`Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" /><link rel="prev" href="https://fiix.one/posts/bash%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E8%89%BA%E6%9C%AF/" /><link rel="next" href="https://fiix.one/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Git命令使用方法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/fiix.one\/posts\/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95\/"
+        },"image": ["https:\/\/cdn.jsdelivr.net\/gh\/biubox\/biubox.github.io@main\/img\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Git","wordcount":  2565 ,
+        "url": "https:\/\/fiix.one\/posts\/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95\/","datePublished": "2020-10-15T20:17:43+00:00","dateModified": "2020-10-15T20:17:43+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "FiixOne","logo": "https:\/\/cdn.jsdelivr.net\/gh\/biubox\/biubox.github.io@main\/img\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "FiixOne"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="FiixOne`Blog"><span class="header-title-pre"><i class='fab fa-blogger fa-fw'></i></span>Fiix.One</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/" title="主页"><i class='fa fa-home'></i>  </a><a class="menu-item" href="/posts/" title="所有文章"><i class='fas fa-list-alt'></i> 归档 </a><a class="menu-item" href="/categories/" title="分类"><i class='fa fa-th'></i> 分类 </a><a class="menu-item" href="/tags/" title="标签"><i class='fas fa-tags fa-fw'></i> 标签 </a><a class="menu-item" href="/download/" title="Download"><i class='fas fa-cloud-download-alt'></i> 下载 </a><a class="menu-item" href="/about/" title="关于"><i class='fa fa-user'></i> 关于 </a><a class="menu-item" href="https://space.bilibili.com/471993083" title="B站" rel="noopener noreffer" target="_blank"><i class='fas fa-video' style='color:#FB7299'></i>  </a><a class="menu-item" href="http://git.fiix.one" title="Git 加速" rel="noopener noreffer" target="_blank"><i class='fas fa-tachometer-alt'></i>  </a><a class="menu-item" href="/tools.html" title="小工具"><i class='fas fa-location-arrow'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="FiixOne`Blog"><span class="header-title-pre"><i class='fab fa-blogger fa-fw'></i></span>Fiix.One</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/" title="主页"><i class='fa fa-home'></i></a><a class="menu-item" href="/posts/" title="所有文章"><i class='fas fa-list-alt'></i>归档</a><a class="menu-item" href="/categories/" title="分类"><i class='fa fa-th'></i>分类</a><a class="menu-item" href="/tags/" title="标签"><i class='fas fa-tags fa-fw'></i>标签</a><a class="menu-item" href="/download/" title="Download"><i class='fas fa-cloud-download-alt'></i>下载</a><a class="menu-item" href="/about/" title="关于"><i class='fa fa-user'></i>关于</a><a class="menu-item" href="https://space.bilibili.com/471993083" title="B站" rel="noopener noreffer" target="_blank"><i class='fas fa-video' style='color:#FB7299'></i></a><a class="menu-item" href="http://git.fiix.one" title="Git 加速" rel="noopener noreffer" target="_blank"><i class='fas fa-tachometer-alt'></i></a><a class="menu-item" href="/tools.html" title="小工具"><i class='fas fa-location-arrow'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Git命令使用方法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%85%B6%E4%BB%96/"><i class="far fa-folder fa-fw"></i>其他</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-15">2020-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2565 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#git-恢复到上次提交">Git 恢复到上次提交</a></li>
+    <li><a href="#git-add-撤销">Git Add 撤销</a></li>
+    <li><a href="#git-更改项目语言分类">Git 更改项目语言分类</a></li>
+    <li><a href="#git-强制放弃本地修改新增删除文件">Git 强制放弃本地修改（新增、删除文件）</a></li>
+    <li><a href="#git-工具---子模块">Git 工具 - 子模块</a>
+      <ul>
+        <li><a href="#开始使用子模块">开始使用子模块</a></li>
+        <li><a href="#克隆含有子模块的项目">克隆含有子模块的项目</a>
+          <ul>
+            <li><a href="#单独克隆了模块但忘记添加子模块注意">单独克隆了模块但忘记添加子模块（注意）</a></li>
+          </ul>
+        </li>
+        <li><a href="#从子模块的远端拉取上游修改">从子模块的远端拉取上游修改</a></li>
+        <li><a href="#从项目远端拉取上游更改">从项目远端拉取上游更改</a></li>
+      </ul>
+    </li>
+    <li><a href="#git基本常用命令如下">Git基本常用命令如下：</a></li>
+    <li><a href="#文献地址">文献地址</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>[toc]</p>
+<h2 id="git-恢复到上次提交">Git 恢复到上次提交</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git log   <span class="c1">#查询到需要恢复的版本</span>
+
+git reset --soft hash1  <span class="c1">#--soft 保存本地文件</span>
+git reset --hard hash2  <span class="c1">#--hard 本地文件也被恢复到上一个版本</span>
+
+git push origin HEAD --force
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="git-add-撤销">Git Add 撤销</h2>
+<p>撤销操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git status 					<span class="c1">#先看一下add 中的文件 </span>
+git reset HEAD 				<span class="c1">#撤销上一次add </span>
+git reset HEAD path/file.name <span class="c1">#单独撤销某个文件</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="git-更改项目语言分类">Git 更改项目语言分类</h2>
+<p>在项目目录中创建一个名为 &ldquo;<code>.gitattributes</code>&rdquo; 的文件，添加以下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">*.js linguist-language=Java
+</code></pre></td></tr></table>
+</div>
+</div><p>重新<code>git push</code>到 Github 上</p>
+<hr>
+<h2 id="git-强制放弃本地修改新增删除文件">Git 强制放弃本地修改（新增、删除文件）</h2>
+<p>本地修改了一些文件，其中包含修改、新增、删除的，不需要了想要丢弃
+<code>git check -- .</code>操作只放弃了修改的文件，新增和删除的仍然没有恢复
+使用如下命令：
+<code>git checkout . &amp;&amp; git clean -df</code></p>
+<p>可以放弃所有修改、新增、删除文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git checkout .  	//放弃本地修改，没有提交的可以回到未修改前版本
+git clean  			//是从工作目录中移除没有track的文件
+</code></pre></td></tr></table>
+</div>
+</div><p>通常的参数是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git clean -df 
+	-d 	<span class="c1">#表示同时移除目录,</span>
+	-f  <span class="c1">#表示force,在git的配置文件中, clean.requireForce=true,如果不加-f,clean将会拒绝执行.</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="git-工具---子模块">Git 工具 - 子模块</h2>
+<p><em><strong>项目嵌套子项目（仓库）</strong></em></p>
+<p>子模块允许你将一个 Git 仓库作为另一个 Git 仓库的子目录。 它能让你将另一个仓库克隆到自己的项目中，同时还保持提交的独立。</p>
+<h3 id="开始使用子模块">开始使用子模块</h3>
+<p>首先将一个<strong>已存在的 Git 仓库</strong>添加为<strong>正在工作的仓库的子模块</strong>。 你可以通过在 <code>git submodule add</code> 命令后面加上想要跟踪的项目的相对或绝对 URL 来添加新的子模块。</p>
+<p>在本例中，我们将会添加一个名为 “DbConnector” 的库。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git submodule add https://github.com/chaconinc/DbConnector
+Cloning into <span class="s1">&#39;DbConnector&#39;</span>...
+remote: Counting objects: 11, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>10/10<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">11</span> <span class="o">(</span>delta 0<span class="o">)</span>, reused <span class="m">11</span> <span class="o">(</span>delta 0<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>11/11<span class="o">)</span>, <span class="k">done</span>.
+Checking connectivity... <span class="k">done</span>.
+</code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，子模块会将子项目放到一个与仓库同名的目录中，如果你想要放到其他地方，那么可以在命令结尾添加一个不同的路径。</p>
+<p>运行 <code>git status</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git status
+On branch master
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+
+Changes to be committed:
+  <span class="o">(</span>use <span class="s2">&#34;git reset HEAD &lt;file&gt;...&#34;</span> to unstage<span class="o">)</span>
+
+	new file:   .gitmodules
+	new file:   DbConnector
+</code></pre></td></tr></table>
+</div>
+</div><p>注意产生到新的 <code>.gitmodules</code> 文件。 该配置文件保存了项目 <strong>URL <strong>与已经拉取的</strong>本地目录</strong>之间的映射：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>submodule <span class="s2">&#34;DbConnector&#34;</span><span class="o">]</span>
+	<span class="nv">path</span> <span class="o">=</span> DbConnector
+	<span class="nv">url</span> <span class="o">=</span> https://github.com/chaconinc/DbConnector
+</code></pre></td></tr></table>
+</div>
+</div><p>如果有多个子模块，该文件中就会有多条记录。 要重点注意的是，该文件也像 <code>.gitignore</code> 文件一样受到版本控制。 它会和该项目的其他部分一同被拉取推送。 这就是克隆该项目的人知道去哪获得子模块的原因。</p>
+<p>可以根据自己的需要，通过在本地执行 <code>git config submodule.DbConnector.url &lt;私有URL&gt;</code> 来覆盖这个选项的值</p>
+<p><code>DbConnector</code> 是工作目录中的一个子目录，但 Git 还是会将它视作一个子模块。当你不在那个目录中时，Git 并不会跟踪它的内容， 而是将它看作子模块仓库中的某个具体的提交。</p>
+<h3 id="克隆含有子模块的项目">克隆含有子模块的项目</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/chaconinc/MainProject
+Cloning into <span class="s1">&#39;MainProject&#39;</span>...
+remote: Counting objects: 14, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>13/13<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">14</span> <span class="o">(</span>delta 1<span class="o">)</span>, reused <span class="m">13</span> <span class="o">(</span>delta 0<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>14/14<span class="o">)</span>, <span class="k">done</span>.
+Checking connectivity... <span class="k">done</span>.
+$ <span class="nb">cd</span> MainProject
+$ ls -la
+total <span class="m">16</span>
+drwxr-xr-x   <span class="m">9</span> schacon  staff  <span class="m">306</span> Sep <span class="m">17</span> 15:21 .
+drwxr-xr-x   <span class="m">7</span> schacon  staff  <span class="m">238</span> Sep <span class="m">17</span> 15:21 ..
+drwxr-xr-x  <span class="m">13</span> schacon  staff  <span class="m">442</span> Sep <span class="m">17</span> 15:21 .git
+-rw-r--r--   <span class="m">1</span> schacon  staff   <span class="m">92</span> Sep <span class="m">17</span> 15:21 .gitmodules
+drwxr-xr-x   <span class="m">2</span> schacon  staff   <span class="m">68</span> Sep <span class="m">17</span> 15:21 DbConnector
+-rw-r--r--   <span class="m">1</span> schacon  staff  <span class="m">756</span> Sep <span class="m">17</span> 15:21 Makefile
+drwxr-xr-x   <span class="m">3</span> schacon  staff  <span class="m">102</span> Sep <span class="m">17</span> 15:21 includes
+drwxr-xr-x   <span class="m">4</span> schacon  staff  <span class="m">136</span> Sep <span class="m">17</span> 15:21 scripts
+drwxr-xr-x   <span class="m">4</span> schacon  staff  <span class="m">136</span> Sep <span class="m">17</span> 15:21 src
+$ <span class="nb">cd</span> DbConnector/
+$ ls
+$
+</code></pre></td></tr></table>
+</div>
+</div><p><code>DbConnector</code> 目录是空的。</p>
+<p>你必须运行两个命令：</p>
+<p><code>git submodule init</code> 用来初始化本地配置文件</p>
+<p><code>git submodule update</code> 则从该项目中抓取所有数据并检出父项目中列出的合适的提交。</p>
+<p>现在 <code>DbConnector</code> 子目录是处在和<strong>之前提交时相同的状态</strong>了</p>
+<blockquote>
+<p>更简单一点的方式。 如果给 <code>git clone</code> 命令传递 <code>--recurse-submodules</code> 选项，它就会自动初始化并更新仓库中的每一个子模块， 包括可能存在的嵌套子模块。</p>
+</blockquote>
+<h4 id="单独克隆了模块但忘记添加子模块注意">单独克隆了模块但忘记添加子模块（注意）</h4>
+<p>已经克隆了项目但忘记了 <code>--recurse-submodules</code>，</p>
+<p>那么可以运行 <code>git submodule update --init</code> 将 <code>git submodule init</code> 和 <code>git submodule update</code> 合并成一步。</p>
+<p>如果还要初始化、抓取并检出任何嵌套的子模块， 请使用简明的 <code>git submodule update --init --recursive</code>。</p>
+<h3 id="从子模块的远端拉取上游修改">从子模块的远端拉取上游修改</h3>
+<p>如果你不想在子目录中手动抓取与合并，那么还有种更容易的方式。 运行 <code>git submodule update --remote</code>，Git 将会进入子模块然后抓取并更新。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git submodule update --remote DbConnector
+remote: Counting objects: 4, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">4</span> <span class="o">(</span>delta 2<span class="o">)</span>, reused <span class="m">4</span> <span class="o">(</span>delta 2<span class="o">)</span>
+Unpacking objects: 100% <span class="o">(</span>4/4<span class="o">)</span>, <span class="k">done</span>.
+From https://github.com/chaconinc/DbConnector
+   3f19983..d0354fc  master     -&gt; origin/master
+Submodule path <span class="s1">&#39;DbConnector&#39;</span>: checked out <span class="s1">&#39;d0354fc054692d3906c85c3af05ddce39a1c0644&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>此命令默认会假定你想要更新并检出子模块仓库的 <code>master</code> 分支。</p>
+<h3 id="从项目远端拉取上游更改">从项目远端拉取上游更改</h3>
+<p>协作者的视角，他自己的 <code>MainProject</code> 仓库的本地克隆， 只是执行 <code>git pull</code> 获取子模块的新提交的更改还不够：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git pull
+From https://github.com/chaconinc/MainProject
+   fb9093c..0a24cfc  master     -&gt; origin/master
+Fetching submodule DbConnector
+From https://github.com/chaconinc/DbConnector
+   c3f01dc..c87d55d  stable     -&gt; origin/stable
+Updating fb9093c..0a24cfc
+Fast-forward
+ .gitmodules         <span class="p">|</span> <span class="m">2</span> +-
+ DbConnector         <span class="p">|</span> <span class="m">2</span> +-
+ <span class="m">2</span> files changed, <span class="m">2</span> insertions<span class="o">(</span>+<span class="o">)</span>, <span class="m">2</span> deletions<span class="o">(</span>-<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git status
+ On branch master
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+Changes not staged <span class="k">for</span> commit:
+  <span class="o">(</span>use <span class="s2">&#34;git add &lt;file&gt;...&#34;</span> to update what will be committed<span class="o">)</span>
+  <span class="o">(</span>use <span class="s2">&#34;git checkout -- &lt;file&gt;...&#34;</span> to discard changes in working directory<span class="o">)</span>
+
+	modified:   DbConnector <span class="o">(</span>new commits<span class="o">)</span>
+
+Submodules changed but not updated:
+
+* DbConnector c87d55d...c3f01dc <span class="o">(</span>4<span class="o">)</span>:
+  &lt; catch non-null terminated lines
+  &lt; more robust error handling
+  &lt; more efficient db routine
+  &lt; better connection routine
+
+no changes added to commit <span class="o">(</span>use <span class="s2">&#34;git add&#34;</span> and/or <span class="s2">&#34;git commit -a&#34;</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，<code>git pull</code> 命令会递归地<strong>抓取子模块的更改</strong>，如上面第一个命令的输出所示。 然而，它<strong>不会在主项目中更新子模块</strong>。</p>
+<p>这点可通过 <code>git status</code> 命令看到，它会显示子模块“已修改”，且“有新的提交”。</p>
+<p>此外，左边的尖括号（&lt;）指出了新的提交，表示这些提交已在 MainProject 中记录，但尚未在本地的 <code>DbConnector</code> 中检出。</p>
+<p>为了完成在主项目的更新，你需要运行 <code>git submodule update</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ git submodule update --init --recursive
+Submodule path <span class="s1">&#39;vendor/plugins/demo&#39;</span>: checked out <span class="s1">&#39;48679c6302815f6c76f1fe30625d795d9e55fc56&#39;</span>
+
+$ git status
+ On branch master
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+nothing to commit, working tree clean
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="git基本常用命令如下">Git基本常用命令如下：</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">　　mkdir：         XX (创建一个空目录 XX指目录名)
+
+　　pwd：          显示当前目录的路径。
+
+　　git init          把当前的目录变成可以管理的git仓库，生成隐藏.git文件。
+
+　　git add XX       把xx文件添加到暂存区去。
+
+　　git commit –m “XX”  提交文件 –m 后面的是注释。
+
+　　git status        查看仓库状态
+
+　　git diff  XX      查看XX文件修改了那些内容
+
+　　git log          查看历史记录
+
+　　git reset  --hard HEAD^ 或者 git reset  --hard HEAD~ 回退到上一个版本
+
+　　(如果想回退到100个版本，使用git reset –hard HEAD~100 )
+
+　　cat XX         查看XX文件内容
+
+　　git reflog       查看历史记录的版本号id
+
+　　git checkout -- XX  把XX文件在工作区的修改全部撤销。
+
+　　git rm XX          删除XX文件
+
+　　git remote add origin https://github.com/username/testgit 关联一个远程库
+
+　　git push –u(第一次要用-u 以后不需要) origin master 把当前master分支推送到远程库
+
+　　git clone https://github.com/username/testgit  从远程库中克隆
+
+　　git checkout –b dev  创建dev分支 并切换到dev分支上
+
+　　git branch  查看当前所有的分支
+
+　　git checkout master 切换回master分支
+
+　　git merge dev    在当前的分支上合并dev分支
+
+　　git branch –d dev 删除dev分支
+
+　　git branch name  创建分支
+
+　　git stash 把当前的工作隐藏起来 等以后恢复现场后继续工作
+
+　　git stash list 查看所有被隐藏的文件列表
+
+　　git stash apply 恢复被隐藏的文件，但是内容不删除
+
+　　git stash drop 删除文件
+
+　　git stash pop 恢复文件的同时 也删除文件
+
+　　git remote 查看远程库的信息
+
+　　git remote –v 查看远程库的详细信息
+
+　　git push origin master  Git会把master分支推送到远程库对应的远程分支上
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="文献地址">文献地址</h2>
+<p>部分文献摘录于：<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97" target="_blank" rel="noopener noreffer">git-scm.com</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-10-15</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" data-title="Git命令使用方法"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" data-title="Git命令使用方法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/baidu.svg"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://fiix.one/posts/git%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" data-title="Git命令使用方法"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/git/">Git</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/bash%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E8%89%BA%E6%9C%AF/" class="prev" rel="prev" title="Bash命令行的艺术"><i class="fas fa-angle-left fa-fw"></i>Bash命令行的艺术</a>
+            <a href="/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/" class="next" rel="next" title="命令行使用代理">命令行使用代理<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://fiix.one" target="_blank">FiixOne</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" ><img alt="知识共享许可协议" style="top:50%; margin:-3px;" src="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/cc/cc-by-nc-sa.svg"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":20,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

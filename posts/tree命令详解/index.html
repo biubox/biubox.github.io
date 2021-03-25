@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Tree命令详解 - FiixOne`Blog</title><meta name="Description" content="FiixOne Blog"><meta property="og:title" content="Tree命令详解" />
+<meta property="og:description" content="例如:
+
+
+1
+2
+
+
+tree -C -L 3 -T &#34;文件下载列表&#34; -H &#34;&#34; -I &#34;*.html|img|en-US|icons&#34; --charset=utf8 -o index.html
+tree -C -L 3 -D -h --dirsfirst -F -T &#34;文件下载列表&#34; -H &#34;&#34; -I &#34;*.html|*.sh&#34; --charset=utf8 -o index.html
+
+
+详解:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-26T19:19:33&#43;08:00" />
+<meta property="article:modified_time" content="2021-01-26T19:19:33&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"/>
+
+<meta name="twitter:title" content="Tree命令详解"/>
+<meta name="twitter:description" content="例如:
+
+
+1
+2
+
+
+tree -C -L 3 -T &#34;文件下载列表&#34; -H &#34;&#34; -I &#34;*.html|img|en-US|icons&#34; --charset=utf8 -o index.html
+tree -C -L 3 -D -h --dirsfirst -F -T &#34;文件下载列表&#34; -H &#34;&#34; -I &#34;*.html|*.sh&#34; --charset=utf8 -o index.html
+
+
+详解:"/>
+<meta name="application-name" content="FiixOne`Blog">
+<meta name="apple-mobile-web-app-title" content="FiixOne`Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/logo.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="https://fiix.one/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/" /><link rel="next" href="https://fiix.one/posts/home/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Tree命令详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/fiix.one\/posts\/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3\/"
+        },"image": ["https:\/\/cdn.jsdelivr.net\/gh\/biubox\/biubox.github.io@main\/img\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Bash","wordcount":  1214 ,
+        "url": "https:\/\/fiix.one\/posts\/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3\/","datePublished": "2021-01-26T19:19:33+08:00","dateModified": "2021-01-26T19:19:33+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "FiixOne","logo": "https:\/\/cdn.jsdelivr.net\/gh\/biubox\/biubox.github.io@main\/img\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "FiixOne"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="FiixOne`Blog"><span class="header-title-pre"><i class='fab fa-blogger fa-fw'></i></span>Fiix.One</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/" title="主页"><i class='fa fa-home'></i>  </a><a class="menu-item" href="/posts/" title="所有文章"><i class='fas fa-list-alt'></i> 归档 </a><a class="menu-item" href="/categories/" title="分类"><i class='fa fa-th'></i> 分类 </a><a class="menu-item" href="/tags/" title="标签"><i class='fas fa-tags fa-fw'></i> 标签 </a><a class="menu-item" href="/download/" title="Download"><i class='fas fa-cloud-download-alt'></i> 下载 </a><a class="menu-item" href="/about/" title="关于"><i class='fa fa-user'></i> 关于 </a><a class="menu-item" href="https://space.bilibili.com/471993083" title="B站" rel="noopener noreffer" target="_blank"><i class='fas fa-video' style='color:#FB7299'></i>  </a><a class="menu-item" href="http://git.fiix.one" title="Git 加速" rel="noopener noreffer" target="_blank"><i class='fas fa-tachometer-alt'></i>  </a><a class="menu-item" href="/tools.html" title="小工具"><i class='fas fa-location-arrow'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="FiixOne`Blog"><span class="header-title-pre"><i class='fab fa-blogger fa-fw'></i></span>Fiix.One</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/" title="主页"><i class='fa fa-home'></i></a><a class="menu-item" href="/posts/" title="所有文章"><i class='fas fa-list-alt'></i>归档</a><a class="menu-item" href="/categories/" title="分类"><i class='fa fa-th'></i>分类</a><a class="menu-item" href="/tags/" title="标签"><i class='fas fa-tags fa-fw'></i>标签</a><a class="menu-item" href="/download/" title="Download"><i class='fas fa-cloud-download-alt'></i>下载</a><a class="menu-item" href="/about/" title="关于"><i class='fa fa-user'></i>关于</a><a class="menu-item" href="https://space.bilibili.com/471993083" title="B站" rel="noopener noreffer" target="_blank"><i class='fas fa-video' style='color:#FB7299'></i></a><a class="menu-item" href="http://git.fiix.one" title="Git 加速" rel="noopener noreffer" target="_blank"><i class='fas fa-tachometer-alt'></i></a><a class="menu-item" href="/tools.html" title="小工具"><i class='fas fa-location-arrow'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Tree命令详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://fiix.one" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>FiixOne</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a>&nbsp;<a href="/categories/bash/"><i class="far fa-folder fa-fw"></i>Bash</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-26">2021-01-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1214 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#例如">例如:</a></li>
+    <li><a href="#详解">详解:</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="例如">例如:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">tree -C -L <span class="m">3</span> -T <span class="s2">&#34;文件下载列表&#34;</span> -H <span class="s2">&#34;&#34;</span> -I <span class="s2">&#34;*.html|img|en-US|icons&#34;</span> --charset<span class="o">=</span>utf8 -o index.html
+tree -C -L <span class="m">3</span> -D -h --dirsfirst -F -T <span class="s2">&#34;文件下载列表&#34;</span> -H <span class="s2">&#34;&#34;</span> -I <span class="s2">&#34;*.html|*.sh&#34;</span> --charset<span class="o">=</span>utf8 -o index.html
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="详解">详解:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ tree --help
+usage: tree <span class="o">[</span>-adfghilnpqrstuvxACDFNS<span class="o">]</span> <span class="o">[</span>-H baseHREF<span class="o">]</span> <span class="o">[</span>-T title <span class="o">]</span> <span class="o">[</span>-L level <span class="o">[</span>-R<span class="o">]]</span>
+        <span class="o">[</span>-P pattern<span class="o">]</span> <span class="o">[</span>-I pattern<span class="o">]</span> <span class="o">[</span>-o filename<span class="o">]</span> <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> <span class="o">[</span>--inodes<span class="o">]</span>
+        <span class="o">[</span>--device<span class="o">]</span> <span class="o">[</span>--noreport<span class="o">]</span> <span class="o">[</span>--nolinks<span class="o">]</span> <span class="o">[</span>--dirsfirst<span class="o">]</span> <span class="o">[</span>--charset charset<span class="o">]</span>
+        <span class="o">[</span>--filelimit <span class="c1">#] [&lt;directory list&gt;]</span>
+  -a            All files are listed<span class="o">(</span>列出所有文件<span class="o">)</span>.
+  -d            List directories only<span class="o">(</span>只列出目录<span class="o">)</span>.
+  -l            Follow symbolic links like directories.<span class="o">(</span>遵循象目录这样的符号链接<span class="o">)</span>
+  -f            Print the full path prefix <span class="k">for</span> each file<span class="o">(</span>打印每个文件的完整路径前缀<span class="o">)</span>.
+  -i            Don<span class="s1">&#39;t print indentation lines()不要打印压痕线.
+</span><span class="s1">  -q            Print non-printable characters as &#39;</span>?<span class="s1">&#39;.(将不可打印字符打印为&#39;</span>?<span class="s1">&#39;。)
+</span><span class="s1">  -N            Print non-printable characters as is.(按原样打印不可打印字符)
+</span><span class="s1">  -p            Print the protections for each file.(打印每个文件的保护)
+</span><span class="s1">  -u            Displays file owner or UID number(显示文件所有者或UID号).
+</span><span class="s1">  -g            Displays file group owner or GID number.(显示文件组所有者或GID编号)
+</span><span class="s1">  -s            Print the size in bytes of each file.(打印每个文件的字节大小)
+</span><span class="s1">  -h            Print the size in a more human readable way.(以更容易被人阅读的方式打印尺寸)
+</span><span class="s1">  -D            Print the date of last modification.(打印上次修改的日期)
+</span><span class="s1">  -F            Appends &#39;</span>/<span class="s1">&#39;, &#39;</span><span class="o">=</span><span class="s1">&#39;, &#39;</span>*<span class="s1">&#39;, or &#39;</span><span class="p">|</span><span class="s1">&#39; as per ls -F.(根据ls -F添加&#39;</span>/<span class="s1">&#39;、&#39;</span><span class="o">=</span><span class="s1">&#39;、&#39;</span>*<span class="s1">&#39;或&#39;</span><span class="p">|</span><span class="err">&#39;</span>。<span class="o">)</span>
+  -v            Sort files alphanumerically by version.<span class="o">(</span>按版本对文件进行字母数字排序<span class="o">)</span>
+  -r            Sort files in reverse alphanumeric order.<span class="o">(</span>按字母数字倒序排列文件。<span class="o">)</span>
+  -t            Sort files by last modification time.<span class="o">(</span>按上次修改时间排序文件<span class="o">)</span>
+  -x            Stay on current filesystem only.<span class="o">(</span>只保留当前文件系统<span class="o">)</span>
+  -L level      Descend only level directories deep.<span class="o">(</span>只向下深入到级别目录<span class="o">)</span>
+  -A            Print ANSI lines graphic indentation lines.<span class="o">(</span>打印ANSI线图形压痕线<span class="o">)</span>
+  -S            Print with ASCII graphics indentation lines.<span class="o">(</span>用ASCII图形缩进行打印<span class="o">)</span>
+  -n            Turn colorization off always <span class="o">(</span>-C overrides<span class="o">)</span>.<span class="o">(</span>始终关闭着色<span class="o">(</span>-C覆盖<span class="o">))</span>
+  -C            Turn colorization on always.<span class="o">(</span>始终打开彩色化<span class="o">)</span>
+  -P pattern    List only those files that match the pattern given.<span class="o">(</span>只列出与给定模式匹配的文件<span class="o">)</span>
+  -I pattern    Do not list files that match the given pattern.<span class="o">(</span>不要列出与给定模式匹配的文件<span class="o">)</span>
+  -H baseHREF   Prints out HTML format with baseHREF as top directory.<span class="o">(</span>打印出以baseHREF作为顶部目录的HTML格式<span class="o">)</span>
+  -T string     Replace the default HTML title and H1 header with string.<span class="o">(</span>用字符串替换默认的HTML标题和H1标题<span class="o">)</span>
+  -R            Rerun tree when max dir level reached.<span class="o">(</span>当达到最大dir级别时重新运行树<span class="o">)</span>
+  -o file       Output to file instead of stdout.<span class="o">(</span>输出到文件而不是stdout。<span class="o">)</span>
+  --inodes      Print inode number of each file.<span class="o">(</span>打印每个文件的inode编号<span class="o">)</span>
+  --device      Print device ID number to which each file belongs.<span class="o">(</span>打印每个文件所属的设备ID号<span class="o">)</span>
+  --noreport    Turn off file/directory count at end of tree listing.<span class="o">(</span>在树列表末尾关闭文件/目录计数<span class="o">)</span>
+  --nolinks     Turn off hyperlinks in HTML output<span class="o">(</span>关闭HTML输出中的超链接<span class="o">)</span>.
+  --dirsfirst   List directories before files.<span class="o">(</span>在文件之前列出目录<span class="o">)</span>
+  --charset X   Use charset X <span class="k">for</span> HTML and indentation line output.<span class="o">(</span>使用charset X作为HTML和缩进行输出<span class="o">)</span>
+  --filelimit <span class="c1"># Do not descend dirs with more than # files in them.(不要下载包含超过#文件的dirs)</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-01-26</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" data-title="Tree命令详解"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" data-title="Tree命令详解"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/baidu.svg"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" data-title="Tree命令详解"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/bash/">Bash</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/" class="prev" rel="prev" title="命令行使用代理"><i class="fas fa-angle-left fa-fw"></i>命令行使用代理</a>
+            <a href="/posts/home/" class="next" rel="next" title="主页">主页<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://fiix.one" target="_blank">FiixOne</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" ><img alt="知识共享许可协议" style="top:50%; margin:-3px;" src="https://cdn.jsdelivr.net/gh/biubox/biubox.github.io@main/img/cc/cc-by-nc-sa.svg"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":20,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

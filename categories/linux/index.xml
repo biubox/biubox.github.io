@@ -1,0 +1,2187 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Linux - 分类 - FiixOne`Blog</title>
+        <link>https://fiix.one/categories/linux/</link>
+        <description>Linux - 分类 - FiixOne`Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fiixone@163.com (FiixOne)</managingEditor>
+            <webMaster>fiixone@163.com (FiixOne)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 26 Jan 2021 19:19:33 &#43;0800</lastBuildDate><atom:link href="https://fiix.one/categories/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Tree命令详解</title>
+    <link>https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Tue, 26 Jan 2021 19:19:33 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/tree%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[<h2 id="例如">例如:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">tree -C -L <span class="m">3</span> -T <span class="s2">&#34;文件下载列表&#34;</span> -H <span class="s2">&#34;&#34;</span> -I <span class="s2">&#34;*.html|img|en-US|icons&#34;</span> --charset<span class="o">=</span>utf8 -o index.html
+tree -C -L <span class="m">3</span> -D -h --dirsfirst -F -T <span class="s2">&#34;文件下载列表&#34;</span> -H <span class="s2">&#34;&#34;</span> -I <span class="s2">&#34;*.html|*.sh&#34;</span> --charset<span class="o">=</span>utf8 -o index.html
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="详解">详解:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ tree --help
+usage: tree <span class="o">[</span>-adfghilnpqrstuvxACDFNS<span class="o">]</span> <span class="o">[</span>-H baseHREF<span class="o">]</span> <span class="o">[</span>-T title <span class="o">]</span> <span class="o">[</span>-L level <span class="o">[</span>-R<span class="o">]]</span>
+        <span class="o">[</span>-P pattern<span class="o">]</span> <span class="o">[</span>-I pattern<span class="o">]</span> <span class="o">[</span>-o filename<span class="o">]</span> <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> <span class="o">[</span>--inodes<span class="o">]</span>
+        <span class="o">[</span>--device<span class="o">]</span> <span class="o">[</span>--noreport<span class="o">]</span> <span class="o">[</span>--nolinks<span class="o">]</span> <span class="o">[</span>--dirsfirst<span class="o">]</span> <span class="o">[</span>--charset charset<span class="o">]</span>
+        <span class="o">[</span>--filelimit <span class="c1">#] [&lt;directory list&gt;]</span>
+  -a            All files are listed<span class="o">(</span>列出所有文件<span class="o">)</span>.
+  -d            List directories only<span class="o">(</span>只列出目录<span class="o">)</span>.
+  -l            Follow symbolic links like directories.<span class="o">(</span>遵循象目录这样的符号链接<span class="o">)</span>
+  -f            Print the full path prefix <span class="k">for</span> each file<span class="o">(</span>打印每个文件的完整路径前缀<span class="o">)</span>.
+  -i            Don<span class="s1">&#39;t print indentation lines()不要打印压痕线.
+</span><span class="s1">  -q            Print non-printable characters as &#39;</span>?<span class="s1">&#39;.(将不可打印字符打印为&#39;</span>?<span class="s1">&#39;。)
+</span><span class="s1">  -N            Print non-printable characters as is.(按原样打印不可打印字符)
+</span><span class="s1">  -p            Print the protections for each file.(打印每个文件的保护)
+</span><span class="s1">  -u            Displays file owner or UID number(显示文件所有者或UID号).
+</span><span class="s1">  -g            Displays file group owner or GID number.(显示文件组所有者或GID编号)
+</span><span class="s1">  -s            Print the size in bytes of each file.(打印每个文件的字节大小)
+</span><span class="s1">  -h            Print the size in a more human readable way.(以更容易被人阅读的方式打印尺寸)
+</span><span class="s1">  -D            Print the date of last modification.(打印上次修改的日期)
+</span><span class="s1">  -F            Appends &#39;</span>/<span class="s1">&#39;, &#39;</span><span class="o">=</span><span class="s1">&#39;, &#39;</span>*<span class="s1">&#39;, or &#39;</span><span class="p">|</span><span class="s1">&#39; as per ls -F.(根据ls -F添加&#39;</span>/<span class="s1">&#39;、&#39;</span><span class="o">=</span><span class="s1">&#39;、&#39;</span>*<span class="s1">&#39;或&#39;</span><span class="p">|</span><span class="err">&#39;</span>。<span class="o">)</span>
+  -v            Sort files alphanumerically by version.<span class="o">(</span>按版本对文件进行字母数字排序<span class="o">)</span>
+  -r            Sort files in reverse alphanumeric order.<span class="o">(</span>按字母数字倒序排列文件。<span class="o">)</span>
+  -t            Sort files by last modification time.<span class="o">(</span>按上次修改时间排序文件<span class="o">)</span>
+  -x            Stay on current filesystem only.<span class="o">(</span>只保留当前文件系统<span class="o">)</span>
+  -L level      Descend only level directories deep.<span class="o">(</span>只向下深入到级别目录<span class="o">)</span>
+  -A            Print ANSI lines graphic indentation lines.<span class="o">(</span>打印ANSI线图形压痕线<span class="o">)</span>
+  -S            Print with ASCII graphics indentation lines.<span class="o">(</span>用ASCII图形缩进行打印<span class="o">)</span>
+  -n            Turn colorization off always <span class="o">(</span>-C overrides<span class="o">)</span>.<span class="o">(</span>始终关闭着色<span class="o">(</span>-C覆盖<span class="o">))</span>
+  -C            Turn colorization on always.<span class="o">(</span>始终打开彩色化<span class="o">)</span>
+  -P pattern    List only those files that match the pattern given.<span class="o">(</span>只列出与给定模式匹配的文件<span class="o">)</span>
+  -I pattern    Do not list files that match the given pattern.<span class="o">(</span>不要列出与给定模式匹配的文件<span class="o">)</span>
+  -H baseHREF   Prints out HTML format with baseHREF as top directory.<span class="o">(</span>打印出以baseHREF作为顶部目录的HTML格式<span class="o">)</span>
+  -T string     Replace the default HTML title and H1 header with string.<span class="o">(</span>用字符串替换默认的HTML标题和H1标题<span class="o">)</span>
+  -R            Rerun tree when max dir level reached.<span class="o">(</span>当达到最大dir级别时重新运行树<span class="o">)</span>
+  -o file       Output to file instead of stdout.<span class="o">(</span>输出到文件而不是stdout。<span class="o">)</span>
+  --inodes      Print inode number of each file.<span class="o">(</span>打印每个文件的inode编号<span class="o">)</span>
+  --device      Print device ID number to which each file belongs.<span class="o">(</span>打印每个文件所属的设备ID号<span class="o">)</span>
+  --noreport    Turn off file/directory count at end of tree listing.<span class="o">(</span>在树列表末尾关闭文件/目录计数<span class="o">)</span>
+  --nolinks     Turn off hyperlinks in HTML output<span class="o">(</span>关闭HTML输出中的超链接<span class="o">)</span>.
+  --dirsfirst   List directories before files.<span class="o">(</span>在文件之前列出目录<span class="o">)</span>
+  --charset X   Use charset X <span class="k">for</span> HTML and indentation line output.<span class="o">(</span>使用charset X作为HTML和缩进行输出<span class="o">)</span>
+  --filelimit <span class="c1"># Do not descend dirs with more than # files in them.(不要下载包含超过#文件的dirs)</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>命令行使用代理</title>
+    <link>https://fiix.one/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/</link>
+    <pubDate>Fri, 23 Oct 2020 08:29:17 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86/</guid>
+    <description><![CDATA[<h2 id="命令行使用代理">命令行使用代理</h2>
+<blockquote>
+<p>基本原理一样，触类旁通</p>
+</blockquote>
+<h3 id="设置环境变量临时生效">设置环境变量,临时生效</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>https://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="设置环境变量永久生效">设置环境变量,永久生效</h3>
+<p>修改 <code>~/.bash.rc</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080&#34;</span>
+<span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080&#34;</span>
+<span class="c1"># 无需代理的主机或域名，可使用通配符</span>
+<span class="nb">export</span> <span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&#34;localhost, 127.0.0.1, ::1, 10.*.*.*,&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="取消设置环境变量">取消设置环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">unset</span> http_proxy
+<span class="nb">unset</span> https_proxy
+<span class="nb">unset</span> ftp_proxy
+<span class="nb">unset</span> all_proxy
+<span class="nb">unset</span> no_proxy
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="apt-get代理临时生效">apt-get代理,临时生效</h3>
+<p>在命令行临时带入
+在<code>apt</code>命令后面增加<code>-o</code>选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get -o Acquire::http::proxy<span class="o">=</span><span class="s2">&#34;http://127.0.0.1:1080/&#34;</span>  update
+sudo apt-get -o Acquire::https::proxy<span class="o">=</span><span class="s2">&#34;https://127.0.0.1:1080/&#34;</span>  update
+sudo apt-get -o Acquire:🧦:proxy<span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:1080/&#34;</span>  update
+<span class="c1"># 注意上面的使用&#39;socks&#39;是正确的，链接才是&#39;socks5&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="apt-get代理永久生效">apt-get代理,永久生效</h3>
+<p>修改 <code>/etc/apt/apt.conf</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">Acquire:🧦:proxy <span class="s2">&#34;socks5://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::http::proxy <span class="s2">&#34;http://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::https::proxy <span class="s2">&#34;https://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+Acquire::ftp::proxy <span class="s2">&#34;ftp://127.0.0.1:1080/&#34;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>Bash命令行的艺术</title>
+    <link>https://fiix.one/posts/bash%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E8%89%BA%E6%9C%AF/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/bash%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E8%89%BA%E6%9C%AF/</guid>
+    <description><![CDATA[<p>🌍
+<em><a href="README-cs.md" rel="">Čeština</a> ∙ <a href="README-de.md" rel="">Deutsch</a> ∙ <a href="README-el.md" rel="">Ελληνικά</a> ∙ <a href="README.md" rel="">English</a> ∙ <a href="README-es.md" rel="">Español</a> ∙ <a href="README-fr.md" rel="">Français</a> ∙ <a href="README-id.md" rel="">Indonesia</a> ∙ <a href="README-it.md" rel="">Italiano</a> ∙ <a href="README-ja.md" rel="">日本語</a> ∙ <a href="README-ko.md" rel="">한국어</a> ∙ <a href="README-pt.md" rel="">Português</a> ∙ <a href="README-ro.md" rel="">Română</a> ∙ <a href="README-ru.md" rel="">Русский</a> ∙ <a href="README-sl.md" rel="">Slovenščina</a> ∙ <a href="README-uk.md" rel="">Українська</a> ∙ <a href="README-zh.md" rel="">简体中文</a> ∙ <a href="README-zh-Hant.md" rel="">繁體中文</a></em></p>
+<h1 id="bash命令行的艺术">Bash命令行的艺术</h1>
+<p><a href="https://gitter.im/jlevy/the-art-of-command-line?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge" target="_blank" rel="noopener noreffer"></a></p>
+<ul>
+<li><a href="#%e5%89%8d%e8%a8%80" rel="">前言</a></li>
+<li><a href="#%e5%9f%ba%e7%a1%80" rel="">基础</a></li>
+<li><a href="#%e6%97%a5%e5%b8%b8%e4%bd%bf%e7%94%a8" rel="">日常使用</a></li>
+<li><a href="#%e6%96%87%e4%bb%b6%e5%8f%8a%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86" rel="">文件及数据处理</a></li>
+<li><a href="#%e7%b3%bb%e7%bb%9f%e8%b0%83%e8%af%95" rel="">系统调试</a></li>
+<li><a href="#%e5%8d%95%e8%a1%8c%e8%84%9a%e6%9c%ac" rel="">单行脚本</a></li>
+<li><a href="#%e5%86%b7%e9%97%a8%e4%bd%86%e6%9c%89%e7%94%a8" rel="">冷门但有用</a></li>
+<li><a href="#%e4%bb%85%e9%99%90-os-x-%e7%b3%bb%e7%bb%9f" rel="">仅限 OS X 系统</a></li>
+<li><a href="#%e4%bb%85%e9%99%90-windows-%e7%b3%bb%e7%bb%9f" rel="">仅限 Windows 系统</a></li>
+<li><a href="#%e6%9b%b4%e5%a4%9a%e8%b5%84%e6%ba%90" rel="">更多资源</a></li>
+<li><a href="#%e5%85%8d%e8%b4%a3%e5%a3%b0%e6%98%8e" rel="">免责声明</a></li>
+</ul>
+<p></p>
+<p>熟练使用命令行是一种常常被忽视，或被认为难以掌握的技能，但实际上，它会提高你作为工程师的灵活性以及生产力。本文是一份我在 Linux 上工作时，发现的一些命令行使用技巧的摘要。有些技巧非常基础，而另一些则相当复杂，甚至晦涩难懂。这篇文章并不长，但当你能够熟练掌握这里列出的所有技巧时，你就学会了很多关于命令行的东西了。</p>
+<p>这篇文章是<a href="AUTHORS.md" rel="">许多作者和译者</a>共同的成果。
+这里的部分内容
+<a href="http://www.quora.com/What-are-some-lesser-known-but-useful-Unix-commands" target="_blank" rel="noopener noreffer">首次</a>
+<a href="http://www.quora.com/What-are-the-most-useful-Swiss-army-knife-one-liners-on-Unix" target="_blank" rel="noopener noreffer">出现</a>
+于 <a href="http://www.quora.com/What-are-some-time-saving-tips-that-every-Linux-user-should-know" target="_blank" rel="noopener noreffer">Quora</a>，
+但已经迁移到了 Github，并由众多高手做出了许多改进。
+如果你在本文中发现了错误或者存在可以改善的地方，请<a href="/CONTRIBUTING.md" rel=""><strong>贡献你的一份力量</strong></a>。</p>
+<h2 id="前言">前言</h2>
+<p>涵盖范围：</p>
+<ul>
+<li>这篇文章不仅能帮助刚接触命令行的新手，而且对具有经验的人也大有裨益。本文致力于做到<em>覆盖面广</em>（涉及所有重要的内容），<em>具体</em>（给出具体的最常用的例子），以及<em>简洁</em>（避免冗余的内容，或是可以在其他地方轻松查到的细枝末节）。在特定应用场景下，本文的内容属于基本功或者能帮助您节约大量的时间。</li>
+<li>本文主要为 Linux 所写，但在<a href="#%e4%bb%85%e9%99%90-os-x-%e7%b3%bb%e7%bb%9f" rel="">仅限 OS X 系统</a>章节和<a href="#%e4%bb%85%e9%99%90-windows-%e7%b3%bb%e7%bb%9f" rel="">仅限 Windows 系统</a>章节中也包含有对应操作系统的内容。除去这两个章节外，其它的内容大部分均可在其他类 Unix 系统或 OS X，甚至 Cygwin 中得到应用。</li>
+<li>本文主要关注于交互式 Bash，但也有很多技巧可以应用于其他 shell 和 Bash 脚本当中。</li>
+<li>除去“标准的”Unix 命令，本文还包括了一些依赖于特定软件包的命令（前提是它们具有足够的价值）。</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>为了能在一页内展示尽量多的东西，一些具体的信息可以在引用的页面中找到。我们相信机智的你知道如何使用 Google 或者其他搜索引擎来查阅到更多的详细信息。文中部分命令需要您使用 <code>apt-get</code>，<code>yum</code>，<code>dnf</code>，<code>pacman</code>，
+<code>pip</code> 或 <code>brew</code>（以及其它合适的包管理器）来安装依赖的程序。</li>
+<li>遇到问题的话，请尝试使用 <a href="http://explainshell.com/" target="_blank" rel="noopener noreffer">Explainshell</a> 去获取相关命令、参数、管道等内容的解释。</li>
+</ul>
+<h2 id="基础">基础</h2>
+<ul>
+<li>
+<p>学习 Bash 的基础知识。具体地，在命令行中输入 <code>man bash</code> 并至少全文浏览一遍; 它理解起来很简单并且不冗长。其他的 shell 可能很好用，但 Bash 的功能已经足够强大并且到几乎总是可用的（ 如果你<em>只</em>学习 zsh，fish 或其他的 shell 的话，在你自己的设备上会显得很方便，但过度依赖这些功能会给您带来不便，例如当你需要在服务器上工作时）。</p>
+</li>
+<li>
+<p>熟悉至少一个基于文本的编辑器。通常而言 Vim （<code>vi</code>） 会是你最好的选择，毕竟在终端中编辑文本时 Vim 是最好用的工具（甚至大部分情况下 Vim 要比 Emacs、大型 IDE 或是炫酷的编辑器更好用）。</p>
+</li>
+<li>
+<p>学会如何使用 <code>man</code> 命令去阅读文档。学会使用 <code>apropos</code> 去查找文档。知道有些命令并不对应可执行文件，而是在 Bash 内置好的，此时可以使用 <code>help</code> 和 <code>help -d</code> 命令获取帮助信息。你可以用 <code>type 命令</code> 来判断这个命令到底是可执行文件、shell 内置命令还是别名。</p>
+</li>
+<li>
+<p>学会使用 <code>&gt;</code> 和 <code>&lt;</code> 来重定向输出和输入，学会使用 <code>|</code> 来重定向管道。明白 <code>&gt;</code> 会覆盖了输出文件而 <code>&gt;&gt;</code> 是在文件末添加。了解标准输出 stdout 和标准错误 stderr。</p>
+</li>
+<li>
+<p>学会使用通配符 <code>*</code> （或许再算上 <code>?</code> 和 <code>[</code>&hellip;<code>]</code>） 和引用以及引用中 <code>'</code> 和 <code>&quot;</code> 的区别（后文中有一些具体的例子）。</p>
+</li>
+<li>
+<p>熟悉 Bash 中的任务管理工具：<code>&amp;</code>，<strong>ctrl-z</strong>，<strong>ctrl-c</strong>，<code>jobs</code>，<code>fg</code>，<code>bg</code>，<code>kill</code> 等。</p>
+</li>
+<li>
+<p>学会使用 <code>ssh</code> 进行远程命令行登录，最好知道如何使用 <code>ssh-agent</code>，<code>ssh-add</code> 等命令来实现基础的无密码认证登录。</p>
+</li>
+<li>
+<p>学会基本的文件管理工具：<code>ls</code> 和 <code>ls -l</code> （了解 <code>ls -l</code> 中每一列代表的意义），<code>less</code>，<code>head</code>，<code>tail</code> 和 <code>tail -f</code> （甚至 <code>less +F</code>），<code>ln</code> 和 <code>ln -s</code> （了解硬链接与软链接的区别），<code>chown</code>，<code>chmod</code>，<code>du</code> （硬盘使用情况概述：<code>du -hs *</code>）。 关于文件系统的管理，学习 <code>df</code>，<code>mount</code>，<code>fdisk</code>，<code>mkfs</code>，<code>lsblk</code>。知道 inode 是什么（与 <code>ls -i</code> 和 <code>df -i</code> 等命令相关）。</p>
+</li>
+<li>
+<p>学习基本的网络管理工具：<code>ip</code> 或 <code>ifconfig</code>，<code>dig</code>。</p>
+</li>
+<li>
+<p>学习并使用一种版本控制管理系统，例如 <code>git</code>。</p>
+</li>
+<li>
+<p>熟悉正则表达式，学会使用 <code>grep</code>／<code>egrep</code>，它们的参数中 <code>-i</code>，<code>-o</code>，<code>-v</code>，<code>-A</code>，<code>-B</code> 和 <code>-C</code> 这些是很常用并值得认真学习的。</p>
+</li>
+<li>
+<p>学会使用 <code>apt-get</code>，<code>yum</code>，<code>dnf</code> 或 <code>pacman</code> （具体使用哪个取决于你使用的 Linux 发行版）来查找和安装软件包。并确保你的环境中有 <code>pip</code> 来安装基于 Python 的命令行工具 （接下来提到的部分程序使用 <code>pip</code> 来安装会很方便）。</p>
+</li>
+</ul>
+<h2 id="日常使用">日常使用</h2>
+<ul>
+<li>
+<p>在 Bash 中，可以通过按 <strong>Tab</strong> 键实现自动补全参数，使用 <strong>ctrl-r</strong> 搜索命令行历史记录（按下按键之后，输入关键字便可以搜索，重复按下 <strong>ctrl-r</strong> 会向后查找匹配项，按下 <strong>Enter</strong> 键会执行当前匹配的命令，而按下右方向键会将匹配项放入当前行中，不会直接执行，以便做出修改）。</p>
+</li>
+<li>
+<p>在 Bash 中，可以按下 <strong>ctrl-w</strong> 删除你键入的最后一个单词，<strong>ctrl-u</strong> 可以删除行内光标所在位置之前的内容，<strong>alt-b</strong> 和 <strong>alt-f</strong> 可以以单词为单位移动光标，<strong>ctrl-a</strong> 可以将光标移至行首，<strong>ctrl-e</strong> 可以将光标移至行尾，<strong>ctrl-k</strong> 可以删除光标至行尾的所有内容，<strong>ctrl-l</strong> 可以清屏。键入 <code>man readline</code> 可以查看 Bash 中的默认快捷键。内容有很多，例如 <strong>alt-.</strong> 循环地移向前一个参数，而 <strong>alt-</strong>* 可以展开通配符。</p>
+</li>
+<li>
+<p>你喜欢的话，可以执行 <code>set -o vi</code> 来使用 vi 风格的快捷键，而执行 <code>set -o emacs</code> 可以把它改回来。</p>
+</li>
+<li>
+<p>为了便于编辑长命令，在设置你的默认编辑器后（例如 <code>export EDITOR=vim</code>），<strong>ctrl-x</strong> <strong>ctrl-e</strong> 会打开一个编辑器来编辑当前输入的命令。在 vi 风格下快捷键则是 <strong>escape-v</strong>。</p>
+</li>
+<li>
+<p>键入 <code>history</code> 查看命令行历史记录，再用 <code>!n</code>（<code>n</code> 是命令编号）就可以再次执行。其中有许多缩写，最有用的大概就是 <code>!$</code>， 它用于指代上次键入的参数，而 <code>!!</code> 可以指代上次键入的命令了（参考 man 页面中的“HISTORY EXPANSION”）。不过这些功能，你也可以通过快捷键 <strong>ctrl-r</strong> 和 <strong>alt-.</strong> 来实现。</p>
+</li>
+<li>
+<p><code>cd</code> 命令可以切换工作路径，输入 <code>cd ~</code> 可以进入 home 目录。要访问你的 home 目录中的文件，可以使用前缀 <code>~</code>（例如 <code>~/.bashrc</code>）。在 <code>sh</code> 脚本里则用环境变量 <code>$HOME</code> 指代 home 目录的路径。</p>
+</li>
+<li>
+<p>回到前一个工作路径：<code>cd -</code>。</p>
+</li>
+<li>
+<p>如果你输入命令的时候中途改了主意，按下 <strong>alt-#</strong> 在行首添加 <code>#</code> 把它当做注释再按下回车执行（或者依次按下 <strong>ctrl-a</strong>， <strong>#</strong>， <strong>enter</strong>）。这样做的话，之后借助命令行历史记录，你可以很方便恢复你刚才输入到一半的命令。</p>
+</li>
+<li>
+<p>使用 <code>xargs</code> （ 或 <code>parallel</code>）。他们非常给力。注意到你可以控制每行参数个数（<code>-L</code>）和最大并行数（<code>-P</code>）。如果你不确定它们是否会按你想的那样工作，先使用 <code>xargs echo</code> 查看一下。此外，使用 <code>-I{}</code> 会很方便。例如：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">      find . -name <span class="s1">&#39;*.py&#39;</span> <span class="p">|</span> xargs grep some_function
+      cat hosts <span class="p">|</span> xargs -I<span class="o">{}</span> ssh root@<span class="o">{}</span> hostname
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><code>pstree -p</code> 以一种优雅的方式展示进程树。</p>
+</li>
+<li>
+<p>使用 <code>pgrep</code> 和 <code>pkill</code> 根据名字查找进程或发送信号（<code>-f</code> 参数通常有用）。</p>
+</li>
+<li>
+<p>了解你可以发往进程的信号的种类。比如，使用 <code>kill -STOP [pid]</code> 停止一个进程。使用 <code>man 7 signal</code> 查看详细列表。</p>
+</li>
+<li>
+<p>使用 <code>nohup</code> 或 <code>disown</code> 使一个后台进程持续运行。</p>
+</li>
+<li>
+<p>使用 <code>netstat -lntp</code> 或 <code>ss -plat</code> 检查哪些进程在监听端口（默认是检查 TCP 端口; 添加参数 <code>-u</code> 则检查 UDP 端口）或者 <code>lsof -iTCP -sTCP:LISTEN -P -n</code> (这也可以在 OS X 上运行)。</p>
+</li>
+<li>
+<p><code>lsof</code> 来查看开启的套接字和文件。</p>
+</li>
+<li>
+<p>使用 <code>uptime</code> 或 <code>w</code> 来查看系统已经运行多长时间。</p>
+</li>
+<li>
+<p>使用 <code>alias</code> 来创建常用命令的快捷形式。例如：<code>alias ll='ls -latr'</code> 创建了一个新的命令别名 <code>ll</code>。</p>
+</li>
+<li>
+<p>可以把别名、shell 选项和常用函数保存在 <code>~/.bashrc</code>，具体看下这篇<a href="http://superuser.com/a/183980/7106" target="_blank" rel="noopener noreffer">文章</a>。这样做的话你就可以在所有 shell 会话中使用你的设定。</p>
+</li>
+<li>
+<p>把环境变量的设定以及登陆时要执行的命令保存在 <code>~/.bash_profile</code>。而对于从图形界面启动的 shell 和 <code>cron</code> 启动的 shell，则需要单独配置文件。</p>
+</li>
+<li>
+<p>要想在几台电脑中同步你的配置文件（例如 <code>.bashrc</code> 和 <code>.bash_profile</code>），可以借助 Git。</p>
+</li>
+<li>
+<p>当变量和文件名中包含空格的时候要格外小心。Bash 变量要用引号括起来，比如 <code>&quot;$FOO&quot;</code>。尽量使用 <code>-0</code> 或 <code>-print0</code> 选项以便用 NULL 来分隔文件名，例如 <code>locate -0 pattern | xargs -0 ls -al</code> 或 <code>find / -print0 -type d | xargs -0 ls -al</code>。如果 for 循环中循环访问的文件名含有空字符（空格、tab 等字符），只需用 <code>IFS=$'\n'</code> 把内部字段分隔符设为换行符。</p>
+</li>
+<li>
+<p>在 Bash 脚本中，使用 <code>set -x</code> 去调试输出（或者使用它的变体 <code>set -v</code>，它会记录原始输入，包括多余的参数和注释）。尽可能地使用严格模式：使用 <code>set -e</code> 令脚本在发生错误时退出而不是继续运行；使用 <code>set -u</code> 来检查是否使用了未赋值的变量；试试 <code>set -o pipefail</code>，它可以监测管道中的错误。当牵扯到很多脚本时，使用 <code>trap</code> 来检测 ERR 和 EXIT。一个好的习惯是在脚本文件开头这样写，这会使它能够检测一些错误，并在错误发生时中断程序并输出信息：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">      <span class="nb">set</span> -euo pipefail
+      <span class="nb">trap</span> <span class="s2">&#34;echo &#39;error: Script failed: see failed command above&#39;&#34;</span> ERR
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在 Bash 脚本中，子 shell（使用括号 <code>(...)</code>）是一种组织参数的便捷方式。一个常见的例子是临时地移动工作路径，代码如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">      <span class="c1"># do something in current dir</span>
+      <span class="o">(</span><span class="nb">cd</span> /some/other/dir <span class="o">&amp;&amp;</span> other-command<span class="o">)</span>
+      <span class="c1"># continue in original dir</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>在 Bash 中，变量有许多的扩展方式。<code>${name:?error message}</code> 用于检查变量是否存在。此外，当 Bash 脚本只需要一个参数时，可以使用这样的代码 <code>input_file=${1:?usage: $0 input_file}</code>。在变量为空时使用默认值：<code>${name:-default}</code>。如果你要在之前的例子中再加一个（可选的）参数，可以使用类似这样的代码 <code>output_file=${2:-logfile}</code>，如果省略了 $2，它的值就为空，于是 <code>output_file</code> 就会被设为 <code>logfile</code>。数学表达式：<code>i=$(( (i + 1) % 5 ))</code>。序列：<code>{1..10}</code>。截断字符串：<code>${var%suffix}</code> 和 <code>${var#prefix}</code>。例如，假设 <code>var=foo.pdf</code>，那么 <code>echo ${var%.pdf}.txt</code> 将输出 <code>foo.txt</code>。</p>
+</li>
+<li>
+<p>使用括号扩展（<code>{</code>&hellip;<code>}</code>）来减少输入相似文本，并自动化文本组合。这在某些情况下会很有用，例如 <code>mv foo.{txt,pdf} some-dir</code>（同时移动两个文件），<code>cp somefile{,.bak}</code>（会被扩展成 <code>cp somefile somefile.bak</code>）或者 <code>mkdir -p test-{a,b,c}/subtest-{1,2,3}</code>（会被扩展成所有可能的组合，并创建一个目录树）。</p>
+</li>
+<li>
+<p>通过使用 <code>&lt;(some command)</code> 可以将输出视为文件。例如，对比本地文件 <code>/etc/hosts</code> 和一个远程文件：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      diff /etc/hosts &lt;<span class="o">(</span>ssh somehost cat /etc/hosts<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>编写脚本时，你可能会想要把代码都放在大括号里。缺少右括号的话，代码就会因为语法错误而无法执行。如果你的脚本是要放在网上分享供他人使用的，这样的写法就体现出它的好处了，因为这样可以防止下载不完全代码被执行。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">{</span>
+      <span class="c1"># 在这里写代码</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>了解 Bash 中的“here documents”，例如 <code>cat &lt;&lt;EOF ...</code>。</p>
+</li>
+<li>
+<p>在 Bash 中，同时重定向标准输出和标准错误：<code>some-command &gt;logfile 2&gt;&amp;1</code> 或者 <code>some-command &amp;&gt;logfile</code>。通常，为了保证命令不会在标准输入里残留一个未关闭的文件句柄捆绑在你当前所在的终端上，在命令后添加 <code>&lt;/dev/null</code> 是一个好习惯。</p>
+</li>
+<li>
+<p>使用 <code>man ascii</code> 查看具有十六进制和十进制值的ASCII表。<code>man unicode</code>，<code>man utf-8</code>，以及 <code>man latin1</code> 有助于你去了解通用的编码信息。</p>
+</li>
+<li>
+<p>使用 <code>screen</code> 或 <a href="https://tmux.github.io/" target="_blank" rel="noopener noreffer"><code>tmux</code></a> 来使用多份屏幕，当你在使用 ssh 时（保存 session 信息）将尤为有用。而 <code>byobu</code> 可以为它们提供更多的信息和易用的管理工具。另一个轻量级的 session 持久化解决方案是 <a href="https://github.com/bogner/dtach" target="_blank" rel="noopener noreffer"><code>dtach</code></a>。</p>
+</li>
+<li>
+<p>ssh 中，了解如何使用 <code>-L</code> 或 <code>-D</code>（偶尔需要用 <code>-R</code>）开启隧道是非常有用的，比如当你需要从一台远程服务器上访问 web 页面。</p>
+</li>
+<li>
+<p>对 ssh 设置做一些小优化可能是很有用的，例如这个 <code>~/.ssh/config</code> 文件包含了防止特定网络环境下连接断开、压缩数据、多通道等选项：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">      TCPKeepAlive=yes
+      ServerAliveInterval=15
+      ServerAliveCountMax=6
+      Compression=yes
+      ControlMaster auto
+      ControlPath /tmp/%r@%h:%p
+      ControlPersist yes
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>一些其他的关于 ssh 的选项是与安全相关的，应当小心翼翼的使用。例如你应当只能在可信任的网络中启用 <code>StrictHostKeyChecking=no</code>，<code>ForwardAgent=yes</code>。</p>
+</li>
+<li>
+<p>考虑使用 <a href="https://mosh.mit.edu/" target="_blank" rel="noopener noreffer"><code>mosh</code></a> 作为 ssh 的替代品，它使用 UDP 协议。它可以避免连接被中断并且对带宽需求更小，但它需要在服务端做相应的配置。</p>
+</li>
+<li>
+<p>获取八进制形式的文件访问权限（修改系统设置时通常需要，但 <code>ls</code> 的功能不那么好用并且通常会搞砸），可以使用类似如下的代码：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      stat -c <span class="s1">&#39;%A %a %n&#39;</span> /etc/timezone
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>使用 <a href="https://github.com/mooz/percol" target="_blank" rel="noopener noreffer"><code>percol</code></a> 或者 <a href="https://github.com/junegunn/fzf" target="_blank" rel="noopener noreffer"><code>fzf</code></a> 可以交互式地从另一个命令输出中选取值。</p>
+</li>
+<li>
+<p>使用 <code>fpp</code>（<a href="https://github.com/facebook/PathPicker" target="_blank" rel="noopener noreffer">PathPicker</a>）可以与基于另一个命令(例如 <code>git</code>）输出的文件交互。</p>
+</li>
+<li>
+<p>将 web 服务器上当前目录下所有的文件（以及子目录）暴露给你所处网络的所有用户，使用：
+<code>python -m SimpleHTTPServer 7777</code> （使用端口 7777 和 Python 2）或<code>python -m http.server 7777</code> （使用端口 7777 和 Python 3）。</p>
+</li>
+<li>
+<p>以其他用户的身份执行命令，使用 <code>sudo</code>。默认以 root 用户的身份执行；使用 <code>-u</code> 来指定其他用户。使用 <code>-i</code> 来以该用户登录（需要输入_你自己的_密码）。</p>
+</li>
+<li>
+<p>将 shell 切换为其他用户，使用 <code>su username</code> 或者 <code>sudo - username</code>。加入 <code>-</code> 会使得切换后的环境与使用该用户登录后的环境相同。省略用户名则默认为 root。切换到哪个用户，就需要输入_哪个用户的_密码。</p>
+</li>
+<li>
+<p>了解命令行的 <a href="https://wiki.debian.org/CommonErrorMessages/ArgumentListTooLong" target="_blank" rel="noopener noreffer">128K 限制</a>。使用通配符匹配大量文件名时，常会遇到“Argument list too long”的错误信息。（这种情况下换用 <code>find</code> 或 <code>xargs</code> 通常可以解决。）</p>
+</li>
+<li>
+<p>当你需要一个基本的计算器时，可以使用 <code>python</code> 解释器（当然你要用 python 的时候也是这样）。例如：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&gt;&gt;&gt; 2+3
+5
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="文件及数据处理">文件及数据处理</h2>
+<ul>
+<li>
+<p>在当前目录下通过文件名查找一个文件，使用类似于这样的命令：<code>find . -iname '*something*'</code>。在所有路径下通过文件名查找文件，使用 <code>locate something</code> （但注意到 <code>updatedb</code> 可能没有对最近新建的文件建立索引，所以你可能无法定位到这些未被索引的文件）。</p>
+</li>
+<li>
+<p>使用 <a href="https://github.com/ggreer/the_silver_searcher" target="_blank" rel="noopener noreffer"><code>ag</code></a> 在源代码或数据文件里检索（<code>grep -r</code> 同样可以做到，但相比之下 <code>ag</code> 更加先进）。</p>
+</li>
+<li>
+<p>将 HTML 转为文本：<code>lynx -dump -stdin</code>。</p>
+</li>
+<li>
+<p>Markdown，HTML，以及所有文档格式之间的转换，试试 <a href="http://pandoc.org/" target="_blank" rel="noopener noreffer"><code>pandoc</code></a>。</p>
+</li>
+<li>
+<p>当你要处理棘手的 XML 时候，<code>xmlstarlet</code> 算是上古时代流传下来的神器。</p>
+</li>
+<li>
+<p>使用 <a href="http://stedolan.github.io/jq/" target="_blank" rel="noopener noreffer"><code>jq</code></a> 处理 JSON。</p>
+</li>
+<li>
+<p>使用 <a href="https://github.com/0k/shyaml" target="_blank" rel="noopener noreffer"><code>shyaml</code></a> 处理 YAML。</p>
+</li>
+<li>
+<p>要处理 Excel 或 CSV 文件的话，<a href="https://github.com/onyxfish/csvkit" target="_blank" rel="noopener noreffer">csvkit</a> 提供了 <code>in2csv</code>，<code>csvcut</code>，<code>csvjoin</code>，<code>csvgrep</code> 等方便易用的工具。</p>
+</li>
+<li>
+<p>当你要处理 Amazon S3 相关的工作的时候，<a href="https://github.com/s3tools/s3cmd" target="_blank" rel="noopener noreffer"><code>s3cmd</code></a> 是一个很方便的工具而 <a href="https://github.com/bloomreach/s4cmd" target="_blank" rel="noopener noreffer"><code>s4cmd</code></a> 的效率更高。Amazon 官方提供的 <a href="https://github.com/aws/aws-cli" target="_blank" rel="noopener noreffer"><code>aws</code></a> 以及  <a href="https://github.com/donnemartin/saws" target="_blank" rel="noopener noreffer"><code>saws</code></a> 是其他 AWS 相关工作的基础，值得学习。</p>
+</li>
+<li>
+<p>了解如何使用 <code>sort</code> 和 <code>uniq</code>，包括 uniq 的 <code>-u</code> 参数和 <code>-d</code> 参数，具体内容在后文单行脚本节中。另外可以了解一下 <code>comm</code>。</p>
+</li>
+<li>
+<p>了解如何使用 <code>cut</code>，<code>paste</code> 和 <code>join</code> 来更改文件。很多人都会使用 <code>cut</code>，但遗忘了 <code>join</code>。</p>
+</li>
+<li>
+<p>了解如何运用 <code>wc</code> 去计算新行数（<code>-l</code>），字符数（<code>-m</code>），单词数（<code>-w</code>）以及字节数（<code>-c</code>）。</p>
+</li>
+<li>
+<p>了解如何使用 <code>tee</code> 将标准输入复制到文件甚至标准输出，例如 <code>ls -al | tee file.txt</code>。</p>
+</li>
+<li>
+<p>要进行一些复杂的计算，比如分组、逆序和一些其他的统计分析，可以考虑使用 <a href="https://www.gnu.org/software/datamash/" target="_blank" rel="noopener noreffer"><code>datamash</code></a>。</p>
+</li>
+<li>
+<p>注意到语言设置（中文或英文等）对许多命令行工具有一些微妙的影响，比如排序的顺序和性能。大多数 Linux 的安装过程会将 <code>LANG</code> 或其他有关的变量设置为符合本地的设置。要意识到当你改变语言设置时，排序的结果可能会改变。明白国际化可能会使 sort 或其他命令运行效率下降<em>许多倍</em>。某些情况下（例如集合运算）你可以放心的使用 <code>export LC_ALL=C</code> 来忽略掉国际化并按照字节来判断顺序。</p>
+</li>
+<li>
+<p>你可以单独指定某一条命令的环境，只需在调用时把环境变量设定放在命令的前面，例如 <code>TZ=Pacific/Fiji date</code> 可以获取斐济的时间。</p>
+</li>
+<li>
+<p>了解如何使用 <code>awk</code> 和 <code>sed</code> 来进行简单的数据处理。 参阅 <a href="#one-liners" rel="">One-liners</a> 获取示例。</p>
+</li>
+<li>
+<p>替换一个或多个文件中出现的字符串：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      perl -pi.bak -e <span class="s1">&#39;s/old-string/new-string/g&#39;</span> my-files-*.txt
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用 <a href="https://github.com/jlevy/repren" target="_blank" rel="noopener noreffer"><code>repren</code></a> 来批量重命名文件，或是在多个文件中搜索替换内容。（有些时候 <code>rename</code> 命令也可以批量重命名，但要注意，它在不同 Linux 发行版中的功能并不完全一样。）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      <span class="c1"># 将文件、目录和内容全部重命名 foo -&gt; bar:</span>
+      repren --full --preserve-case --from foo --to bar .
+      <span class="c1"># 还原所有备份文件 whatever.bak -&gt; whatever:</span>
+      repren --renames --from <span class="s1">&#39;(.*)\.bak&#39;</span> --to <span class="s1">&#39;\1&#39;</span> *.bak
+      <span class="c1"># 用 rename 实现上述功能（若可用）:</span>
+      rename <span class="s1">&#39;s/\.bak$//&#39;</span> *.bak
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>根据 man 页面的描述，<code>rsync</code> 是一个快速且非常灵活的文件复制工具。它闻名于设备之间的文件同步，但其实它在本地情况下也同样有用。在安全设置允许下，用 <code>rsync</code> 代替 <code>scp</code> 可以实现文件续传，而不用重新从头开始。它同时也是删除大量文件的<a href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html" target="_blank" rel="noopener noreffer">最快方法</a>之一：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">mkdir empty <span class="o">&amp;&amp;</span> rsync -r --delete empty/ some-dir <span class="o">&amp;&amp;</span> rmdir some-dir
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>若要在复制文件时获取当前进度，可使用 <code>pv</code>，<a href="https://github.com/dmerejkowsky/pycp" target="_blank" rel="noopener noreffer"><code>pycp</code></a>，<a href="https://github.com/Xfennec/progress" target="_blank" rel="noopener noreffer"><code>progress</code></a>，<code>rsync --progress</code>。若所执行的复制为block块拷贝，可以使用 <code>dd status=progress</code>。</p>
+</li>
+<li>
+<p>使用 <code>shuf</code> 可以以行为单位来打乱文件的内容或从一个文件中随机选取多行。</p>
+</li>
+<li>
+<p>了解 <code>sort</code> 的参数。显示数字时，使用 <code>-n</code> 或者 <code>-h</code> 来显示更易读的数（例如 <code>du -h</code> 的输出）。明白排序时关键字的工作原理（<code>-t</code> 和 <code>-k</code>）。例如，注意到你需要 <code>-k1，1</code> 来仅按第一个域来排序，而 <code>-k1</code> 意味着按整行排序。稳定排序（<code>sort -s</code>）在某些情况下很有用。例如，以第二个域为主关键字，第一个域为次关键字进行排序，你可以使用 <code>sort -k1，1 | sort -s -k2，2</code>。</p>
+</li>
+<li>
+<p>如果你想在 Bash 命令行中写 tab 制表符，按下 <strong>ctrl-v</strong> <strong>[Tab]</strong> 或键入 <code>$'\t'</code> （后者可能更好，因为你可以复制粘贴它）。</p>
+</li>
+<li>
+<p>标准的源代码对比及合并工具是 <code>diff</code> 和 <code>patch</code>。使用 <code>diffstat</code> 查看变更总览数据。注意到 <code>diff -r</code> 对整个文件夹有效。使用 <code>diff -r tree1 tree2 | diffstat</code> 查看变更的统计数据。<code>vimdiff</code> 用于比对并编辑文件。</p>
+</li>
+<li>
+<p>对于二进制文件，使用 <code>hd</code>，<code>hexdump</code> 或者 <code>xxd</code> 使其以十六进制显示，使用 <code>bvi</code>，<code>hexedit</code> 或者 <code>biew</code> 来进行二进制编辑。</p>
+</li>
+<li>
+<p>同样对于二进制文件，<code>strings</code>（包括 <code>grep</code> 等工具）可以帮助在二进制文件中查找特定比特。</p>
+</li>
+<li>
+<p>制作二进制差分文件（Delta 压缩），使用 <code>xdelta3</code>。</p>
+</li>
+<li>
+<p>使用 <code>iconv</code> 更改文本编码。需要更高级的功能，可以使用 <code>uconv</code>，它支持一些高级的 Unicode 功能。例如，这条命令移除了所有重音符号：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      uconv -f utf-8 -t utf-8 -x <span class="s1">&#39;::Any-Lower; ::Any-NFD; [:Nonspacing Mark:] &gt;; ::Any-NFC; &#39;</span> &lt; input.txt &gt; output.txt
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>拆分文件可以使用 <code>split</code>（按大小拆分）和 <code>csplit</code>（按模式拆分）。</p>
+</li>
+<li>
+<p>操作日期和时间表达式，可以用 <a href="http://www.fresse.org/dateutils/" target="_blank" rel="noopener noreffer"><code>dateutils</code></a> 中的 <code>dateadd</code>、<code>datediff</code>、<code>strptime</code> 等工具。</p>
+</li>
+<li>
+<p>使用 <code>zless</code>、<code>zmore</code>、<code>zcat</code> 和 <code>zgrep</code> 对压缩过的文件进行操作。</p>
+</li>
+<li>
+<p>文件属性可以通过 <code>chattr</code> 进行设置，它比文件权限更加底层。例如，为了保护文件不被意外删除，可以使用不可修改标记：<code>sudo chattr +i /critical/directory/or/file</code></p>
+</li>
+<li>
+<p>使用 <code>getfacl</code> 和 <code>setfacl</code> 以保存和恢复文件权限。例如：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">   getfacl -R /some/path &gt; permissions.txt
+   setfacl --restore<span class="o">=</span>permissions.txt
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>为了高效地创建空文件，请使用 <code>truncate</code>（创建<a href="https://zh.wikipedia.org/wiki/%e7%a8%80%e7%96%8f%e6%96%87%e4%bb%b6" target="_blank" rel="noopener noreffer">稀疏文件</a>），<code>fallocate</code>（用于 ext4，xfs，btrf 和 ocfs2 文件系统），<code>xfs_mkfile</code>（适用于几乎所有的文件系统，包含在 xfsprogs 包中），<code>mkfile</code>（用于类 Unix 操作系统，比如 Solaris 和 Mac OS）。</li>
+</ul>
+<h2 id="系统调试">系统调试</h2>
+<ul>
+<li>
+<p><code>curl</code> 和 <code>curl -I</code> 可以被轻松地应用于 web 调试中，它们的好兄弟 <code>wget</code> 也是如此，或者也可以试试更潮的 <a href="https://github.com/jkbrzt/httpie" target="_blank" rel="noopener noreffer"><code>httpie</code></a>。</p>
+</li>
+<li>
+<p>获取 CPU 和硬盘的使用状态，通常使用使用 <code>top</code>（<code>htop</code> 更佳），<code>iostat</code> 和 <code>iotop</code>。而 <code>iostat -mxz 15</code> 可以让你获悉 CPU 和每个硬盘分区的基本信息和性能表现。</p>
+</li>
+<li>
+<p>使用 <code>netstat</code> 和 <code>ss</code> 查看网络连接的细节。</p>
+</li>
+<li>
+<p><code>dstat</code> 在你想要对系统的现状有一个粗略的认识时是非常有用的。然而若要对系统有一个深度的总体认识，使用 <a href="https://github.com/nicolargo/glances" target="_blank" rel="noopener noreffer"><code>glances</code></a>，它会在一个终端窗口中向你提供一些系统级的数据。</p>
+</li>
+<li>
+<p>若要了解内存状态，运行并理解 <code>free</code> 和 <code>vmstat</code> 的输出。值得留意的是“cached”的值，它指的是 Linux 内核用来作为文件缓存的内存大小，而与空闲内存无关。</p>
+</li>
+<li>
+<p>Java 系统调试则是一件截然不同的事，一个可以用于 Oracle 的 JVM 或其他 JVM 上的调试的技巧是你可以运行 <code>kill -3 &lt;pid&gt;</code> 同时一个完整的栈轨迹和堆概述（包括 GC 的细节）会被保存到标准错误或是日志文件。JDK 中的 <code>jps</code>，<code>jstat</code>，<code>jstack</code>，<code>jmap</code> 很有用。<a href="https://github.com/aragozin/jvm-tools" target="_blank" rel="noopener noreffer">SJK tools</a> 更高级。</p>
+</li>
+<li>
+<p>使用 <a href="http://www.bitwizard.nl/mtr/" target="_blank" rel="noopener noreffer"><code>mtr</code></a> 去跟踪路由，用于确定网络问题。</p>
+</li>
+<li>
+<p>用 <a href="https://dev.yorhel.nl/ncdu" target="_blank" rel="noopener noreffer"><code>ncdu</code></a> 来查看磁盘使用情况，它比寻常的命令，如 <code>du -sh *</code>，更节省时间。</p>
+</li>
+<li>
+<p>查找正在使用带宽的套接字连接或进程，使用 <a href="http://www.ex-parrot.com/~pdw/iftop/" target="_blank" rel="noopener noreffer"><code>iftop</code></a> 或 <a href="https://github.com/raboof/nethogs" target="_blank" rel="noopener noreffer"><code>nethogs</code></a>。</p>
+</li>
+<li>
+<p><code>ab</code> 工具（Apache 中自带）可以简单粗暴地检查 web 服务器的性能。对于更复杂的负载测试，使用 <code>siege</code>。</p>
+</li>
+<li>
+<p><a href="https://wireshark.org/" target="_blank" rel="noopener noreffer"><code>wireshark</code></a>，<a href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html" target="_blank" rel="noopener noreffer"><code>tshark</code></a> 和 <a href="http://ngrep.sourceforge.net/" target="_blank" rel="noopener noreffer"><code>ngrep</code></a> 可用于复杂的网络调试。</p>
+</li>
+<li>
+<p>了解 <code>strace</code> 和 <code>ltrace</code>。这俩工具在你的程序运行失败、挂起甚至崩溃，而你却不知道为什么或你想对性能有个总体的认识的时候是非常有用的。注意 profile 参数（<code>-c</code>）和附加到一个运行的进程参数 （<code>-p</code>）。</p>
+</li>
+<li>
+<p>了解使用 <code>ldd</code> 来检查共享库。但是<a href="http://www.catonmat.net/blog/ldd-arbitrary-code-execution/" target="_blank" rel="noopener noreffer">永远不要在不信任的文件上运行</a>。</p>
+</li>
+<li>
+<p>了解如何运用 <code>gdb</code> 连接到一个运行着的进程并获取它的堆栈轨迹。</p>
+</li>
+<li>
+<p>学会使用 <code>/proc</code>。它在调试正在出现的问题的时候有时会效果惊人。比如：<code>/proc/cpuinfo</code>，<code>/proc/meminfo</code>，<code>/proc/cmdline</code>，<code>/proc/xxx/cwd</code>，<code>/proc/xxx/exe</code>，<code>/proc/xxx/fd/</code>，<code>/proc/xxx/smaps</code>（这里的 <code>xxx</code> 表示进程的 id 或 pid）。</p>
+</li>
+<li>
+<p>当调试一些之前出现的问题的时候，<a href="http://sebastien.godard.pagesperso-orange.fr/" target="_blank" rel="noopener noreffer"><code>sar</code></a> 非常有用。它展示了 cpu、内存以及网络等的历史数据。</p>
+</li>
+<li>
+<p>关于更深层次的系统分析以及性能分析，看看 <code>stap</code>（<a href="https://sourceware.org/systemtap/wiki" target="_blank" rel="noopener noreffer">SystemTap</a>），<a href="https://en.wikipedia.org/wiki/Perf_%28Linux%29" target="_blank" rel="noopener noreffer"><code>perf</code></a>，以及<a href="https://github.com/draios/sysdig" target="_blank" rel="noopener noreffer"><code>sysdig</code></a>。</p>
+</li>
+<li>
+<p>查看你当前使用的系统，使用 <code>uname</code>，<code>uname -a</code>（Unix／kernel 信息）或者 <code>lsb_release -a</code>（Linux 发行版信息）。</p>
+</li>
+<li>
+<p>无论什么东西工作得很欢乐（可能是硬件或驱动问题）时可以试试 <code>dmesg</code>。</p>
+</li>
+<li>
+<p>如果你删除了一个文件，但通过 <code>du</code> 发现没有释放预期的磁盘空间，请检查文件是否被进程占用：
+<code>lsof | grep deleted | grep &quot;filename-of-my-big-file&quot;</code></p>
+</li>
+</ul>
+<h2 id="单行脚本">单行脚本</h2>
+<p>一些命令组合的例子：</p>
+<ul>
+<li>当你需要对文本文件做集合交、并、差运算时，<code>sort</code> 和 <code>uniq</code> 会是你的好帮手。具体例子请参照代码后面的，此处假设 <code>a</code> 与 <code>b</code> 是两内容不同的文件。这种方式效率很高，并且在小文件和上 G 的文件上都能运用（注意尽管在 <code>/tmp</code> 在一个小的根分区上时你可能需要 <code>-T</code> 参数，但是实际上 <code>sort</code> 并不被内存大小约束），参阅前文中关于 <code>LC_ALL</code> 和 <code>sort</code> 的 <code>-u</code> 参数的部分。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      sort a b <span class="p">|</span> uniq &gt; c   <span class="c1"># c 是 a 并 b</span>
+      sort a b <span class="p">|</span> uniq -d &gt; c   <span class="c1"># c 是 a 交 b</span>
+      sort a b b <span class="p">|</span> uniq -u &gt; c   <span class="c1"># c 是 a - b</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>使用 <code>grep . *</code>（每行都会附上文件名）或者 <code>head -100 *</code>（每个文件有一个标题）来阅读检查目录下所有文件的内容。这在检查一个充满配置文件的目录（如 <code>/sys</code>、<code>/proc</code>、<code>/etc</code>）时特别好用。</p>
+</li>
+<li>
+<p>计算文本文件第三列中所有数的和（可能比同等作用的 Python 代码快三倍且代码量少三倍）：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      awk <span class="s1">&#39;{ x += $3 } END { print x }&#39;</span> myfile
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如果你想在文件树上查看大小/日期，这可能看起来像递归版的 <code>ls -l</code> 但比 <code>ls -lR</code> 更易于理解：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      find . -type f -ls
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>假设你有一个类似于 web 服务器日志文件的文本文件，并且一个确定的值只会出现在某些行上，假设一个 <code>acct_id</code> 参数在 URI 中。如果你想计算出每个 <code>acct_id</code> 值有多少次请求，使用如下代码：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      egrep -o <span class="s1">&#39;acct_id=[0-9]+&#39;</span> access.log <span class="p">|</span> cut -d<span class="o">=</span> -f2 <span class="p">|</span> sort <span class="p">|</span> uniq -c <span class="p">|</span> sort -rn
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>要持续监测文件改动，可以使用 <code>watch</code>，例如检查某个文件夹中文件的改变，可以用 <code>watch -d -n 2 'ls -rtlh | tail'</code>；或者在排查 WiFi 设置故障时要监测网络设置的更改，可以用 <code>watch -d -n 2 ifconfig</code>。</p>
+</li>
+<li>
+<p>运行这个函数从这篇文档中随机获取一条技巧（解析 Markdown 文件并抽取项目）：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">      <span class="k">function</span> taocl<span class="o">()</span> <span class="o">{</span>
+        curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README-zh.md<span class="p">|</span>
+          pandoc -f markdown -t html <span class="p">|</span>
+          iconv -f <span class="s1">&#39;utf-8&#39;</span> -t <span class="s1">&#39;unicode&#39;</span> <span class="p">|</span>
+          xmlstarlet fo --html --dropdtd <span class="p">|</span>
+          xmlstarlet sel -t -v <span class="s2">&#34;(html/body/ul/li[count(p)&gt;0])[</span><span class="nv">$RANDOM</span><span class="s2"> mod last()+1]&#34;</span> <span class="p">|</span>
+          xmlstarlet unesc <span class="p">|</span> fmt -80
+      <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="冷门但有用">冷门但有用</h2>
+<ul>
+<li>
+<p><code>expr</code>：计算表达式或正则匹配</p>
+</li>
+<li>
+<p><code>m4</code>：简单的宏处理器</p>
+</li>
+<li>
+<p><code>yes</code>：多次打印字符串</p>
+</li>
+<li>
+<p><code>cal</code>：漂亮的日历</p>
+</li>
+<li>
+<p><code>env</code>：执行一个命令（脚本文件中很有用）</p>
+</li>
+<li>
+<p><code>printenv</code>：打印环境变量（调试时或在写脚本文件时很有用）</p>
+</li>
+<li>
+<p><code>look</code>：查找以特定字符串开头的单词或行</p>
+</li>
+<li>
+<p><code>cut</code>，<code>paste</code> 和 <code>join</code>：数据修改</p>
+</li>
+<li>
+<p><code>fmt</code>：格式化文本段落</p>
+</li>
+<li>
+<p><code>pr</code>：将文本格式化成页／列形式</p>
+</li>
+<li>
+<p><code>fold</code>：包裹文本中的几行</p>
+</li>
+<li>
+<p><code>column</code>：将文本格式化成多个对齐、定宽的列或表格</p>
+</li>
+<li>
+<p><code>expand</code> 和 <code>unexpand</code>：制表符与空格之间转换</p>
+</li>
+<li>
+<p><code>nl</code>：添加行号</p>
+</li>
+<li>
+<p><code>seq</code>：打印数字</p>
+</li>
+<li>
+<p><code>bc</code>：计算器</p>
+</li>
+<li>
+<p><code>factor</code>：分解因数</p>
+</li>
+<li>
+<p><a href="https://gnupg.org/" target="_blank" rel="noopener noreffer"><code>gpg</code></a>：加密并签名文件</p>
+</li>
+<li>
+<p><code>toe</code>：terminfo 入口列表</p>
+</li>
+<li>
+<p><code>nc</code>：网络调试及数据传输</p>
+</li>
+<li>
+<p><code>socat</code>：套接字代理，与 <code>netcat</code> 类似</p>
+</li>
+<li>
+<p><a href="https://github.com/mattthias/slurm" target="_blank" rel="noopener noreffer"><code>slurm</code></a>：网络流量可视化</p>
+</li>
+<li>
+<p><code>dd</code>：文件或设备间传输数据</p>
+</li>
+<li>
+<p><code>file</code>：确定文件类型</p>
+</li>
+<li>
+<p><code>tree</code>：以树的形式显示路径和文件，类似于递归的 <code>ls</code></p>
+</li>
+<li>
+<p><code>stat</code>：文件信息</p>
+</li>
+<li>
+<p><code>time</code>：执行命令，并计算执行时间</p>
+</li>
+<li>
+<p><code>timeout</code>：在指定时长范围内执行命令，并在规定时间结束后停止进程</p>
+</li>
+<li>
+<p><code>lockfile</code>：使文件只能通过 <code>rm -f</code> 移除</p>
+</li>
+<li>
+<p><code>logrotate</code>： 切换、压缩以及发送日志文件</p>
+</li>
+<li>
+<p><code>watch</code>：重复运行同一个命令，展示结果并／或高亮有更改的部分</p>
+</li>
+<li>
+<p><a href="https://github.com/joh/when-changed" target="_blank" rel="noopener noreffer"><code>when-changed</code></a>：当检测到文件更改时执行指定命令。参阅 <code>inotifywait</code> 和 <code>entr</code>。</p>
+</li>
+<li>
+<p><code>tac</code>：反向输出文件</p>
+</li>
+<li>
+<p><code>shuf</code>：文件中随机选取几行</p>
+</li>
+<li>
+<p><code>comm</code>：一行一行的比较排序过的文件</p>
+</li>
+<li>
+<p><code>strings</code>：从二进制文件中抽取文本</p>
+</li>
+<li>
+<p><code>tr</code>：转换字母</p>
+</li>
+<li>
+<p><code>iconv</code> 或 <code>uconv</code>：文本编码转换</p>
+</li>
+<li>
+<p><code>split</code> 和 <code>csplit</code>：分割文件</p>
+</li>
+<li>
+<p><code>sponge</code>：在写入前读取所有输入，在读取文件后再向同一文件写入时比较有用，例如 <code>grep -v something some-file | sponge some-file</code></p>
+</li>
+<li>
+<p><code>units</code>：将一种计量单位转换为另一种等效的计量单位（参阅 <code>/usr/share/units/definitions.units</code>）</p>
+</li>
+<li>
+<p><code>apg</code>：随机生成密码</p>
+</li>
+<li>
+<p><code>xz</code>：高比例的文件压缩</p>
+</li>
+<li>
+<p><code>ldd</code>：动态库信息</p>
+</li>
+<li>
+<p><code>nm</code>：提取 obj 文件中的符号</p>
+</li>
+<li>
+<p><code>ab</code> 或 <a href="https://github.com/wg/wrk" target="_blank" rel="noopener noreffer"><code>wrk</code></a>：web 服务器性能分析</p>
+</li>
+<li>
+<p><code>strace</code>：调试系统调用</p>
+</li>
+<li>
+<p><a href="http://www.bitwizard.nl/mtr/" target="_blank" rel="noopener noreffer"><code>mtr</code></a>：更好的网络调试跟踪工具</p>
+</li>
+<li>
+<p><code>cssh</code>：可视化的并发 shell</p>
+</li>
+<li>
+<p><code>rsync</code>：通过 ssh 或本地文件系统同步文件和文件夹</p>
+</li>
+<li>
+<p><a href="https://wireshark.org/" target="_blank" rel="noopener noreffer"><code>wireshark</code></a> 和 <a href="https://www.wireshark.org/docs/wsug_html_chunked/AppToolstshark.html" target="_blank" rel="noopener noreffer"><code>tshark</code></a>：抓包和网络调试工具</p>
+</li>
+<li>
+<p><a href="http://ngrep.sourceforge.net/" target="_blank" rel="noopener noreffer"><code>ngrep</code></a>：网络层的 grep</p>
+</li>
+<li>
+<p><code>host</code> 和 <code>dig</code>：DNS 查找</p>
+</li>
+<li>
+<p><code>lsof</code>：列出当前系统打开文件的工具以及查看端口信息</p>
+</li>
+<li>
+<p><code>dstat</code>：系统状态查看</p>
+</li>
+<li>
+<p><a href="https://github.com/nicolargo/glances" target="_blank" rel="noopener noreffer"><code>glances</code></a>：高层次的多子系统总览</p>
+</li>
+<li>
+<p><code>iostat</code>：硬盘使用状态</p>
+</li>
+<li>
+<p><code>mpstat</code>： CPU 使用状态</p>
+</li>
+<li>
+<p><code>vmstat</code>： 内存使用状态</p>
+</li>
+<li>
+<p><code>htop</code>：top 的加强版</p>
+</li>
+<li>
+<p><code>last</code>：登入记录</p>
+</li>
+<li>
+<p><code>w</code>：查看处于登录状态的用户</p>
+</li>
+<li>
+<p><code>id</code>：用户/组 ID 信息</p>
+</li>
+<li>
+<p><a href="http://sebastien.godard.pagesperso-orange.fr/" target="_blank" rel="noopener noreffer"><code>sar</code></a>：系统历史数据</p>
+</li>
+<li>
+<p><a href="http://www.ex-parrot.com/~pdw/iftop/" target="_blank" rel="noopener noreffer"><code>iftop</code></a> 或 <a href="https://github.com/raboof/nethogs" target="_blank" rel="noopener noreffer"><code>nethogs</code></a>：套接字及进程的网络利用情况</p>
+</li>
+<li>
+<p><code>ss</code>：套接字数据</p>
+</li>
+<li>
+<p><code>dmesg</code>：引导及系统错误信息</p>
+</li>
+<li>
+<p><code>sysctl</code>： 在内核运行时动态地查看和修改内核的运行参数</p>
+</li>
+<li>
+<p><code>hdparm</code>：SATA/ATA 磁盘更改及性能分析</p>
+</li>
+<li>
+<p><code>lsblk</code>：列出块设备信息：以树形展示你的磁盘以及磁盘分区信息</p>
+</li>
+<li>
+<p><code>lshw</code>，<code>lscpu</code>，<code>lspci</code>，<code>lsusb</code> 和 <code>dmidecode</code>：查看硬件信息，包括 CPU、BIOS、RAID、显卡、USB设备等</p>
+</li>
+<li>
+<p><code>lsmod</code> 和 <code>modinfo</code>：列出内核模块，并显示其细节</p>
+</li>
+<li>
+<p><code>fortune</code>，<code>ddate</code> 和 <code>sl</code>：额，这主要取决于你是否认为蒸汽火车和莫名其妙的名人名言是否“有用”</p>
+</li>
+</ul>
+<h2 id="仅限-os-x-系统">仅限 OS X 系统</h2>
+<p>以下是<em>仅限于</em> OS X 系统的技巧。</p>
+<ul>
+<li>
+<p>用 <code>brew</code> （Homebrew）或者 <code>port</code> （MacPorts）进行包管理。这些可以用来在 OS X 系统上安装以上的大多数命令。</p>
+</li>
+<li>
+<p>用 <code>pbcopy</code> 复制任何命令的输出到桌面应用，用 <code>pbpaste</code> 粘贴输入。</p>
+</li>
+<li>
+<p>若要在 OS X 终端中将 Option 键视为 alt 键（例如在上面介绍的 <strong>alt-b</strong>、<strong>alt-f</strong> 等命令中用到），打开 偏好设置 -&gt; 描述文件 -&gt; 键盘 并勾选“使用 Option 键作为 Meta 键”。</p>
+</li>
+<li>
+<p>用 <code>open</code> 或者 <code>open -a /Applications/Whatever.app</code> 使用桌面应用打开文件。</p>
+</li>
+<li>
+<p>Spotlight：用 <code>mdfind</code> 搜索文件，用 <code>mdls</code> 列出元数据（例如照片的 EXIF 信息）。</p>
+</li>
+<li>
+<p>注意 OS X 系统是基于 BSD UNIX 的，许多命令（例如 <code>ps</code>，<code>ls</code>，<code>tail</code>，<code>awk</code>，<code>sed</code>）都和 Linux 中有微妙的不同（ Linux 很大程度上受到了 System V-style Unix 和 GNU 工具影响）。你可以通过标题为 &ldquo;BSD General Commands Manual&rdquo; 的 man 页面发现这些不同。在有些情况下 GNU 版本的命令也可能被安装（例如 <code>gawk</code> 和 <code>gsed</code> 对应 GNU 中的 awk 和 sed ）。如果要写跨平台的 Bash 脚本，避免使用这些命令（例如，考虑 Python 或者 <code>perl</code> ）或者经过仔细的测试。</p>
+</li>
+<li>
+<p>用 <code>sw_vers</code> 获取 OS X 的版本信息。</p>
+</li>
+</ul>
+<h2 id="仅限-windows-系统">仅限 Windows 系统</h2>
+<p>以下是<em>仅限于</em> Windows 系统的技巧。</p>
+<h3 id="在-winodws-下获取-unix-工具">在 Winodws 下获取 Unix 工具</h3>
+<ul>
+<li>
+<p>可以安装 <a href="https://cygwin.com/" target="_blank" rel="noopener noreffer">Cygwin</a> 允许你在 Microsoft Windows 中体验 Unix shell 的威力。这样的话，本文中介绍的大多数内容都将适用。</p>
+</li>
+<li>
+<p>在 Windows 10 上，你可以使用 <a href="https://msdn.microsoft.com/commandline/wsl/about" target="_blank" rel="noopener noreffer">Bash on Ubuntu on Windows</a>，它提供了一个熟悉的 Bash 环境，包含了不少 Unix 命令行工具。好处是它允许 Linux 上编写的程序在 Windows 上运行，而另一方面，Windows 上编写的程序却无法在 Bash 命令行中运行。</p>
+</li>
+<li>
+<p>如果你在 Windows 上主要想用 GNU 开发者工具（例如 GCC），可以考虑 <a href="http://www.mingw.org/" target="_blank" rel="noopener noreffer">MinGW</a> 以及它的 <a href="http://www.mingw.org/wiki/msys" target="_blank" rel="noopener noreffer">MSYS</a> 包，这个包提供了例如 bash，gawk，make 和 grep 的工具。MSYS 并不包含所有可以与 Cygwin 媲美的特性。当制作 Unix 工具的原生 Windows 端口时 MinGW 将特别地有用。</p>
+</li>
+<li>
+<p>另一个在 Windows 下实现接近 Unix 环境外观效果的选项是 <a href="https://github.com/dthree/cash" target="_blank" rel="noopener noreffer">Cash</a>。注意在此环境下只有很少的 Unix 命令和命令行可用。</p>
+</li>
+</ul>
+<h3 id="实用-windows-命令行工具">实用 Windows 命令行工具</h3>
+<ul>
+<li>
+<p>可以使用 <code>wmic</code> 在命令行环境下给大部分 Windows 系统管理任务编写脚本以及执行这些任务。</p>
+</li>
+<li>
+<p>Windows 实用的原生命令行网络工具包括 <code>ping</code>，<code>ipconfig</code>，<code>tracert</code>，和 <code>netstat</code>。</p>
+</li>
+<li>
+<p>可以使用 <code>Rundll32</code> 命令来实现<a href="http://www.thewindowsclub.com/rundll32-shortcut-commands-windows" target="_blank" rel="noopener noreffer">许多有用的 Windows 任务</a> 。</p>
+</li>
+</ul>
+<h3 id="cygwin-技巧">Cygwin 技巧</h3>
+<ul>
+<li>
+<p>通过 Cygwin 的包管理器来安装额外的 Unix 程序。</p>
+</li>
+<li>
+<p>使用 <code>mintty</code> 作为你的命令行窗口。</p>
+</li>
+<li>
+<p>要访问 Windows 剪贴板，可以通过 <code>/dev/clipboard</code>。</p>
+</li>
+<li>
+<p>运行 <code>cygstart</code> 以通过默认程序打开一个文件。</p>
+</li>
+<li>
+<p>要访问 Windows 注册表，可以使用 <code>regtool</code>。</p>
+</li>
+<li>
+<p>注意 Windows 驱动器路径 <code>C:\</code> 在 Cygwin 中用 <code>/cygdrive/c</code> 代表，而 Cygwin 的 <code>/</code> 代表 Windows 中的 <code>C:\cygwin</code>。要转换 Cygwin 和 Windows 风格的路径可以用 <code>cygpath</code>。这在需要调用 Windows 程序的脚本里很有用。</p>
+</li>
+<li>
+<p>学会使用 <code>wmic</code>，你就可以从命令行执行大多数 Windows 系统管理任务，并编成脚本。</p>
+</li>
+<li>
+<p>要在 Windows 下获得 Unix 的界面和体验，另一个办法是使用 <a href="https://github.com/dthree/cash" target="_blank" rel="noopener noreffer">Cash</a>。需要注意的是，这个环境支持的 Unix 命令和命令行参数非常少。</p>
+</li>
+<li>
+<p>要在 Windows 上获取 GNU 开发者工具（比如 GCC）的另一个办法是使用 <a href="http://www.mingw.org/" target="_blank" rel="noopener noreffer">MinGW</a> 以及它的 <a href="http://www.mingw.org/wiki/msys" target="_blank" rel="noopener noreffer">MSYS</a> 软件包，该软件包提供了 bash、gawk、make、grep 等工具。然而 MSYS 提供的功能没有 Cygwin 完善。MinGW 在创建 Unix 工具的 Windows 原生移植方面非常有用。</p>
+</li>
+</ul>
+<h2 id="更多资源">更多资源</h2>
+<ul>
+<li><a href="https://github.com/alebcay/awesome-shell" target="_blank" rel="noopener noreffer">awesome-shell</a>：一份精心组织的命令行工具及资源的列表。</li>
+<li><a href="https://github.com/herrbischoff/awesome-osx-command-line" target="_blank" rel="noopener noreffer">awesome-osx-command-line</a>：一份针对 OS X 命令行的更深入的指南。</li>
+<li><a href="http://redsymbol.net/articles/unofficial-bash-strict-mode/" target="_blank" rel="noopener noreffer">Strict mode</a>：为了编写更好的脚本文件。</li>
+<li><a href="https://github.com/koalaman/shellcheck" target="_blank" rel="noopener noreffer">shellcheck</a>：一个静态 shell 脚本分析工具，本质上是 bash／sh／zsh 的 lint。</li>
+<li><a href="http://www.dwheeler.com/essays/filenames-in-shell.html" target="_blank" rel="noopener noreffer">Filenames and Pathnames in Shell</a>：有关如何在 shell 脚本里正确处理文件名的细枝末节。</li>
+<li><a href="http://datascienceatthecommandline.com/#tools" target="_blank" rel="noopener noreffer">Data Science at the Command Line</a>：用于数据科学的一些命令和工具，摘自同名书籍。</li>
+</ul>
+<h2 id="免责声明">免责声明</h2>
+<p>除去特别小的工作，你编写的代码应当方便他人阅读。能力往往伴随着责任，你 <em>有能力</em> 在 Bash 中玩一些奇技淫巧并不意味着你应该去做！;)</p>
+<h2 id="授权条款">授权条款</h2>
+<p><a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreffer"></a></p>
+<p>本文使用授权协议 <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreffer">Creative Commons Attribution-ShareAlike 4.0 International License</a>。</p>
+]]></description>
+</item><item>
+    <title>Centos7关闭SELinux</title>
+    <link>https://fiix.one/posts/centos7%E5%85%B3%E9%97%ADselinux/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E5%85%B3%E9%97%ADselinux/</guid>
+    <description><![CDATA[<h2 id="centos7关闭selinux">CentOS7关闭SELinux</h2>
+<h3 id="查看状态">查看状态</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@dev-server ~]# getenforce
+Disabled
+[root@dev-server ~]# /usr/sbin/sestatus -v
+SELinux status:                 disabled
+</code></pre></td></tr></table>
+</div>
+</div><p>临时关闭
+##设置SELinux 成为permissive模式
+##setenforce 1 设置SELinux 成为enforcing模式
+setenforce 0</p>
+<p>永久关闭</p>
+<pre><code>vi /etc/selinux/config
+</code></pre>
+<p>将SELINUX=enforcing改为SELINUX=disabled</p>
+<p><strong>设置后需要重启才能生效</strong></p>
+]]></description>
+</item><item>
+    <title>Centos7更改主机名</title>
+    <link>https://fiix.one/posts/centos7%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D/</guid>
+    <description><![CDATA[<h2 id="在centos7中有三种定义的主机名">在CentOS7中，有三种定义的主机名:</h2>
+<hr>
+<p><em><strong>静态的（Static hostname）</strong></em>
+“静态”主机名也称为内核主机名，是系统在启动时从/etc/hostname自动初始化的主机名。</p>
+<p><em><strong>瞬态的（Tansient hostname）</strong></em>
+“瞬态”主机名是在系统运行时临时分配的主机名，例如，通过DHCP或mDNS服务器分配。</p>
+<p><em><strong>灵活的（Pretty hostname）</strong></em>
+“灵活”主机名也有人叫做“别名”主机名。
+“灵活”主机名则允许使用自由形式（包括特殊/空白字符）的主机名，以展示给终端用户</p>
+<p><em><strong>“静态”主机名和“瞬态”主机名都遵从作为互联网域名同样的字符限制规则。</strong></em></p>
+<hr>
+<p>在CentOS 7中，使用<code>hostnamectl</code>命令行工具，可以查看或修改与主机名相关的配置。</p>
+<h3 id="查看主机名">查看主机名:</h3>
+<pre><code>//查看一下当前主机名的情况
+hostnamectl   
+
+//查看全部三种主机名
+hostnamectl status
+
+//只查看静态、瞬态或灵活主机名，分别使用--static，--transient或--pretty选项
+# hostnamectl --static
+
+# hostnamectl --transient
+
+# hostnamectl --pretty
+
+//瞬态的（Tansient hostname）
+hostname
+
+//查看主机名配置文件，（静态）（Static hostname）
+cat /etc/hostname
+</code></pre>
+<h3 id="查看当前linux操作系统相关信息-内核版本号硬件架构主机名称和操作系统类型等">查看当前Linux操作系统相关信息 （内核版本号、硬件架构、主机名称和操作系统类型等）:</h3>
+<pre><code>uname -a			//查看到的是瞬态的（Tansient hostname）
+cat /etc/redhat-release		//查看操作系统环境
+</code></pre>
+<h3 id="修改主机名">修改主机名:</h3>
+<ul>
+<li>临时有效</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">    hostname myname	//只能临时修改的主机名，当重启机器后，主机名称又变回来了。
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>永久生效</li>
+</ul>
+<p>(修改配置文件/etc/hostname来实现主机名的修改)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vim /etc/hostname
+hostname  myname
+</code></pre></td></tr></table>
+</div>
+</div><p>(命令行)</p>
+<p>//永久性的修改主机名称，重启后能保持修改后的。
+hostnamectl set-hostname xxx</p>
+<p>//删除hostname
+hostnamectl set-hostname &quot;&quot;
+hostnamectl set-hostname &quot;&quot; &ndash;static
+hostnamectl set-hostname &quot;&quot; &ndash;pretty</p>
+<ul>
+<li>修改主机名：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># hostnamectl set-hostname myname</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在修改静态/瞬态主机名时，任何特殊字符或空白字符会被移除，而提供的参数中的任何大写字母会自动转化为小写。</p>
+<p><em><strong>一旦修改了静态主机名，<code>/etc/hostname</code> 将被自动更新。<code>/etc/hosts</code> 不会更新以保存所做的修改，所以每次修改主机名后一定要手动更新/<code>etc/hosts</code>，之后再重启CentOS 7。否则系统再启动时会很慢。</strong></em></p>
+<ul>
+<li>手动更新/etc/hosts</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vim /etc/hosts
+#127.0.0.1   localhost localhost.localdomain
+127.0.0.1  myname
+#::1         localhost localhost.localdomain
+::1        myname
+</code></pre></td></tr></table>
+</div>
+</div><p>重启CentOS 7</p>
+]]></description>
+</item><item>
+    <title>Centos7查看开启关闭firewalld</title>
+    <link>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADfirewalld/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADfirewalld/</guid>
+    <description><![CDATA[<h2 id="centos7查看开启关闭firewalld">Centos7查看开启关闭firewalld</h2>
+<pre><code>systemctl stop firewalld.service #停止firewall
+
+systemctl disable firewalld.service #禁止firewall开机启动
+
+firewall-cmd --state #查看默认防火墙状态
+#（关闭后显示notrunning，开启后显示running）
+</code></pre>
+]]></description>
+</item><item>
+    <title>Centos7查看开启关闭iptables</title>
+    <link>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADiptables/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/centos7%E6%9F%A5%E7%9C%8B%E5%BC%80%E5%90%AF%E5%85%B3%E9%97%ADiptables/</guid>
+    <description><![CDATA[<h2 id="iptables">iptables</h2>
+<p>CentOS 配置防火墙操作实例（启、停、开、闭端口）：</p>
+<p>注：防火墙的基本操作命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">查询防火墙状态:
+[root@localhost ~]# service iptables status
+停止防火墙:
+[root@localhost ~]# service iptables stop
+启动防火墙:
+[root@localhost ~]# service iptables start
+重启防火墙:
+[root@localhost ~]# service iptables restart
+永久关闭防火墙:
+[root@localhost ~]# chkconfig iptables off
+永久关闭后启用:
+[root@localhost ~]# chkconfig iptables on
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>Linux启用SSH密钥登录</title>
+    <link>https://fiix.one/posts/linux%E5%90%AF%E7%94%A8ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/linux%E5%90%AF%E7%94%A8ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/</guid>
+    <description><![CDATA[<h2 id="linux启用ssh密钥登录">Linux启用SSH密钥登录</h2>
+<p>在某些时候，使用密码作为登录服务器的认证方式是不太安全的，为避免密码被暴力破解，许多时候可以采用ssh密钥登录服务器，这里以CentOS为例。</p>
+<h3 id="第一步">第一步</h3>
+<p>　　生成秘钥对:</p>
+<ul>
+<li><strong>方法一</strong></li>
+</ul>
+<p>在服务器上利用ssh-keygen生成:
+输入:</p>
+<pre><code>ssh-keygen -t rsa
+</code></pre>
+<p>一路enter跳过(当然你也可以自己定义，不过没必要);</p>
+<p>会在<code>/root/.ssh</code>下生成公钥(id_rsa.pub)私钥(id_rsa);</p>
+<p>（公钥是用于服务器端，私钥是用于客户端） 然后将私钥下载至电脑上(登录时会用到)。</p>
+<ul>
+<li><strong>方法二</strong></li>
+</ul>
+<p>利用远程工具(如Xshell)生成
+这里以Xshell为例，点击”工具-新建用户密钥生成向导”全部默认;</p>
+<p>下一步，提示输入密钥加密的密码，这里可以为空;</p>
+<p>下一步，将公钥保存为文件，命名为id_rsa.pub;</p>
+<p>上传到服务器<code>/root/.ssh</code>下。</p>
+<h3 id="第二步">第二步</h3>
+<p>　　修改<code>/etc/ssh/sshd_config</code>如下部分:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">RSAAuthentication yes 开启RSA验证
+PubkeyAuthentication yes 是否使用公钥验证
+AuthorizedKeysFile .ssh/authorized_keys 公钥的保存位置
+PasswordAuthentication no 禁止使用密码验证登录
+</code></pre></td></tr></table>
+</div>
+</div><p>这里最好是禁止使用密码验证登录，否则用密钥就没多大意义了。
+更改后保存。</p>
+<h3 id="第三步">第三步</h3>
+<p>　　进入到密钥保存的目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /root/.ssh
+新建密钥验证文件”authorized_keys”，并将公钥输出重定向覆盖密钥验证文件:
+
+touch authorized_keys  
+cat id_rsa.pub &gt;&gt; authorized_keys   这里建议使用追加而不是覆盖
+修改authorized_keys文件权限为600
+chmod  600 /root/.ssh/authorized_keys
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="第四步">第四步</h3>
+<p>　　重启ssh服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#CentOS 7之前的版本请执行:  
+service sshd restart
+#CentOS 7请执行:  
+systemctl restart sshd.service
+</code></pre></td></tr></table>
+</div>
+</div><p>接下来就能够通过密钥登录服务器了:
+在打开连接的时候会提示导入用户密钥，选择之前保存的私钥文件”id_rsa”即可。</p>
+<p><strong>如何在Linux系统中用密钥方式连接其他的远程Linux主机呢？</strong></p>
+<pre><code>ssh -i ~/.ssh/id_rsa root@192.168.1.1 -p 22
+</code></pre>
+]]></description>
+</item><item>
+    <title>Linux系统主机分辨率调节/投屏/双屏</title>
+    <link>https://fiix.one/posts/xrandr%E5%91%BD%E4%BB%A4%E6%8A%95%E5%B1%8F%E5%92%8C%E6%89%A9%E5%B1%95/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/xrandr%E5%91%BD%E4%BB%A4%E6%8A%95%E5%B1%8F%E5%92%8C%E6%89%A9%E5%B1%95/</guid>
+    <description><![CDATA[<h2 id="linux系统主机分辨率调节投屏双屏">Linux系统主机分辨率调节/投屏/双屏</h2>
+<p>xrandr 指令可以用来改变X环境的桌面大小和屏幕频率 </p>
+<p><code>xrandr</code>: 列出目前环境支持的解析度和频率 </p>
+<p><code>xrandr -q</code>: 同上 ，当前使用的分辨率会带上 “ * “ 号 </p>
+<h3 id="xrandr和cvt命令添加自定义的分辨率模式">xrandr和cvt命令添加自定义的分辨率模式</h3>
+<p>使用xrandr -q命令查看当前支持的分辨率模式: 
+例如,需要创建800x750的分辨率模式,步骤如下:</p>
+<ol>
+<li>使用cvt命令创建新的分辨率:</li>
+</ol>
+<p><code>cvt 800 750</code></p>
+<ol start="2">
+<li>使用xrandr -newmode modeline信息(cvt命令产生的结果) 创建新的mode:</li>
+</ol>
+<p><code>xrandr --newmode &quot;800X750_60.00&quot; 48.50 800 840 920 1040 750 753 763 779 -hsync +vsync</code></p>
+<ol start="3">
+<li>xrandr -addmode 设备名 mode 来为设备添加新的mode:</li>
+</ol>
+<p><code>xrandr -addmode VGA-1 800X750_60.00</code></p>
+<ol start="4">
+<li>使用xrandr -out 设备名 -mode mode 来使用新的分辨率模式</li>
+</ol>
+<p><code>xrand -out VGA-1 -mode 800X750_60.00</code></p>
+<p>以上步骤只是<strong>临时添加</strong>了新的分辨率,重启后就会消失,要永久保存,需要将modeline的信息保存到配置文件中.</p>
+<h3 id="更改分辨率">更改分辨率</h3>
+<p><code>xrandr -s 1024x768</code>   这种方式可以 </p>
+<p><code>xrandr -s n</code>  (n: xrandr 列出来的模式对应的数字)  这种方式也是可以的</p>
+<p>用法举例：<code>xrandr -s 1024x768 -r 75</code></p>
+<p>这样就可以将显示器的分辨率和刷新率立即更改为<code>1024x768＠75</code>，<strong>注意<code>1024x768</code>中间一定要是<code>x</code>不可以是<code>*</code>.</strong></p>
+<p>设置分辨率时需要指定设置的output及mode，如将eDP1的分辨率改为1920x1080，命令就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">xrandr --output eDP1 --mode 1920x1080
+--output:指定显示器。
+--mode:指定一种有效的分辨率。
+--rate:指定刷新率。
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>电脑的分辨率必须和投影率的分辨率相同，才能正常使用</p>
+<p>将笔记本屏慕内容克隆到屏幕</p>
+<p><code>xrandr --output VGA --same-as LVDS --auto</code> (LVDS:代表笔记本液晶屏)</p>
+<h3 id="xrandr-命令行切换双屏">xrandr 命令行切换双屏</h3>
+<p>常用方式如下，其他的可以自己探索：</p>
+<ul>
+<li>打开外接显示器(最高分辨率)，与笔记本液晶屏幕显示同样内容（克隆）</li>
+</ul>
+<p><code>xrandr --output VGA --same-as LVDS --auto</code></p>
+<ul>
+<li> 打开外接显示器(分辨率为1024x768)，与笔记本液晶屏幕显示同样内容（克隆）</li>
+</ul>
+<p><code>xrandr --output VGA --same-as LVDS --mode 1024x768</code></p>
+<p>* 打开外接显示器(最高分辨率)，设置为右侧扩展屏幕</p>
+<p><code>xrandr --output VGA --right-of LVDS --auto</code></p>
+<p>*关闭外接显示器</p>
+<p><code>xrandr --output VGA --off</code></p>
+<ul>
+<li>打开外接显示器，同时关闭笔记本液晶屏幕（只用外接显示器工作）</li>
+</ul>
+<p><code>xrandr --output VGA --auto --output LVDS --off</code></p>
+<p>* 关闭外接显示器，同时打开笔记本液晶屏幕 (只用笔记本液晶屏)</p>
+<p><code>xrandr --output VGA --off --output LVDS --auto</code></p>
+]]></description>
+</item><item>
+    <title>Shadowsock安装部署|bbr</title>
+    <link>https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/shadowsock%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</guid>
+    <description><![CDATA[<h2 id="shadowsocks-install">Shadowsocks-install</h2>
+<hr>
+<h3 id="升级软件更新系统">升级软件更新系统</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"> 	yum update -y
+	yum upgrade -y
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="官方安装说明">官方安装说明</h3>
+<h4 id="安装">安装</h4>
+<p>Debian / Ubuntu:</p>
+<pre><code>apt-get install python-pip
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre>
+<p>CentOS:</p>
+<pre><code>yum install python-setuptools &amp;&amp; easy_install pip
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre>
+<p>CentOS 7 如果需要 AEAD 密码, 请安装 libsodium</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">dnf install libsodium python34-pip
+pip3 install  git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre></td></tr></table>
+</div>
+</div><p>带有<a href="http://snapcraft.io/" target="_blank" rel="noopener noreffer">snap</a>的Linux发行版:</p>
+<pre><code>snap install shadowsocks
+</code></pre>
+<p>Windows:</p>
+<p>请查看: <a href="https://github.com/shadowsocks/shadowsocks/wiki/Install-Shadowsocks-Server-on-Windows" target="_blank" rel="noopener noreffer">Install Shadowsocks Server on Windows</a>.</p>
+<h4 id="用法">用法</h4>
+<pre><code>ssserver -p 443 -k password -m aes-256-cfb
+</code></pre>
+<p>后台运行:</p>
+<pre><code>sudo ssserver -p 443 -k password -m aes-256-cfb --user nobody -d start
+</code></pre>
+<p>停止:</p>
+<pre><code>sudo ssserver -d stop
+</code></pre>
+<p>检查日志 log:</p>
+<pre><code>sudo less /var/log/shadowsocks.log
+</code></pre>
+<p>通过检查所有选项<code>-h</code>。您也可以改用[配置]文件。</p>
+<p>如果安装了<a href="http://snapcraft.io/" target="_blank" rel="noopener noreffer">snap</a> 软件包，则必须在命令前面加上<code>shadowsocks</code>.，例如：</p>
+<pre><code>shadowsocks.ssserver -p 443 -k password -m aes-256-cfb
+</code></pre>
+<h4 id="使用配置文件">使用配置文件</h4>
+<p><a href="https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File" target="_blank" rel="noopener noreffer">Create configuration file and run</a></p>
+<p>启动:</p>
+<pre><code>ssserver -c /etc/shadowsocks.json
+</code></pre>
+<hr>
+<h3 id="pip-安装说明">pip 安装说明</h3>
+<h4 id="安装python和pip">安装python和pip</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	yum install python python-pip -y	<span class="c1">#安装python和pip</span>
+	pip install shadowsocks
+	<span class="c1">#安装shadowsocks 如果报错,按提示升级pip</span>
+	pip install --upgrade pip
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h4 id="config">config</h4>
+<ul>
+<li>配置文件需拷贝进 /etc 目录下</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	<span class="c1">#多用户配置文件</span>
+	vim /etc/shadowsocks.json
+	
+	<span class="o">{</span>
+    <span class="s2">&#34;server&#34;</span>: <span class="s2">&#34;0.0.0.0&#34;</span>,
+    <span class="s2">&#34;port_password&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;8381&#34;</span>: <span class="s2">&#34;foobar1&#34;</span>,
+        <span class="s2">&#34;8382&#34;</span>: <span class="s2">&#34;foobar2&#34;</span>,
+        <span class="s2">&#34;8383&#34;</span>: <span class="s2">&#34;foobar3&#34;</span>,
+        <span class="s2">&#34;8384&#34;</span>: <span class="s2">&#34;foobar4&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;timeout&#34;</span>: 300,
+    <span class="s2">&#34;method&#34;</span>: <span class="s2">&#34;aes-256-cfb&#34;</span>
+	<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>shadowsocks.service</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	vim /etc/systemd/system/shadowsocks.service
+	<span class="c1">#文件放置在	/etc/systemd/system/ 目录下.</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>Unit<span class="o">]</span>  
+<span class="nv">Description</span><span class="o">=</span>Shadowsocks  
+  
+<span class="o">[</span>Service<span class="o">]</span>  
+<span class="nv">TimeoutStartSec</span><span class="o">=</span><span class="m">0</span>  
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/ssserver -c /etc/shadowsocks.json  
+  
+<span class="o">[</span>Install<span class="o">]</span>  
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">chmod +x  /etc/systemd/system/shadowsocks.service
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如下报错请修改</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim /usr/lib/python2.7/site-packages/shadowsocks/crypto/openssl.py
+
+
+libcrypto.EVP_CIPHER_CTX_cleanup.argtypes <span class="o">=</span> <span class="o">(</span>c_void_p,<span class="o">)</span>
+<span class="c1">## 改成</span>
+libcrypto.EVP_CIPHER_CTX_reset.argtypes <span class="o">=</span> <span class="o">(</span>c_void_p,<span class="o">)</span>
+
+libcrypto.EVP_CIPHER_CTX_cleanup<span class="o">(</span>self._ctx<span class="o">)</span>
+<span class="c1">## 改成</span>
+libcrypto.EVP_CIPHER_CTX_reset<span class="o">(</span>self._ctx<span class="o">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">INFO: loading config from /etc/shadowsocks.json
+2021-03-07 08:46:36 INFO     loading libcrypto from libcrypto.so.10
+2021-03-07 08:46:36 INFO     starting server at 207.246.108.196:8001
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&#34;/usr/bin/ssserver&#34;</span>, line 11, in &lt;module&gt;
+    load_entry_point<span class="o">(</span><span class="s1">&#39;shadowsocks==2.8.2&#39;</span>, <span class="s1">&#39;console_scripts&#39;</span>, <span class="s1">&#39;ssserver&#39;</span><span class="o">)()</span>
+  File <span class="s2">&#34;/usr/lib/python3.4/site-packages/shadowsocks/server.py&#34;</span>, line 68, in main
+    tcp_servers.append<span class="o">(</span>tcprelay.TCPRelay<span class="o">(</span>a_config, dns_resolver, False<span class="o">))</span>
+  File <span class="s2">&#34;/usr/lib/python3.4/site-packages/shadowsocks/tcprelay.py&#34;</span>, line 582, in __init__
+    server_socket.bind<span class="o">(</span>sa<span class="o">)</span>
+OSError: <span class="o">[</span>Errno 99<span class="o">]</span> Cannot assign requested address
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>启动&rsquo;停止&rsquo;查看状态:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	systemctl start shadowsocks
+	systemctl stop shadowsocks
+	systemctl status shadowsocks
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>bbr加速脚本</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	./bbr.sh	<span class="c1">#自动配置安装脚本.</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+]]></description>
+</item><item>
+    <title>SSH登录取消yes</title>
+    <link>https://fiix.one/posts/ssh%E7%99%BB%E5%BD%95%E5%8F%96%E6%B6%88yes/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ssh%E7%99%BB%E5%BD%95%E5%8F%96%E6%B6%88yes/</guid>
+    <description><![CDATA[<h2 id="ssh登录取消yes">SSH登录取消yes</h2>
+<p>ssh登录机器的时候，如果这台机器没有使用ssh登录过(严格来说应该是<code>~/.ssh/known_hosts</code>文件中没有这台机器的HostKey)</p>
+<p>ssh会产生一个提示，询问是否需 要添加这台机器的HostKey，回答yes/no即可，虽然只要不删除<code>~/.ssh/known_hosts</code>文件中该机器的HostKey，则这个提示 将不会出现，书写一些自动化脚本的时候，就会成为问题。</p>
+<hr>
+<p><code>vi /etc/ssh/ssh_config</code>
+下面的参数默认为ask，去掉前面的注释，设置为<code>no</code>即可。
+<code>StrictHostKeyChecking no</code></p>
+<hr>
+<p>以后ssh将会自动添加HostKey到<code>~/.ssh/known_hosts</code>，不会再询问。</p>
+<p>默认该项配置是<code>ask</code>，所以会询问。</p>
+<p>最严格的配置是<code>yes</code>，每次必须手动将hostkey添加到<code>~/.ssh/known_hosts</code>文件中。</p>
+]]></description>
+</item><item>
+    <title>SSH登陆时带上密码</title>
+    <link>https://fiix.one/posts/ssh%E7%99%BB%E9%99%86%E6%97%B6%E5%B8%A6%E4%B8%8A%E5%AF%86%E7%A0%81/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ssh%E7%99%BB%E9%99%86%E6%97%B6%E5%B8%A6%E4%B8%8A%E5%AF%86%E7%A0%81/</guid>
+    <description><![CDATA[<h2 id="ssh登陆时带上密码">SSH登陆时带上密码</h2>
+<p>在ssh的同时带上密码，不用手动输入
+先安装一个软件包</p>
+<p><code>yum install -y sshpass</code></p>
+<p>只需要在ssh命令的前面带上sshpass就可以</p>
+<p><code>sshpass -p 'your passwd' ssh root@192.168.1.1 systemctl restart nginx</code></p>
+]]></description>
+</item><item>
+    <title>Ubuntu-1804-Gnome3-自定义系统登录背景</title>
+    <link>https://fiix.one/posts/ubuntu%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%BD%95%E8%83%8C%E6%99%AF/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ubuntu%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B3%BB%E7%BB%9F%E7%99%BB%E5%BD%95%E8%83%8C%E6%99%AF/</guid>
+    <description><![CDATA[<h2 id="ubuntu-1804-gnome3-自定义系统登录背景">Ubuntu-1804-Gnome3-自定义系统登录背景</h2>
+<blockquote>
+<p>20.04LTS个人测试无效，暂没有找到解决方法</p>
+</blockquote>
+<p>设置文件在<code>/etc/alternatives/gdm3.css</code></p>
+<p>找到<code>#lockDialogGroup</code> 开始设置他的属性。</p>
+<p><strong>注意备份</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-css" data-lang="css"><span class="p">#</span><span class="nn">lockDialogGroup</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#2c001e</span> <span class="nb">url</span><span class="p">(</span><span class="sx">file:///usr/share/backgrounds/loginscreen.jpg</span><span class="p">);</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">background-size</span><span class="p">:</span> <span class="kc">contain</span><span class="p">;</span>
+  <span class="k">background-attachment</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+  <span class="k">background-position</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">background-repeat</span><span class="p">:</span> <span class="kc">repeat</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意,请使用和显示器分辨率比例相同的图片</strong></p>
+<hr>
+<h2 id="ps">PS:</h2>
+<p>图片裁剪软件，又不想装PS的话，可以用一下我自己写的剪切小工具，c#写的(vs2008)</p>
+<p><a href="https://github.com/Sth32/cut-pic-with-2-point" target="_blank" rel="noopener noreffer">https://github.com/Sth32/cut-pic-with-2-point</a></p>
+<p>首先，介绍一下我的情况,小笔记本屏幕再带一个外置显示器.</p>
+<p>系统开机时自动设置两者分辨率为1920x1080，因此我的解锁的壁纸要为1920x1080的。但是小显示器太小了，这个分辨率看不清，于是在我login后，分辨率被调整为了1600x900，这时候再锁屏，如果固定了壁纸的大小，就会导致壁纸显示不完全，好在这个分辨率和上面的分辨率都是一个比例(16:9)，因此我们让壁纸自适应屏幕的高度，然后自动调整宽度，就可以在两种分辨率下达到完美显示的效果了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-css" data-lang="css"><span class="nt">background</span> 						<span class="nt">属性</span><span class="err">，</span><span class="nt">设置壁纸的位置</span><span class="err">。</span>
+<span class="nt">height</span>
+<span class="nt">background-size</span> 
+<span class="nt">background-attachment</span><span class="o">:</span> <span class="nt">fixed</span><span class="o">;</span>
+<span class="nt">background-position</span><span class="o">:</span> <span class="nt">0px</span> <span class="nt">0px</span><span class="o">;</span>
+<span class="nt">background-repeat</span><span class="o">:</span> <span class="nt">repeat</span><span class="o">;</span>	
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="转载于sth32httpsblogcsdnnetmy__codearticledetails83988525">转载于<a href="https://blog.csdn.net/My__Code/article/details/83988525" target="_blank" rel="noopener noreffer">[Sth32]</a></h2>
+]]></description>
+</item><item>
+    <title>Ubuntu清除卸载后的软件包数据</title>
+    <link>https://fiix.one/posts/ubuntu%E6%B8%85%E9%99%A4%E5%8D%B8%E8%BD%BD%E5%90%8E%E7%9A%84%E5%8C%85%E6%95%B0%E6%8D%AE/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/ubuntu%E6%B8%85%E9%99%A4%E5%8D%B8%E8%BD%BD%E5%90%8E%E7%9A%84%E5%8C%85%E6%95%B0%E6%8D%AE/</guid>
+    <description><![CDATA[<h2 id="ubuntu清除卸载后的包数据">Ubuntu清除卸载后的包数据</h2>
+<h3 id="单独卸载包时清除配置">单独卸载包时清除配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get 包名 --purge
+sudo apt-get purge 包名
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="卸载系统全部不用的包">卸载系统全部不用的包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get autoremove --purge
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="清除全部已卸载的包配置文件">清除全部已卸载的包配置文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo dpkg -l <span class="p">|</span>grep ^rc<span class="p">|</span>awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span>sudo xargs dpkg -P
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item><item>
+    <title>V2ray一键安装|bbr加速</title>
+    <link>https://fiix.one/posts/v2ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/v2ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[<h2 id="v2ray一键安装">V2ray一键安装</h2>
+<hr>
+<p><strong>Debian8/Debian7/Ubuntu16/Ubuntu14/centos7 v2ray一键部署管理脚本：</strong></p>
+<ul>
+<li>
+<p>安装脚本命令：</p>
+<p><code>bash &lt;(curl -s -L https://git.io/v2ray.sh) </code></p>
+</li>
+<li>
+<p>卸载脚本命令：</p>
+<p><code>bash &lt;(curl -s -L https://git.io/v2ray.sh) </code></p>
+</li>
+<li>
+<p>快速管理</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  v2ray info 查看 V2Ray 配置信息
+
+  v2ray config 修改 V2Ray 配置
+
+  v2ray link 生成 V2Ray 配置文件链接
+
+  v2ray infolink 生成 V2Ray 配置信息链接
+
+  v2ray qr 生成 V2Ray 配置二维码链接
+
+  v2ray ss 修改 Shadowsocks 配置
+
+  v2ray ssinfo 查看 Shadowsocks 配置信息
+
+  v2ray ssqr 生成 Shadowsocks 配置二维码链接
+
+  v2ray status 查看 V2Ray 运行状态
+
+  v2ray start 启动 V2Ray
+
+  v2ray stop 停止 V2Ray
+
+  v2ray restart 重启 V2Ray
+
+  v2ray log 查看 V2Ray 运行日志
+
+  v2ray update 更新 V2Ray
+
+  v2ray update.sh 更新 V2Ray 管理脚本
+
+  v2ray uninstall 卸载 V2Ray
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="安装bbr加速">安装bbr加速</h2>
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">wget --no-check-certificate  https://github.com/teddysun/across/raw/master  /bbr.sh
+chmod +x bbr.sh 
+./bbr.sh
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+]]></description>
+</item><item>
+    <title>vsftpd主目录权限（无法写入,连接失败）解决方法</title>
+    <link>https://fiix.one/posts/vsftpd%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/vsftpd%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</guid>
+    <description><![CDATA[<h2 id="vsftpd主目录权限无法写入连接失败">vsftpd主目录权限（无法写入,连接失败）</h2>
+<p>当<strong>限定了用户不能跳出其主目录之后</strong>，使用该用户登录FTP时往往会遇到这个错误：</p>
+<pre><code>500 OOPS: vsftpd: refusing to run with writable root inside chroot ()
+</code></pre>
+<p>这个问题发生在最新的这是由于下面的更新造成的：</p>
+<p><em><strong>Add stronger checks for the configuration error of running with a writeable root directory inside a chroot(). This may bite people who carelessly turned on chroot_local_user but such is life.</strong></em></p>
+<p>从2.3.5之后，vsftpd增强了安全检查，如果<strong>用户被限定在了其主目录下，则该用户的主目录不能再具有写权限</strong>了！如果检查发现还有写权限，就会报该错误。</p>
+<p>要修复这个错误，可以用命令</p>
+<pre><code>chmod a-w /home/user #去除用户主目录的写权限，注意把目录替换成你自己的。
+</code></pre>
+<p>或者你可以在<code>vsftpd.conf</code>的配置文件中增加下列两项中的一项：</p>
+<pre><code>allow_writeable_chroot=YES
+</code></pre>
+]]></description>
+</item><item>
+    <title>树莓派初始配置</title>
+    <link>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</guid>
+    <description><![CDATA[<h2 id="配置wifi接入">配置Wifi接入</h2>
+<p><code>wpa_supplicant.conf</code>是linux无线网络管理软件<code>wpa_supplicant</code>的配置文件，该文件记录了无线网络的配置情况。</p>
+<pre><code>vim /etc/wpa_supplicant/wpa_supplicant.conf
+</code></pre>
+<p>其中ssid为wifi名称，psk为wifi密码</p>
+<p>添加 <code>network</code> 节点，添加后文件内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">country</span><span class="o">=</span>GB
+<span class="nv">ctrl_interface</span><span class="o">=</span><span class="nv">DIR</span><span class="o">=</span>/var/run/wpa_supplicant <span class="nv">GROUP</span><span class="o">=</span>netdev
+<span class="nv">update_config</span><span class="o">=</span><span class="m">1</span>
+<span class="c1">##在此处之后添加</span>
+<span class="nv">network</span><span class="o">={</span>
+        <span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;Honor 10&#34;</span>
+        <span class="nv">psk</span><span class="o">=</span><span class="s2">&#34;zyj123#..&#34;</span>
+        <span class="nv">priority</span><span class="o">=</span><span class="m">5</span>
+      <span class="o">}</span>
+<span class="nv">network</span><span class="o">={</span>
+        <span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;company&#34;</span>
+        <span class="nv">psk</span><span class="o">=</span><span class="s2">&#34;companyPwd&#34;</span>
+        <span class="nv">priority</span><span class="o">=</span><span class="m">4</span>
+      <span class="o">}</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p><em><strong>其中priority为优先级，值越大，优先级越高。</strong></em></p>
+<hr>
+<h2 id="静态ip设置wifi和有线">静态IP设置(Wifi和有线)</h2>
+<p>在 interfaces 文件的开头注释里告诉我们了要修改静态IP地址，需要修改的是 /etc/dhcpcd.conf 也就是 DHCP 的配置文件。</p>
+<p>查看官方文档 man dhcpcd.conf 可知，需要配置 static IP 的话，只需修改以下参数：</p>
+<pre><code>vi /etc/dhcpcd.conf
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># 使用 vi 编辑文件，增加下列配置项</span>
+<span class="c1"># 指定接口 eth0　或者 wlan0</span>
+interface eth0
+<span class="c1"># 指定静态IP，/24表示子网掩码为 255.255.255.0</span>
+static <span class="nv">ip_address</span><span class="o">=</span>192.168.1.20/24
+<span class="c1"># 路由器/网关IP地址</span>
+static <span class="nv">routers</span><span class="o">=</span>192.168.1.1
+<span class="c1"># 手动自定义DNS服务器</span>
+static <span class="nv">domain_name_servers</span><span class="o">=</span>192.168.1.1 114.114.114.114
+<span class="c1"># 修改完成后，按esc键后输入 :wq 保存。重启树莓派就生效了</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="查看cpu温度">查看CPU温度</h2>
+<pre><code>sudo cat/sys/class/thermal/thermal_zone0/temp
+</code></pre>
+<hr>
+<h2 id="hdmi热拔插增强设置">HDMI热拔插/增强设置</h2>
+<p>树莓派有两个视频输出源（HDMI、模拟复合视频）。从原理上，HDMI口可以检测显示设备的有无及分辨率，模拟视频只能单纯输出，对目标设备没有任何检测（可以理解为开环）。</p>
+<p><em><strong>不能双头同时输出，开机时的策略是有HDMI则HDMI优先，无则退化到模拟视频。</strong></em></p>
+<p>可以通过修改config.txt来改动。设置<code>hdmi_force_hotplug=1</code>可以强制系统认为HDMI接口有设备插入。</p>
+<p>找到<code>#hdmi_force_hotplug=1</code>这句话，把前面的<code>#</code>注释符号去掉，启用HDMI热插拔功能。
+找到<code>#config_hdmi_boost=4</code>这句话，把前面的<code>#</code>注释符号去掉，启用加强HDMI信号。</p>
+<p>注意强制HDMI输出时，树莓派不知道对面的显示设备是什么。</p>
+<hr>
+<h2 id="强制分辨率显示">强制分辨率显示</h2>
+<p>所以你可能有必要用<code>hdmi_group</code>和<code>hdmi_mode</code>选项手动指定显示分辨率</p>
+<p>找到<code>#hdmi_group=1</code>这句话，把前面的<code>#</code>注释符号去掉,强行指定显示器类型：</p>
+<p><em><strong>1是连接老式电视，2代表连接新电视.</strong></em></p>
+<p>配置 <code>hdmi_safe = 1</code>，可以显示，可是屏幕分辨率一直只有640 * 480。
+hdmi_safe = 1强制使分辨率为640 * 480。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">/opt/vc/bin/tvservice -m CEA  ＃CEA老屏幕，hdmi_group <span class="o">=</span> <span class="m">1</span>
+/opt/vc/bin/tvservice -m DMT  ＃新屏幕  <span class="nv">hdmi_group</span> <span class="o">=</span> <span class="m">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>查看屏幕支持的分辨率</p>
+<p></p>
+<p><code>/boot/config.txt</code> 里面设置如下</p>
+<pre><code>hdmi_group=2  #设置为新式电视模式
+hdmi_mode=27  #选择合适的分辨率 &quot;mode 码&quot;
+</code></pre>
+<hr>
+<h2 id="强制竖屏">强制竖屏</h2>
+<pre><code>display_rotate=1
+</code></pre>
+]]></description>
+</item><item>
+    <title>树莓派引脚图</title>
+    <link>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%95%E8%84%9A%E5%9B%BE/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%95%E8%84%9A%E5%9B%BE/</guid>
+    <description><![CDATA[<h2 id="树莓派引脚图">树莓派引脚图</h2>
+<p></p>
+]]></description>
+</item><item>
+    <title>树莓派设置AP</title>
+    <link>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BEwifi%E5%92%8Cap/</link>
+    <pubDate>Sat, 10 Oct 2020 20:17:43 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://fiix.one/posts/%E6%A0%91%E8%8E%93%E6%B4%BEwifi%E5%92%8Cap/</guid>
+    <description><![CDATA[<h2 id="树莓派设置ap">树莓派设置AP</h2>
+<p>输入如下命令:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">iw list
+
+</code></pre></td></tr></table>
+</div>
+</div><p><em><strong>输出内容包涵<code>AP</code>则支持AP模式</strong></em></p>
+<p><code>ip neigh</code> 查看手机热点分配IP</p>
+<p>加入代码<code>display_rotate=1</code>使得屏幕竖屏显示</p>
+]]></description>
+</item></channel>
+</rss>
